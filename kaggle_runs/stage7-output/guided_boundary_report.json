@@ -1,0 +1,2921 @@
+{
+  "experiment": {
+    "slug": "eunectesqaq/dinomaly-guided-boundary-v7",
+    "stage": 7,
+    "generated": "2026-11-05 12:57:12",
+    "partial": false,
+    "hypothesis": "coarse 48x48 token reconstruction spreads across image edges; edge-guided filtering may sharpen boundaries"
+  },
+  "config": {
+    "slug": "eunectesqaq/dinomaly-guided-boundary-v7",
+    "stage": 7,
+    "script": "script.py",
+    "code_sha256": "c83ba09de825f9dff5ae998efc81911efd01af6973b5ac29db3e4ed316eaa055",
+    "baseline": {
+      "resize": 448,
+      "crop": 392,
+      "fov": 0.875
+    },
+    "enabled_scales": [
+      {
+        "name": "hi672",
+        "crop": 672,
+        "resize": 768,
+        "fov": 0.875,
+        "batch": 2
+      }
+    ],
+    "variants": [
+      "base_fuse672",
+      "box2_fuse672",
+      "guide_fuse672",
+      "detail_fuse672"
+    ],
+    "fusion": {
+      "reference": "0.5 * base_global + 0.5 * hi672",
+      "box_control": "two-pass avg_pool2d box smoothing",
+      "guided": "grayscale local-linear guided filter",
+      "detail": "base_fuse672 + strength * clipped(guided - box2)"
+    },
+    "guide": {
+      "source": "original 672 crop de-normalized to RGB 0..1, bilinear resized to 256, luminance grayscale",
+      "radius": 7,
+      "epsilon": 0.0025,
+      "detail_strength": 0.5,
+      "detail_cap_fraction": 0.1,
+      "box_pooling": "avg_pool2d(count_include_pad=False)"
+    },
+    "metrics": {
+      "keys": [
+        "I-AUROC",
+        "I-AP",
+        "I-F1",
+        "P-AUROC",
+        "P-AP",
+        "P-F1",
+        "P-AUPRO"
+      ],
+      "recall": [
+        "R@FPR0.001",
+        "R@FPR0.01",
+        "R@FPR0.05"
+      ],
+      "evaluation_grid": 256,
+      "mask_source": "exact original 448->392 gt transform, nearest to 256",
+      "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants",
+      "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+    },
+    "no_training": true,
+    "test_labels_used_for_selection_or_fit": false,
+    "classes_total": 15,
+    "eval_classes": [
+      "bottle",
+      "cable",
+      "capsule",
+      "carpet",
+      "grid",
+      "hazelnut",
+      "leather",
+      "metal_nut",
+      "pill",
+      "screw",
+      "tile",
+      "toothbrush",
+      "transistor",
+      "wood",
+      "zipper"
+    ],
+    "partial": false,
+    "test_images_total": 1725,
+    "test_images_evaluated": 1725,
+    "test_counts": {
+      "bottle": 83,
+      "cable": 150,
+      "capsule": 132,
+      "carpet": 117,
+      "grid": 78,
+      "hazelnut": 110,
+      "leather": 124,
+      "metal_nut": 115,
+      "pill": 167,
+      "screw": 160,
+      "tile": 117,
+      "toothbrush": 42,
+      "transistor": 100,
+      "wood": 79,
+      "zipper": 151
+    },
+    "eval_batch": 4,
+    "base_batch": 4,
+    "scale_batches": {
+      "672": 2
+    },
+    "probe": {
+      "base": {
+        "crop": 392,
+        "resize": 448,
+        "batch": 4,
+        "seconds": 5.201898813247681,
+        "seconds_per_image": 1.3004747033119202,
+        "peak_mib": 1154.81640625,
+        "enabled": true
+      },
+      "672": {
+        "crop": 672,
+        "resize": 768,
+        "batch": 2,
+        "seconds": 0.5981037616729736,
+        "seconds_per_image": 0.2990518808364868,
+        "peak_mib": 1958.419921875,
+        "enabled": true
+      }
+    },
+    "base_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+    "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+    "stage1_metrics": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/metrics.json"
+  },
+  "checkpoints": {
+    "base": {
+      "path": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+      "sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+      "iter": 10000,
+      "kind": null,
+      "reused_unchanged": true
+    }
+  },
+  "identity": {
+    "image_scores_identical_across_variants": true,
+    "image_score_max_abs_diff_across_variants": 0.0,
+    "image_scores_source": "one baseline-global score per test image, reused by every variant",
+    "scale_selection": "fixed a priori: only 392 base and 672 (768->672); no 560 forward; no test labels used",
+    "no_training": true,
+    "checkpoint_reused_unchanged": true,
+    "high_res_geometry": "672 branch independently resizes the native PIL image; same 7/8 FOV as the 448->392 baseline",
+    "position_interpolation": "DINOv2 interpolate_pos_encoding; ViTill side derived from token count",
+    "guide_parameters_fixed_a_priori": true,
+    "reference": "base_fuse672 = 0.5 * base_global + 0.5 * hi672",
+    "stage1_baseline_comparison": null
+  },
+  "results": {
+    "per_class": {
+      "bottle": {
+        "class": "bottle",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 83,
+        "n_normal": 20,
+        "n_anomaly": 63,
+        "n_gt_positive_pixels": 425068,
+        "n_gt_negative_pixels": 5014420,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "65c9b3c4b0b4c128ca1b68fe4a98252366fc99ae3d38675b723dd948137cc672"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.0033434307912275905
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.991755530984716,
+              "P-AP": 0.8959961950194297,
+              "P-F1": 0.8453787862404049,
+              "P-AUPRO": 0.970971678585881
+            },
+            "recall": {
+              "R@FPR0.001": 0.23292273236282196,
+              "R@FPR0.01": 0.7811126690317785,
+              "R@FPR0.05": 0.9795726801358842
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.18769150972366333,
+              "T@FPR0.01": 0.1340557336807251,
+              "T@FPR0.05": 0.08787724375724792
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9920395013762795,
+              "P-AP": 0.8974239149240391,
+              "P-F1": 0.842207477163857,
+              "P-AUPRO": 0.9669639188269585
+            },
+            "recall": {
+              "R@FPR0.001": 0.2410108500287013,
+              "R@FPR0.01": 0.7829123810778511,
+              "R@FPR0.05": 0.9763379035824856
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17874057590961456,
+              "T@FPR0.01": 0.13115668296813965,
+              "T@FPR0.05": 0.0902794674038887
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9923518287734445,
+              "P-AP": 0.9045533474835027,
+              "P-F1": 0.8452326360576696,
+              "P-AUPRO": 0.9686885460415107
+            },
+            "recall": {
+              "R@FPR0.001": 0.2751983212097829,
+              "R@FPR0.01": 0.7952680512294503,
+              "R@FPR0.05": 0.9766837306031035
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17606040835380554,
+              "T@FPR0.01": 0.13082146644592285,
+              "T@FPR0.05": 0.08951342105865479
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9917690036775052,
+              "P-AP": 0.8986509961810731,
+              "P-F1": 0.8463138533712453,
+              "P-AUPRO": 0.9714242786708991
+            },
+            "recall": {
+              "R@FPR0.001": 0.24634176178870204,
+              "R@FPR0.01": 0.785958952449961,
+              "R@FPR0.05": 0.9797373596695117
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.18670988082885742,
+              "T@FPR0.01": 0.13388144969940186,
+              "T@FPR0.05": 0.08765913546085358
+            }
+          }
+        },
+        "seconds": 66.29028797149658,
+        "gpu_peak_mib": 1979.29541015625
+      },
+      "cable": {
+        "class": "cable",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 150,
+        "n_normal": 58,
+        "n_anomaly": 92,
+        "n_gt_positive_pixels": 392036,
+        "n_gt_negative_pixels": 9438364,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 1.0000000000000002,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "dcb8110b45ae77cc9970324bbd7ca5f99b94f5cbfd4d6944b1345f6f0aad5570"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.005063207525956004
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9869961064345221,
+              "P-AP": 0.7529138737328407,
+              "P-F1": 0.7606651183197004,
+              "P-AUPRO": 0.9464688340164563
+            },
+            "recall": {
+              "R@FPR0.001": 0.11855543878623391,
+              "R@FPR0.01": 0.7266603067065269,
+              "R@FPR0.05": 0.9591619137018029
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.16532011330127716,
+              "T@FPR0.01": 0.10754813253879547,
+              "T@FPR0.05": 0.08543357998132706
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9875302711404963,
+              "P-AP": 0.7349750691009237,
+              "P-F1": 0.7557263729363453,
+              "P-AUPRO": 0.942943242576261
+            },
+            "recall": {
+              "R@FPR0.001": 0.09847820098154252,
+              "R@FPR0.01": 0.6899621463335,
+              "R@FPR0.05": 0.9721862277954065
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.15922768414020538,
+              "T@FPR0.01": 0.10742951929569244,
+              "T@FPR0.05": 0.08373052626848221
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9883830601138792,
+              "P-AP": 0.7520188568233537,
+              "P-F1": 0.7677378096180936,
+              "P-AUPRO": 0.947334247606881
+            },
+            "recall": {
+              "R@FPR0.001": 0.10704119009478721,
+              "R@FPR0.01": 0.7289177524513055,
+              "R@FPR0.05": 0.972260200593823
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.15896712243556976,
+              "T@FPR0.01": 0.10731470584869385,
+              "T@FPR0.05": 0.08392547070980072
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.987207044014565,
+              "P-AP": 0.7582570990593126,
+              "P-F1": 0.7644846527571788,
+              "P-AUPRO": 0.9467369197482597
+            },
+            "recall": {
+              "R@FPR0.001": 0.12175157383505597,
+              "R@FPR0.01": 0.7381184381026232,
+              "R@FPR0.05": 0.958621147037517
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1654326617717743,
+              "T@FPR0.01": 0.10760068893432617,
+              "T@FPR0.05": 0.08561323583126068
+            }
+          }
+        },
+        "seconds": 127.45666313171387,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "capsule": {
+        "class": "capsule",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 132,
+        "n_normal": 23,
+        "n_anomaly": 109,
+        "n_gt_positive_pixels": 113921,
+        "n_gt_negative_pixels": 8536831,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.9804547267650578,
+          "I-AP": 0.9957602425175316,
+          "I-F1": 0.9771688997727346
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "335d904ba9de870d516038aa78153f94e6a234e934cbb263fb56cd6760ffea78"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.004820043390447443
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9804547267650578,
+              "I-AP": 0.9957602425175316,
+              "I-F1": 0.9771688997727346,
+              "P-AUROC": 0.9861085104056236,
+              "P-AP": 0.6298046687429464,
+              "P-F1": 0.6123301219065151,
+              "P-AUPRO": 0.9760547179705322
+            },
+            "recall": {
+              "R@FPR0.001": 0.2898412057478428,
+              "R@FPR0.01": 0.7416894163499267,
+              "R@FPR0.05": 0.9287664258565146
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1303076595067978,
+              "T@FPR0.01": 0.09035484492778778,
+              "T@FPR0.05": 0.068722203373909
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9804547267650578,
+              "I-AP": 0.9957602425175316,
+              "I-F1": 0.9771688997727346,
+              "P-AUROC": 0.9875483611064626,
+              "P-AP": 0.6081145542087051,
+              "P-F1": 0.6064909980788332,
+              "P-AUPRO": 0.9694802243179237
+            },
+            "recall": {
+              "R@FPR0.001": 0.2457755813238999,
+              "R@FPR0.01": 0.7408379491050816,
+              "R@FPR0.05": 0.934507246249594
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12353084981441498,
+              "T@FPR0.01": 0.08773931115865707,
+              "T@FPR0.05": 0.06679272651672363
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9804547267650578,
+              "I-AP": 0.9957602425175316,
+              "I-F1": 0.9771688997727346,
+              "P-AUROC": 0.9875661525509197,
+              "P-AP": 0.6280941945267333,
+              "P-F1": 0.6166233547422824,
+              "P-AUPRO": 0.9710460006127057
+            },
+            "recall": {
+              "R@FPR0.001": 0.26442885859499127,
+              "R@FPR0.01": 0.749378955592033,
+              "R@FPR0.05": 0.9359643963799475
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12411008030176163,
+              "T@FPR0.01": 0.08808580040931702,
+              "T@FPR0.05": 0.06731418520212173
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9804547267650578,
+              "I-AP": 0.9957602425175316,
+              "I-F1": 0.9771688997727346,
+              "P-AUROC": 0.9858439247432836,
+              "P-AP": 0.6356496196242206,
+              "P-F1": 0.6155412105900837,
+              "P-AUPRO": 0.9749005096829465
+            },
+            "recall": {
+              "R@FPR0.001": 0.29954090992881033,
+              "R@FPR0.01": 0.7426111076974394,
+              "R@FPR0.05": 0.9277130643165
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.13045424222946167,
+              "T@FPR0.01": 0.09067848324775696,
+              "T@FPR0.05": 0.06903873383998871
+            }
+          }
+        },
+        "seconds": 111.8128809928894,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "carpet": {
+        "class": "carpet",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 117,
+        "n_normal": 28,
+        "n_anomaly": 89,
+        "n_gt_positive_pixels": 168271,
+        "n_gt_negative_pixels": 7499441,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.9987961476725522,
+          "I-AP": 0.9996268092468068,
+          "I-F1": 0.9888888388950642
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "680f65917dce9c6b0dbfd9c62782d1c1e45ed59a243379dbedcef831c280dd8c"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.00101318359375
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9987961476725522,
+              "I-AP": 0.9996268092468068,
+              "I-F1": 0.9888888388950642,
+              "P-AUROC": 0.9938606134496387,
+              "P-AP": 0.7237801777790464,
+              "P-F1": 0.732699529028081,
+              "P-AUPRO": 0.9791609672151654
+            },
+            "recall": {
+              "R@FPR0.001": 0.1498832240849582,
+              "R@FPR0.01": 0.8356520137159701,
+              "R@FPR0.05": 0.9956379887205757
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.22784174978733063,
+              "T@FPR0.01": 0.1338558942079544,
+              "T@FPR0.05": 0.09244892001152039
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9987961476725522,
+              "I-AP": 0.9996268092468068,
+              "I-F1": 0.9888888388950642,
+              "P-AUROC": 0.9937321330100947,
+              "P-AP": 0.702977410291111,
+              "P-F1": 0.7156280878987502,
+              "P-AUPRO": 0.9723762332353818
+            },
+            "recall": {
+              "R@FPR0.001": 0.13607216929833424,
+              "R@FPR0.01": 0.8045236552941386,
+              "R@FPR0.05": 0.9985856148712493
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.21485286951065063,
+              "T@FPR0.01": 0.13540300726890564,
+              "T@FPR0.05": 0.0916556715965271
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9987961476725522,
+              "I-AP": 0.9996268092468068,
+              "I-F1": 0.9888888388950642,
+              "P-AUROC": 0.993875120692203,
+              "P-AP": 0.7100682197475997,
+              "P-F1": 0.7188391441247591,
+              "P-AUPRO": 0.9766648995368277
+            },
+            "recall": {
+              "R@FPR0.001": 0.14143257008040602,
+              "R@FPR0.01": 0.8104367359794618,
+              "R@FPR0.05": 0.9985499581032976
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.21467728912830353,
+              "T@FPR0.01": 0.13489443063735962,
+              "T@FPR0.05": 0.09165477007627487
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9987961476725522,
+              "I-AP": 0.9996268092468068,
+              "I-F1": 0.9888888388950642,
+              "P-AUROC": 0.9938909912413675,
+              "P-AP": 0.7263768867550409,
+              "P-F1": 0.7339708611955896,
+              "P-AUPRO": 0.9796250355137303
+            },
+            "recall": {
+              "R@FPR0.001": 0.1537460406130587,
+              "R@FPR0.01": 0.838052902758051,
+              "R@FPR0.05": 0.9955191328274035
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.2277122586965561,
+              "T@FPR0.01": 0.1336500644683838,
+              "T@FPR0.05": 0.09248536825180054
+            }
+          }
+        },
+        "seconds": 99.66969466209412,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "grid": {
+        "class": "grid",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 78,
+        "n_normal": 21,
+        "n_anomaly": 57,
+        "n_gt_positive_pixels": 50889,
+        "n_gt_negative_pixels": 5060919,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.9983291562238931,
+          "I-AP": 0.9994052928932504,
+          "I-F1": 0.9911503924817943
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "803ddc084724634be1f6dd95cf051b51af25818454a7d114ed24139020b5dce2"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.012911224365234375
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9983291562238931,
+              "I-AP": 0.9994052928932504,
+              "I-F1": 0.9911503924817943,
+              "P-AUROC": 0.9951014278033086,
+              "P-AP": 0.6092905770964965,
+              "P-F1": 0.6262282724280579,
+              "P-AUPRO": 0.9733807698050737
+            },
+            "recall": {
+              "R@FPR0.001": 0.22140344671736525,
+              "R@FPR0.01": 0.8790897836467606,
+              "R@FPR0.05": 0.9986637583760735
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.23915418982505798,
+              "T@FPR0.01": 0.16522762179374695,
+              "T@FPR0.05": 0.09278903901576996
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9983291562238931,
+              "I-AP": 0.9994052928932504,
+              "I-F1": 0.9911503924817943,
+              "P-AUROC": 0.9936422058949961,
+              "P-AP": 0.5395930605252468,
+              "P-F1": 0.5726979079538073,
+              "P-AUPRO": 0.9679042805422069
+            },
+            "recall": {
+              "R@FPR0.001": 0.16113501935585295,
+              "R@FPR0.01": 0.7931576568610113,
+              "R@FPR0.05": 0.9987030596003066
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.21914856135845184,
+              "T@FPR0.01": 0.1574932038784027,
+              "T@FPR0.05": 0.09321235120296478
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9983291562238931,
+              "I-AP": 0.9994052928932504,
+              "I-F1": 0.9911503924817943,
+              "P-AUROC": 0.9943297949917914,
+              "P-AP": 0.5735487161229744,
+              "P-F1": 0.5963522038827771,
+              "P-AUPRO": 0.9745899062858504
+            },
+            "recall": {
+              "R@FPR0.001": 0.18410658492012028,
+              "R@FPR0.01": 0.8238126117628564,
+              "R@FPR0.05": 0.998545854703374
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.22196125984191895,
+              "T@FPR0.01": 0.15846006572246552,
+              "T@FPR0.05": 0.09420757740736008
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9983291562238931,
+              "I-AP": 0.9994052928932504,
+              "I-F1": 0.9911503924817943,
+              "P-AUROC": 0.9952465205734126,
+              "P-AP": 0.6192712623517713,
+              "P-F1": 0.6339578672654475,
+              "P-AUPRO": 0.9746972837678981
+            },
+            "recall": {
+              "R@FPR0.001": 0.2313859576725815,
+              "R@FPR0.01": 0.8854958831967615,
+              "R@FPR0.05": 0.9986244571518402
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.24078965187072754,
+              "T@FPR0.01": 0.16576343774795532,
+              "T@FPR0.05": 0.0930190235376358
+            }
+          }
+        },
+        "seconds": 66.43399405479431,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "hazelnut": {
+        "class": "hazelnut",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 110,
+        "n_normal": 40,
+        "n_anomaly": 70,
+        "n_gt_positive_pixels": 215723,
+        "n_gt_negative_pixels": 6993237,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "ff1758dccc1c9106ebb57bcc02df97dd095fa8868fc2174feab5c1e3ec12f44c"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.0023903165544782367
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9952771240119295,
+              "P-AP": 0.855778849096671,
+              "P-F1": 0.7892250076448775,
+              "P-AUPRO": 0.976015227860509
+            },
+            "recall": {
+              "R@FPR0.001": 0.39043124747940644,
+              "R@FPR0.01": 0.8573309290154504,
+              "R@FPR0.05": 0.995642560134988
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.15038514137268066,
+              "T@FPR0.01": 0.11258163303136826,
+              "T@FPR0.05": 0.07772336900234222
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9950328127936398,
+              "P-AP": 0.8463153228623129,
+              "P-F1": 0.7818588723919309,
+              "P-AUPRO": 0.9679361237152221
+            },
+            "recall": {
+              "R@FPR0.001": 0.3952568803511911,
+              "R@FPR0.01": 0.8468128108732031,
+              "R@FPR0.05": 0.994265794560617
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.14394016563892365,
+              "T@FPR0.01": 0.1101098358631134,
+              "T@FPR0.05": 0.0766204223036766
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9955674160946186,
+              "P-AP": 0.87271689211036,
+              "P-F1": 0.7931912752348601,
+              "P-AUPRO": 0.9710843199362764
+            },
+            "recall": {
+              "R@FPR0.001": 0.475883424576888,
+              "R@FPR0.01": 0.8610069394547637,
+              "R@FPR0.05": 0.9943955906417026
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.14098218083381653,
+              "T@FPR0.01": 0.1087552011013031,
+              "T@FPR0.05": 0.07673124969005585
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9954529337745511,
+              "P-AP": 0.8657509335260762,
+              "P-F1": 0.792940250009703,
+              "P-AUPRO": 0.9769694533137346
+            },
+            "recall": {
+              "R@FPR0.001": 0.4228339120075282,
+              "R@FPR0.01": 0.8623327137115653,
+              "R@FPR0.05": 0.9954154169930883
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1490243673324585,
+              "T@FPR0.01": 0.1119367703795433,
+              "T@FPR0.05": 0.07783051580190659
+            }
+          }
+        },
+        "seconds": 95.39516353607178,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "leather": {
+        "class": "leather",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 124,
+        "n_normal": 32,
+        "n_anomaly": 92,
+        "n_gt_positive_pixels": 73876,
+        "n_gt_negative_pixels": 8052588,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 1.0000000000000002,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "e32964f0af7d4e4ba7e242bddd8d374883e114f7e1db40dbe7061a05d3740fd7"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.00012465446226058469
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9936991278050786,
+              "P-AP": 0.5388301699092827,
+              "P-F1": 0.5490406029734568,
+              "P-AUPRO": 0.9790789650999759
+            },
+            "recall": {
+              "R@FPR0.001": 0.19948291732091614,
+              "R@FPR0.01": 0.7857897016622448,
+              "R@FPR0.05": 0.9993637987979859
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.24631370604038239,
+              "T@FPR0.01": 0.1531033217906952,
+              "T@FPR0.05": 0.09301964938640594
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9936173900661432,
+              "P-AP": 0.5281795853844063,
+              "P-F1": 0.543396885110056,
+              "P-AUPRO": 0.9787817410942512
+            },
+            "recall": {
+              "R@FPR0.001": 0.18348313390004872,
+              "R@FPR0.01": 0.7793870810547404,
+              "R@FPR0.05": 1.0
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.23840337991714478,
+              "T@FPR0.01": 0.1492927074432373,
+              "T@FPR0.05": 0.0941249430179596
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9937065567545976,
+              "P-AP": 0.5361944371174091,
+              "P-F1": 0.5467858418062905,
+              "P-AUPRO": 0.9728077340757638
+            },
+            "recall": {
+              "R@FPR0.001": 0.1892766256971141,
+              "R@FPR0.01": 0.7847203421950295,
+              "R@FPR0.05": 1.0
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.23626628518104553,
+              "T@FPR0.01": 0.1491057425737381,
+              "T@FPR0.05": 0.09409136325120926
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0000000000000002,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9937290016702379,
+              "P-AP": 0.5428830014731282,
+              "P-F1": 0.5502220494936755,
+              "P-AUPRO": 0.9773088337561088
+            },
+            "recall": {
+              "R@FPR0.001": 0.20198711354161025,
+              "R@FPR0.01": 0.786222859927446,
+              "R@FPR0.05": 0.9993367264064107
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.24537238478660583,
+              "T@FPR0.01": 0.15301716327667236,
+              "T@FPR0.05": 0.09300607442855835
+            }
+          }
+        },
+        "seconds": 105.16766738891602,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "metal_nut": {
+        "class": "metal_nut",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 115,
+        "n_normal": 22,
+        "n_anomaly": 93,
+        "n_gt_positive_pixels": 1173521,
+        "n_gt_negative_pixels": 6363119,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 1.0,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "e6cabb6575b768f295c666c766e3d931defd90b2d028a99efe9ccd479e75a6eb"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.007630008393256315
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.971400953398316,
+              "P-AP": 0.8162044253257396,
+              "P-F1": 0.8791614701104498,
+              "P-AUPRO": 0.9575058358139675
+            },
+            "recall": {
+              "R@FPR0.001": 0.027699546919058116,
+              "R@FPR0.01": 0.20390517084909432,
+              "R@FPR0.05": 0.9540400214397526
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.187653586268425,
+              "T@FPR0.01": 0.13764721155166626,
+              "T@FPR0.05": 0.08724295347929001
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9741859574300499,
+              "P-AP": 0.8193203859323603,
+              "P-F1": 0.8717162165410473,
+              "P-AUPRO": 0.9533823859585059
+            },
+            "recall": {
+              "R@FPR0.001": 0.03956895530629618,
+              "R@FPR0.01": 0.20735802767909564,
+              "R@FPR0.05": 0.9544814281124923
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.16792507469654083,
+              "T@FPR0.01": 0.1330806314945221,
+              "T@FPR0.05": 0.08917055279016495
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9738511926865682,
+              "P-AP": 0.8260620381096834,
+              "P-F1": 0.8799182272429835,
+              "P-AUPRO": 0.9583524624286957
+            },
+            "recall": {
+              "R@FPR0.001": 0.04062390021141505,
+              "R@FPR0.01": 0.22049711935278535,
+              "R@FPR0.05": 0.9595320407559813
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17050284147262573,
+              "T@FPR0.01": 0.13262152671813965,
+              "T@FPR0.05": 0.08757581561803818
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 1.0,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.971137715857177,
+              "P-AP": 0.8187949580093712,
+              "P-F1": 0.8814774488712681,
+              "P-AUPRO": 0.9576052639405814
+            },
+            "recall": {
+              "R@FPR0.001": 0.02889594647219777,
+              "R@FPR0.01": 0.21052456666731997,
+              "R@FPR0.05": 0.954683384447317
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.18878282606601715,
+              "T@FPR0.01": 0.1373959481716156,
+              "T@FPR0.05": 0.0871230810880661
+            }
+          }
+        },
+        "seconds": 104.61884021759033,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "pill": {
+        "class": "pill",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 167,
+        "n_normal": 26,
+        "n_anomaly": 141,
+        "n_gt_positive_pixels": 496895,
+        "n_gt_negative_pixels": 10447617,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.9920894708128751,
+          "I-AP": 0.9986187195143849,
+          "I-F1": 0.9858155528368819
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "223d2a1feff6c0245df6d9b62e4f973018f6828636e2e759c1fd14a5b2404f3c"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.006451985194525193
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9754204475463726,
+              "P-AP": 0.7425064490658501,
+              "P-F1": 0.7093033833782402,
+              "P-AUPRO": 0.97712044500069
+            },
+            "recall": {
+              "R@FPR0.001": 0.1650509665019773,
+              "R@FPR0.01": 0.6620855512734078,
+              "R@FPR0.05": 0.8742953742742431
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12253513932228088,
+              "T@FPR0.01": 0.08673900365829468,
+              "T@FPR0.05": 0.06632933765649796
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9821446378018223,
+              "P-AP": 0.7701328717756859,
+              "P-F1": 0.7194333858139442,
+              "P-AUPRO": 0.9718702650080177
+            },
+            "recall": {
+              "R@FPR0.001": 0.19674176636915244,
+              "R@FPR0.01": 0.6636452369212812,
+              "R@FPR0.05": 0.9165859990541261
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.11428558081388474,
+              "T@FPR0.01": 0.08446553349494934,
+              "T@FPR0.05": 0.06491142511367798
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9813591074597192,
+              "P-AP": 0.7795759666419033,
+              "P-F1": 0.7248003929344687,
+              "P-AUPRO": 0.9758508980399082
+            },
+            "recall": {
+              "R@FPR0.001": 0.20072449913965726,
+              "R@FPR0.01": 0.6779842823936647,
+              "R@FPR0.05": 0.9240624276758671
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1148059070110321,
+              "T@FPR0.01": 0.08437462896108627,
+              "T@FPR0.05": 0.06488808989524841
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9749599943420214,
+              "P-AP": 0.7455341240076017,
+              "P-F1": 0.7114809381784825,
+              "P-AUPRO": 0.9780795895563331
+            },
+            "recall": {
+              "R@FPR0.001": 0.16763702593103172,
+              "R@FPR0.01": 0.6664325461113515,
+              "R@FPR0.05": 0.8754666478833556
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12288206815719604,
+              "T@FPR0.01": 0.08677887916564941,
+              "T@FPR0.05": 0.06641609221696854
+            }
+          }
+        },
+        "seconds": 142.9701726436615,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "screw": {
+        "class": "screw",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 160,
+        "n_normal": 41,
+        "n_anomaly": 119,
+        "n_gt_positive_pixels": 39664,
+        "n_gt_negative_pixels": 10446096,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.983398237343718,
+          "I-AP": 0.9946887003395251,
+          "I-F1": 0.9626555516675014
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "9e0b5a8a77fbe72205d5490b4c3b24eeaffb154b268300b630e999e95da53844"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.010210800170898437
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.994477720544336,
+              "P-AP": 0.6592856246268033,
+              "P-F1": 0.6475957672209693,
+              "P-AUPRO": 0.9749371644660824
+            },
+            "recall": {
+              "R@FPR0.001": 0.5741478418717225,
+              "R@FPR0.01": 0.9197256958450988,
+              "R@FPR0.05": 0.9759479628882614
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1156565397977829,
+              "T@FPR0.01": 0.08792322129011154,
+              "T@FPR0.05": 0.07435005903244019
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.993940563795382,
+              "P-AP": 0.6014987322164985,
+              "P-F1": 0.5892794002023284,
+              "P-AUPRO": 0.9677970030465863
+            },
+            "recall": {
+              "R@FPR0.001": 0.4936466317063332,
+              "R@FPR0.01": 0.8870260185558693,
+              "R@FPR0.05": 0.971939290036305
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1064750924706459,
+              "T@FPR0.01": 0.08312661945819855,
+              "T@FPR0.05": 0.07172559946775436
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9935720754748925,
+              "P-AP": 0.6227282359303126,
+              "P-F1": 0.6156344291088014,
+              "P-AUPRO": 0.9672399066274383
+            },
+            "recall": {
+              "R@FPR0.001": 0.5207745058491328,
+              "R@FPR0.01": 0.8900262202501008,
+              "R@FPR0.05": 0.9637706736587334
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.10920040309429169,
+              "T@FPR0.01": 0.084696926176548,
+              "T@FPR0.05": 0.07322615385055542
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9940725590525172,
+              "P-AP": 0.6604610622858875,
+              "P-F1": 0.6490656611015968,
+              "P-AUPRO": 0.9730445489641718
+            },
+            "recall": {
+              "R@FPR0.001": 0.5780304558289633,
+              "R@FPR0.01": 0.9171793061718435,
+              "R@FPR0.05": 0.9731242436466317
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.11683161556720734,
+              "T@FPR0.01": 0.08899341523647308,
+              "T@FPR0.05": 0.07509932667016983
+            }
+          }
+        },
+        "seconds": 134.01375484466553,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "tile": {
+        "class": "tile",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 117,
+        "n_normal": 33,
+        "n_anomaly": 84,
+        "n_gt_positive_pixels": 656996,
+        "n_gt_negative_pixels": 7010716,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "f864fcfb418f9826dea3b125906f600df673dab02051d38fa3e8fe94d845877b"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.00255889892578125
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9840718293488299,
+              "P-AP": 0.8213160897614629,
+              "P-F1": 0.7847167514099352,
+              "P-AUPRO": 0.9160473182636504
+            },
+            "recall": {
+              "R@FPR0.001": 0.13532350273061022,
+              "R@FPR0.01": 0.5236196262990946,
+              "R@FPR0.05": 0.9417698129060147
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.23033995926380157,
+              "T@FPR0.01": 0.17439305782318115,
+              "T@FPR0.05": 0.10381001234054565
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9846344973097032,
+              "P-AP": 0.8397452740326249,
+              "P-F1": 0.7696145777737525,
+              "P-AUPRO": 0.9296877694014972
+            },
+            "recall": {
+              "R@FPR0.001": 0.21053248421603785,
+              "R@FPR0.01": 0.5711221986130813,
+              "R@FPR0.05": 0.924713392471187
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.2056759148836136,
+              "T@FPR0.01": 0.16802090406417847,
+              "T@FPR0.05": 0.11016391962766647
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.985140522156731,
+              "P-AP": 0.8471125631542856,
+              "P-F1": 0.7739351017399302,
+              "P-AUPRO": 0.9302053988412129
+            },
+            "recall": {
+              "R@FPR0.001": 0.22851889509220757,
+              "R@FPR0.01": 0.5822607747992378,
+              "R@FPR0.05": 0.9289051988139958
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.20511434972286224,
+              "T@FPR0.01": 0.16713586449623108,
+              "T@FPR0.05": 0.10914254933595657
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9841830309255841,
+              "P-AP": 0.824581936104984,
+              "P-F1": 0.7857853960634021,
+              "P-AUPRO": 0.9246258257780197
+            },
+            "recall": {
+              "R@FPR0.001": 0.14399783255910234,
+              "R@FPR0.01": 0.5278784041303144,
+              "R@FPR0.05": 0.9428352684034605
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.2299177050590515,
+              "T@FPR0.01": 0.1739659309387207,
+              "T@FPR0.05": 0.10338139533996582
+            }
+          }
+        },
+        "seconds": 102.38151931762695,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "toothbrush": {
+        "class": "toothbrush",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 42,
+        "n_normal": 12,
+        "n_anomaly": 30,
+        "n_gt_positive_pixels": 60567,
+        "n_gt_negative_pixels": 2691945,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999999,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "507989589151c28a5a7ea4fcbd415a1b39e8852470053b2c25b5a26cd294ddf5"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.005933588201349432
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999999,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9919033391816388,
+              "P-AP": 0.6080774074531936,
+              "P-F1": 0.682608349284865,
+              "P-AUPRO": 0.9638988539751345
+            },
+            "recall": {
+              "R@FPR0.001": 0.07292750177489392,
+              "R@FPR0.01": 0.7330064226393911,
+              "R@FPR0.05": 0.9981177869136658
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.2563375234603882,
+              "T@FPR0.01": 0.14376315474510193,
+              "T@FPR0.05": 0.09698433429002762
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999999,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9920104205343256,
+              "P-AP": 0.628073726254085,
+              "P-F1": 0.680850184714696,
+              "P-AUPRO": 0.9483038237013485
+            },
+            "recall": {
+              "R@FPR0.001": 0.09648818663628708,
+              "R@FPR0.01": 0.7241897402876154,
+              "R@FPR0.05": 0.9990754040979412
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.22343744337558746,
+              "T@FPR0.01": 0.1397293359041214,
+              "T@FPR0.05": 0.09598028659820557
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999999,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9924837140425957,
+              "P-AP": 0.6435272589695455,
+              "P-F1": 0.6891238430087239,
+              "P-AUPRO": 0.9554386901318248
+            },
+            "recall": {
+              "R@FPR0.001": 0.10234946422969604,
+              "R@FPR0.01": 0.7470404675813562,
+              "R@FPR0.05": 0.9993065530734558
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.22346091270446777,
+              "T@FPR0.01": 0.13956685364246368,
+              "T@FPR0.05": 0.09637802094221115
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999999,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9919596024597538,
+              "P-AP": 0.6135396109226553,
+              "P-F1": 0.6837305764026885,
+              "P-AUPRO": 0.9650752302277756
+            },
+            "recall": {
+              "R@FPR0.001": 0.07786418346624399,
+              "R@FPR0.01": 0.7365892317598692,
+              "R@FPR0.05": 0.9979361698614757
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.25614702701568604,
+              "T@FPR0.01": 0.14369820058345795,
+              "T@FPR0.05": 0.09740039706230164
+            }
+          }
+        },
+        "seconds": 33.79696774482727,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "transistor": {
+        "class": "transistor",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 100,
+        "n_normal": 60,
+        "n_anomaly": 40,
+        "n_gt_positive_pixels": 417101,
+        "n_gt_negative_pixels": 6136499,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.99125,
+          "I-AP": 0.983562569235511,
+          "I-F1": 0.9749999500000025
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "bd00f4567fc5cef3fcf3854367999d8edd154a421f7ba916baf01d09b7a96402"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.006825103759765625
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9248275333413035,
+              "P-AP": 0.5895012291765824,
+              "P-F1": 0.5663132803352096,
+              "P-AUPRO": 0.7699350571586548
+            },
+            "recall": {
+              "R@FPR0.001": 0.1300812033536242,
+              "R@FPR0.01": 0.39600000959000337,
+              "R@FPR0.05": 0.642614139021484
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.13583439588546753,
+              "T@FPR0.01": 0.09405115246772766,
+              "T@FPR0.05": 0.07738693803548813
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9441649138368153,
+              "P-AP": 0.6524621108111213,
+              "P-F1": 0.6232367069871365,
+              "P-AUPRO": 0.7890519645889107
+            },
+            "recall": {
+              "R@FPR0.001": 0.14922285010105465,
+              "R@FPR0.01": 0.44312528620166336,
+              "R@FPR0.05": 0.7280299016305404
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12755781412124634,
+              "T@FPR0.01": 0.08982418477535248,
+              "T@FPR0.05": 0.07333356887102127
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9412650789831999,
+              "P-AP": 0.6431567656969837,
+              "P-F1": 0.6128734799100795,
+              "P-AUPRO": 0.7887968456591219
+            },
+            "recall": {
+              "R@FPR0.001": 0.1550176096437074,
+              "R@FPR0.01": 0.43443914063979705,
+              "R@FPR0.05": 0.712374221111913
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12744298577308655,
+              "T@FPR0.01": 0.09068847447633743,
+              "T@FPR0.05": 0.07415518909692764
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9226852373706271,
+              "P-AP": 0.5840082090948343,
+              "P-F1": 0.5597264664685327,
+              "P-AUPRO": 0.7683261934412595
+            },
+            "recall": {
+              "R@FPR0.001": 0.1308891611384293,
+              "R@FPR0.01": 0.39184034562372183,
+              "R@FPR0.05": 0.6353712889683794
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.13615188002586365,
+              "T@FPR0.01": 0.09463657438755035,
+              "T@FPR0.05": 0.07782761752605438
+            }
+          }
+        },
+        "seconds": 87.22245740890503,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "wood": {
+        "class": "wood",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 79,
+        "n_normal": 19,
+        "n_anomaly": 60,
+        "n_gt_positive_pixels": 252458,
+        "n_gt_negative_pixels": 4924886,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.999122807017544,
+          "I-AP": 0.9997267759562843,
+          "I-F1": 0.9917354871935002
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "083467dfee0d12296b60756aafe432464b89a83f3e65b94f245858f48bbc38ac"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.0012785593688022345
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9786597084224329,
+              "P-AP": 0.7602102983734069,
+              "P-F1": 0.7052910600395921,
+              "P-AUPRO": 0.9499781341548273
+            },
+            "recall": {
+              "R@FPR0.001": 0.19553747554048595,
+              "R@FPR0.01": 0.6138367570051256,
+              "R@FPR0.05": 0.9141679011954463
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1927248239517212,
+              "T@FPR0.01": 0.13716453313827515,
+              "T@FPR0.05": 0.09313096106052399
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.97948914769545,
+              "P-AP": 0.7439848470870803,
+              "P-F1": 0.686701611309355,
+              "P-AUPRO": 0.9425879570319443
+            },
+            "recall": {
+              "R@FPR0.001": 0.18844718725490972,
+              "R@FPR0.01": 0.5847982634735283,
+              "R@FPR0.05": 0.88261017674227
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.18031153082847595,
+              "T@FPR0.01": 0.1339414417743683,
+              "T@FPR0.05": 0.09486836194992065
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9798067719566926,
+              "P-AP": 0.7521418702375329,
+              "P-F1": 0.6909763559547984,
+              "P-AUPRO": 0.9443397103440297
+            },
+            "recall": {
+              "R@FPR0.001": 0.20257230905734816,
+              "R@FPR0.01": 0.5938294686640946,
+              "R@FPR0.05": 0.8895935165453264
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1792212277650833,
+              "T@FPR0.01": 0.13349059224128723,
+              "T@FPR0.05": 0.09461019933223724
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.978552686039394,
+              "P-AP": 0.7629708527547919,
+              "P-F1": 0.7068554414829383,
+              "P-AUPRO": 0.9490903279592232
+            },
+            "recall": {
+              "R@FPR0.001": 0.20165730537356708,
+              "R@FPR0.01": 0.616863002954947,
+              "R@FPR0.05": 0.9143897202703024
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.19207674264907837,
+              "T@FPR0.01": 0.13702088594436646,
+              "T@FPR0.05": 0.09303873032331467
+            }
+          }
+        },
+        "seconds": 67.21693587303162,
+        "gpu_peak_mib": 1980.48876953125
+      },
+      "zipper": {
+        "class": "zipper",
+        "fingerprint": "16f778c2e53a9e15",
+        "n_test": 151,
+        "n_normal": 32,
+        "n_anomaly": 119,
+        "n_gt_positive_pixels": 271078,
+        "n_gt_negative_pixels": 9624858,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "6ccd3fb9c7a2773f6dc0bbb4015de3b44fba12f2b1201990cf1c8d853f31072d"
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "detail_strength": 0.5,
+          "detail_cap_fraction": 0.1,
+          "detail_clipped_fraction": 0.0014238859477796052
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9955812541386245,
+              "P-AP": 0.8671961556390471,
+              "P-F1": 0.8143222353029622,
+              "P-AUPRO": 0.980588373974324
+            },
+            "recall": {
+              "R@FPR0.001": 0.4424409210633102,
+              "R@FPR0.01": 0.9081260744140063,
+              "R@FPR0.05": 0.9895011767830661
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1519838273525238,
+              "T@FPR0.01": 0.11468739807605743,
+              "T@FPR0.05": 0.09434652328491211
+            }
+          },
+          "box2_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9963347877917376,
+              "P-AP": 0.868429943481561,
+              "P-F1": 0.8149195262204956,
+              "P-AUPRO": 0.9835665055899642
+            },
+            "recall": {
+              "R@FPR0.001": 0.42906469724581114,
+              "R@FPR0.01": 0.9132057931665425,
+              "R@FPR0.05": 0.9959126155571459
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.14640681445598602,
+              "T@FPR0.01": 0.11390139162540436,
+              "T@FPR0.05": 0.09188145399093628
+            }
+          },
+          "guide_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9963864013512852,
+              "P-AP": 0.8723548149709811,
+              "P-F1": 0.8155194941052515,
+              "P-AUPRO": 0.9846428152606074
+            },
+            "recall": {
+              "R@FPR0.001": 0.4449752469768849,
+              "R@FPR0.01": 0.9134234426991493,
+              "R@FPR0.05": 0.996067552512561
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.14567139744758606,
+              "T@FPR0.01": 0.11379943042993546,
+              "T@FPR0.05": 0.09195912629365921
+            }
+          },
+          "detail_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9955366938761444,
+              "P-AP": 0.8679223821329918,
+              "P-F1": 0.8142442247758066,
+              "P-AUPRO": 0.9814473841169506
+            },
+            "recall": {
+              "R@FPR0.001": 0.44548801451980613,
+              "R@FPR0.01": 0.9074288581146386,
+              "R@FPR0.05": 0.9893978854794561
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.15182700753211975,
+              "T@FPR0.01": 0.11471042037010193,
+              "T@FPR0.05": 0.09441520273685455
+            }
+          }
+        },
+        "seconds": 128.27470660209656,
+        "gpu_peak_mib": 1980.48876953125
+      }
+    },
+    "mean": {
+      "base_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.9962293697223761,
+          "I-AP": 0.9980926073135531,
+          "I-F1": 0.9914942848565,
+          "P-AUROC": 0.9839427484544447,
+          "P-AP": 0.7247128127199199,
+          "P-F1": 0.7136586490415545,
+          "P-AUPRO": 0.9527428228907284
+        },
+        "recall": {
+          "R@FPR0.001": 0.2230486114836818,
+          "R@FPR0.01": 0.7045086752029253,
+          "R@FPR0.05": 0.9431508867430506
+        }
+      },
+      "box2_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.9962293697223761,
+          "I-AP": 0.9980926073135531,
+          "I-F1": 0.9914942848565,
+          "P-AUROC": 0.9860031734388931,
+          "P-AP": 0.7187484539258507,
+          "P-F1": 0.7049172140730889,
+          "P-AUPRO": 0.9501755625756654
+        },
+        "recall": {
+          "R@FPR0.001": 0.2176616396050302,
+          "R@FPR0.01": 0.6954709496998802,
+          "R@FPR0.05": 0.9498622702907777
+        }
+      },
+      "guide_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.9962293697223761,
+          "I-AP": 0.9980926073135531,
+          "I-F1": 0.9914942848565,
+          "P-AUROC": 0.9859763196055427,
+          "P-AP": 0.7309236118428775,
+          "P-F1": 0.7125029059647848,
+          "P-AUPRO": 0.9524721587619104
+        },
+        "recall": {
+          "R@FPR0.001": 0.23552826702494262,
+          "R@FPR0.01": 0.7075361536696724,
+          "R@FPR0.05": 0.9500007943448722
+        }
+      },
+      "detail_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.9962293697223761,
+          "I-AP": 0.9980926073135531,
+          "I-F1": 0.9914942848565,
+          "P-AUROC": 0.9837484626412095,
+          "P-AP": 0.7283101956189161,
+          "P-F1": 0.7153197932018427,
+          "P-AUPRO": 0.9532637785625261
+        },
+        "recall": {
+          "R@FPR0.001": 0.23013647964511255,
+          "R@FPR0.01": 0.7075686079585235,
+          "R@FPR0.05": 0.9425447942241765
+        }
+      }
+    }
+  },
+  "image_metrics": {
+    "mean": {
+      "I-AUROC": 0.9962293697223761,
+      "I-AP": 0.9980926073135531,
+      "I-F1": 0.9914942848565
+    },
+    "note": "identical for every variant; from the original baseline global map"
+  },
+  "deltas": {
+    "box2_fuse672 - base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": 0.0020604249844483613,
+        "P-AP": -0.005964358794069202,
+        "P-F1": -0.008741434968465578,
+        "P-AUPRO": -0.002567260315063047
+      },
+      "recall": {
+        "R@FPR0.001": -0.005386971878651586,
+        "R@FPR0.01": -0.009037725503045047,
+        "R@FPR0.05": 0.006711383547727157
+      }
+    },
+    "guide_fuse672 - base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": 0.0020335711510979237,
+        "P-AP": 0.006210799122957522,
+        "P-F1": -0.0011557430767696886,
+        "P-AUPRO": -0.00027066412881804336
+      },
+      "recall": {
+        "R@FPR0.001": 0.01247965554126082,
+        "R@FPR0.01": 0.0030274784667471133,
+        "R@FPR0.05": 0.006849907601821581
+      }
+    },
+    "detail_fuse672 - base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.00019428581323521765,
+        "P-AP": 0.0035973828989961376,
+        "P-F1": 0.001661144160288175,
+        "P-AUPRO": 0.0005209556717976627
+      },
+      "recall": {
+        "R@FPR0.001": 0.007087868161430755,
+        "R@FPR0.01": 0.003059932755598238,
+        "R@FPR0.05": -0.0006060925188741129
+      }
+    }
+  },
+  "per_class_deltas": {
+    "box2_fuse672 - base_fuse672": {
+      "bottle": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0002839703915634706,
+          "P-AP": 0.0014277199046093259,
+          "P-F1": -0.0031713090765478347,
+          "P-AUPRO": -0.0040077597589224245
+        },
+        "recall": {
+          "R@FPR0.001": 0.00808811766587933,
+          "R@FPR0.01": 0.0017997120460726546,
+          "R@FPR0.05": -0.003234776553398544
+        }
+      },
+      "cable": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0005341647059742272,
+          "P-AP": -0.017938804631916994,
+          "P-F1": -0.004938745383355148,
+          "P-AUPRO": -0.0035255914401952637
+        },
+        "recall": {
+          "R@FPR0.001": -0.020077237804691395,
+          "R@FPR0.01": -0.03669816037302698,
+          "R@FPR0.05": 0.013024314093603606
+        }
+      },
+      "capsule": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0014398507008389627,
+          "P-AP": -0.0216901145342413,
+          "P-F1": -0.005839123827681925,
+          "P-AUPRO": -0.006574493652608537
+        },
+        "recall": {
+          "R@FPR0.001": -0.04406562442394288,
+          "R@FPR0.01": -0.0008514672448450833,
+          "R@FPR0.05": 0.005740820393079438
+        }
+      },
+      "carpet": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0001284804395440542,
+          "P-AP": -0.020802767487935303,
+          "P-F1": -0.01707144112933079,
+          "P-AUPRO": -0.00678473397978363
+        },
+        "recall": {
+          "R@FPR0.001": -0.01381105478662395,
+          "R@FPR0.01": -0.03112835842183148,
+          "R@FPR0.05": 0.0029476261506735657
+        }
+      },
+      "grid": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0014592219083124913,
+          "P-AP": -0.06969751657124967,
+          "P-F1": -0.053530364474250636,
+          "P-AUPRO": -0.005476489262866813
+        },
+        "recall": {
+          "R@FPR0.001": -0.060268427361512306,
+          "R@FPR0.01": -0.08593212678574935,
+          "R@FPR0.05": 3.9301224233123655e-05
+        }
+      },
+      "hazelnut": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0002443112182897167,
+          "P-AP": -0.009463526234358088,
+          "P-F1": -0.007366135252946604,
+          "P-AUPRO": -0.008079104145286897
+        },
+        "recall": {
+          "R@FPR0.001": 0.004825632871784669,
+          "R@FPR0.01": -0.010518118142247235,
+          "R@FPR0.05": -0.0013767655743709417
+        }
+      },
+      "leather": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -8.17377389353835e-05,
+          "P-AP": -0.010650584524876328,
+          "P-F1": -0.005643717863400788,
+          "P-AUPRO": -0.00029722400572473884
+        },
+        "recall": {
+          "R@FPR0.001": -0.015999783420867414,
+          "R@FPR0.01": -0.006402620607504406,
+          "R@FPR0.05": 0.0006362012020141306
+        }
+      },
+      "metal_nut": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.002785004031733873,
+          "P-AP": 0.0031159606066207823,
+          "P-F1": -0.00744525356940251,
+          "P-AUPRO": -0.004123449855461647
+        },
+        "recall": {
+          "R@FPR0.001": 0.011869408387238062,
+          "R@FPR0.01": 0.003452856830001322,
+          "R@FPR0.05": 0.0004414066727396193
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.00672419025544968,
+          "P-AP": 0.02762642270983584,
+          "P-F1": 0.010130002435704055,
+          "P-AUPRO": -0.005250179992672299
+        },
+        "recall": {
+          "R@FPR0.001": 0.03169079986717516,
+          "R@FPR0.01": 0.0015596856478733434,
+          "R@FPR0.05": 0.04229062477988299
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0005371567489540485,
+          "P-AP": -0.05778689241030477,
+          "P-F1": -0.05831636701864096,
+          "P-AUPRO": -0.007140161419496027
+        },
+        "recall": {
+          "R@FPR0.001": -0.0805012101653893,
+          "R@FPR0.01": -0.03269967728922951,
+          "R@FPR0.05": -0.004008672851956385
+        }
+      },
+      "tile": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.000562667960873342,
+          "P-AP": 0.018429184271162025,
+          "P-F1": -0.015102173636182714,
+          "P-AUPRO": 0.013640451137846843
+        },
+        "recall": {
+          "R@FPR0.001": 0.07520898148542762,
+          "R@FPR0.01": 0.04750257231398669,
+          "R@FPR0.05": -0.01705642043482769
+        }
+      },
+      "toothbrush": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.00010708135268688856,
+          "P-AP": 0.019996318800891366,
+          "P-F1": -0.001758164570168974,
+          "P-AUPRO": -0.015595030273786059
+        },
+        "recall": {
+          "R@FPR0.001": 0.023560684861393164,
+          "R@FPR0.01": -0.008816682351775684,
+          "R@FPR0.05": 0.0009576171842753389
+        }
+      },
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.019337380495511813,
+          "P-AP": 0.06296088163453883,
+          "P-F1": 0.056923426651926956,
+          "P-AUPRO": 0.019116907430255847
+        },
+        "recall": {
+          "R@FPR0.001": 0.019141646747430463,
+          "R@FPR0.01": 0.047125276611659994,
+          "R@FPR0.05": 0.08541576260905637
+        }
+      },
+      "wood": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0008294392730171518,
+          "P-AP": -0.016225451286326575,
+          "P-F1": -0.018589448730237046,
+          "P-AUPRO": -0.007390177122883035
+        },
+        "recall": {
+          "R@FPR0.001": -0.0070902882855762295,
+          "R@FPR0.01": -0.029038493531597376,
+          "R@FPR0.05": -0.031557724453176283
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0007535336531130366,
+          "P-AP": 0.0012337878425139337,
+          "P-F1": 0.0005972909175333552,
+          "P-AUPRO": 0.0029781316156402005
+        },
+        "recall": {
+          "R@FPR0.001": -0.013376223817499033,
+          "R@FPR0.01": 0.005079718752536211,
+          "R@FPR0.05": 0.006411438774079792
+        }
+      }
+    },
+    "guide_fuse672 - base_fuse672": {
+      "bottle": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0005962977887284948,
+          "P-AP": 0.008557152464072959,
+          "P-F1": -0.0001461501827352274,
+          "P-AUPRO": -0.002283132544370292
+        },
+        "recall": {
+          "R@FPR0.001": 0.04227558884696092,
+          "R@FPR0.01": 0.014155382197671873,
+          "R@FPR0.05": -0.002888949532780627
+        }
+      },
+      "cable": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0013869536793571502,
+          "P-AP": -0.000895016909487012,
+          "P-F1": 0.007072691298393163,
+          "P-AUPRO": 0.0008654135904246907
+        },
+        "recall": {
+          "R@FPR0.001": -0.011514248691446696,
+          "R@FPR0.01": 0.0022574457447785967,
+          "R@FPR0.05": 0.013098286892020083
+        }
+      },
+      "capsule": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0014576421452960897,
+          "P-AP": -0.0017104742162130648,
+          "P-F1": 0.004293232835767213,
+          "P-AUPRO": -0.0050087173578264865
+        },
+        "recall": {
+          "R@FPR0.001": -0.02541234715285151,
+          "R@FPR0.01": 0.007689539242106358,
+          "R@FPR0.05": 0.007197970523432962
+        }
+      },
+      "carpet": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 1.4507242564243406e-05,
+          "P-AP": -0.013711958031446647,
+          "P-F1": -0.013860384903321865,
+          "P-AUPRO": -0.0024960676783377655
+        },
+        "recall": {
+          "R@FPR0.001": -0.008450654004552166,
+          "R@FPR0.01": -0.025215277736508335,
+          "R@FPR0.05": 0.0029119693827218684
+        }
+      },
+      "grid": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0007716328115171533,
+          "P-AP": -0.035741860973522055,
+          "P-F1": -0.0298760685452808,
+          "P-AUPRO": 0.0012091364807766958
+        },
+        "recall": {
+          "R@FPR0.001": -0.03729686179724498,
+          "R@FPR0.01": -0.05527717188390424,
+          "R@FPR0.05": -0.00011790367269948199
+        }
+      },
+      "hazelnut": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0002902920826891586,
+          "P-AP": 0.016938043013688953,
+          "P-F1": 0.003966267589982642,
+          "P-AUPRO": -0.004930907924232564
+        },
+        "recall": {
+          "R@FPR0.001": 0.08545217709748154,
+          "R@FPR0.01": 0.0036760104393133153,
+          "R@FPR0.05": -0.0012469694932853992
+        }
+      },
+      "leather": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 7.428949518994976e-06,
+          "P-AP": -0.0026357327918735685,
+          "P-F1": -0.002254761167166275,
+          "P-AUPRO": -0.0062712310242121205
+        },
+        "recall": {
+          "R@FPR0.001": -0.010206291623802044,
+          "R@FPR0.01": -0.001069359467215314,
+          "R@FPR0.05": 0.0006362012020141306
+        }
+      },
+      "metal_nut": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.002450239288252165,
+          "P-AP": 0.009857612783943814,
+          "P-F1": 0.0007567571325337585,
+          "P-AUPRO": 0.0008466266147281187
+        },
+        "recall": {
+          "R@FPR0.001": 0.012924353292356933,
+          "R@FPR0.01": 0.01659194850369103,
+          "R@FPR0.05": 0.005492019316228669
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.005938659913346633,
+          "P-AP": 0.03706951757605326,
+          "P-F1": 0.01549700955622857,
+          "P-AUPRO": -0.0012695469607817422
+        },
+        "recall": {
+          "R@FPR0.001": 0.03567353263767997,
+          "R@FPR0.01": 0.01589873112025686,
+          "R@FPR0.05": 0.04976705340162402
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0009056450694435725,
+          "P-AP": -0.03655738869649072,
+          "P-F1": -0.03196133811216795,
+          "P-AUPRO": -0.007697257838644056
+        },
+        "recall": {
+          "R@FPR0.001": -0.05337333602258976,
+          "R@FPR0.01": -0.02969947559499797,
+          "R@FPR0.05": -0.012177289229527988
+        }
+      },
+      "tile": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.001068692807901117,
+          "P-AP": 0.02579647339282276,
+          "P-F1": -0.010781649670005056,
+          "P-AUPRO": 0.014158080577562515
+        },
+        "recall": {
+          "R@FPR0.001": 0.09319539236159735,
+          "R@FPR0.01": 0.058641148500143125,
+          "R@FPR0.05": -0.012864614092018889
+        }
+      },
+      "toothbrush": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.000580374860956967,
+          "P-AP": 0.03544985151635194,
+          "P-F1": 0.006515493723858845,
+          "P-AUPRO": -0.00846016384330972
+        },
+        "recall": {
+          "R@FPR0.001": 0.029421962454802122,
+          "R@FPR0.01": 0.01403404494196514,
+          "R@FPR0.05": 0.0011887661597900223
+        }
+      },
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.016437545641896367,
+          "P-AP": 0.053655536520401226,
+          "P-F1": 0.0465601995748699,
+          "P-AUPRO": 0.018861788500467047
+        },
+        "recall": {
+          "R@FPR0.001": 0.024936406290083202,
+          "R@FPR0.01": 0.038439131049793684,
+          "R@FPR0.05": 0.06976008209042894
+        }
+      },
+      "wood": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0011470635342597513,
+          "P-AP": -0.00806842813587405,
+          "P-F1": -0.014314704084793628,
+          "P-AUPRO": -0.005638423810797599
+        },
+        "recall": {
+          "R@FPR0.001": 0.00703483351686221,
+          "R@FPR0.01": -0.02000728834103105,
+          "R@FPR0.05": -0.024574384650119963
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0008051472126606729,
+          "P-AP": 0.005158659331934046,
+          "P-F1": 0.0011972588022892694,
+          "P-AUPRO": 0.004054441286283406
+        },
+        "recall": {
+          "R@FPR0.001": 0.00253432591357472,
+          "R@FPR0.01": 0.005297368285143045,
+          "R@FPR0.05": 0.006566375729494811
+        }
+      }
+    },
+    "detail_fuse672 - base_fuse672": {
+      "bottle": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 1.3472692789173735e-05,
+          "P-AP": 0.0026548011616434053,
+          "P-F1": 0.0009350671308404612,
+          "P-AUPRO": 0.00045260008501812887
+        },
+        "recall": {
+          "R@FPR0.001": 0.01341902942588008,
+          "R@FPR0.01": 0.004846283418182495,
+          "R@FPR0.05": 0.00016467953362753196
+        }
+      },
+      "cable": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.00021093758004298024,
+          "P-AP": 0.005343225326471912,
+          "P-F1": 0.0038195344374784,
+          "P-AUPRO": 0.00026808573180336914
+        },
+        "recall": {
+          "R@FPR0.001": 0.0031961350488220602,
+          "R@FPR0.01": 0.011458131396096305,
+          "R@FPR0.05": -0.0005407666642859299
+        }
+      },
+      "capsule": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00026458566234000003,
+          "P-AP": 0.005844950881274236,
+          "P-F1": 0.0032110886835685637,
+          "P-AUPRO": -0.001154208287585723
+        },
+        "recall": {
+          "R@FPR0.001": 0.00969970418096755,
+          "R@FPR0.01": 0.0009216913475127431,
+          "R@FPR0.05": -0.0010533615400145635
+        }
+      },
+      "carpet": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 3.037779172876398e-05,
+          "P-AP": 0.0025967089759945106,
+          "P-F1": 0.001271332167508632,
+          "P-AUPRO": 0.0004640682985648237
+        },
+        "recall": {
+          "R@FPR0.001": 0.003862816528100499,
+          "R@FPR0.01": 0.0024008890420809115,
+          "R@FPR0.05": -0.00011885589317228717
+        }
+      },
+      "grid": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0001450927701039939,
+          "P-AP": 0.009980685255274846,
+          "P-F1": 0.007729594837389553,
+          "P-AUPRO": 0.001316513962824395
+        },
+        "recall": {
+          "R@FPR0.001": 0.00998251095521624,
+          "R@FPR0.01": 0.006406099550000932,
+          "R@FPR0.05": -3.930122423323468e-05
+        }
+      },
+      "hazelnut": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.00017580976262165926,
+          "P-AP": 0.009972084429405226,
+          "P-F1": 0.003715242364825566,
+          "P-AUPRO": 0.0009542254532256544
+        },
+        "recall": {
+          "R@FPR0.001": 0.03240266452812174,
+          "R@FPR0.01": 0.005001784696114897,
+          "R@FPR0.05": -0.0002271431418996439
+        }
+      },
+      "leather": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 2.9873865159291135e-05,
+          "P-AP": 0.004052831563845505,
+          "P-F1": 0.0011814465202186764,
+          "P-AUPRO": -0.001770131343867165
+        },
+        "recall": {
+          "R@FPR0.001": 0.002504196220694116,
+          "R@FPR0.01": 0.0004331582652011834,
+          "R@FPR0.05": -2.7072391575178045e-05
+        }
+      },
+      "metal_nut": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0002632375411389942,
+          "P-AP": 0.00259053268363163,
+          "P-F1": 0.002315978760818349,
+          "P-AUPRO": 9.942812661389855e-05
+        },
+        "recall": {
+          "R@FPR0.001": 0.001196399553139653,
+          "R@FPR0.01": 0.006619395818225654,
+          "R@FPR0.05": 0.0006433630075644015
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00046045320435117443,
+          "P-AP": 0.0030276749417516013,
+          "P-F1": 0.0021775548002422873,
+          "P-AUPRO": 0.0009591445556431655
+        },
+        "recall": {
+          "R@FPR0.001": 0.0025860594290544325,
+          "R@FPR0.01": 0.004346994837943652,
+          "R@FPR0.05": 0.0011712736091125109
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00040516149181879513,
+          "P-AP": 0.001175437659084233,
+          "P-F1": 0.0014698938806274597,
+          "P-AUPRO": -0.001892615501910555
+        },
+        "recall": {
+          "R@FPR0.001": 0.003882613957240766,
+          "R@FPR0.01": -0.002546389673255267,
+          "R@FPR0.05": -0.0028237192416296075
+        }
+      },
+      "tile": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.00011120157675426068,
+          "P-AP": 0.003265846343521117,
+          "P-F1": 0.0010686446534668992,
+          "P-AUPRO": 0.008578507514369282
+        },
+        "recall": {
+          "R@FPR0.001": 0.008674329828492117,
+          "R@FPR0.01": 0.004258777831219751,
+          "R@FPR0.05": 0.0010654554974458552
+        }
+      },
+      "toothbrush": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 5.6263278115031845e-05,
+          "P-AP": 0.0054622034694616906,
+          "P-F1": 0.0011222271178235044,
+          "P-AUPRO": 0.0011763762526411092
+        },
+        "recall": {
+          "R@FPR0.001": 0.004936681691350073,
+          "R@FPR0.01": 0.0035828091204781476,
+          "R@FPR0.05": -0.00018161705219010837
+        }
+      },
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.002142295970676389,
+          "P-AP": -0.005493020081748123,
+          "P-F1": -0.006586813866676811,
+          "P-AUPRO": -0.0016088637173953257
+        },
+        "recall": {
+          "R@FPR0.001": 0.0008079577848051078,
+          "R@FPR0.01": -0.004159663966281535,
+          "R@FPR0.05": -0.007242850053104655
+        }
+      },
+      "wood": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00010702238303883504,
+          "P-AP": 0.0027605543813850053,
+          "P-F1": 0.0015643814433462522,
+          "P-AUPRO": -0.000887806195604135
+        },
+        "recall": {
+          "R@FPR0.001": 0.006119829833081125,
+          "R@FPR0.01": 0.003026245949821371,
+          "R@FPR0.05": 0.00022181907485607777
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -4.4560262480120016e-05,
+          "P-AP": 0.000726226493944715,
+          "P-F1": -7.801052715561418e-05,
+          "P-AUPRO": 0.0008590101426266816
+        },
+        "recall": {
+          "R@FPR0.001": 0.003047093456495953,
+          "R@FPR0.01": -0.0006972162993676978,
+          "R@FPR0.05": -0.00010329130361008687
+        }
+      }
+    }
+  },
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.11.0+cu130",
+    "cuda_available": true,
+    "classes_evaluated": 15,
+    "test_images_evaluated": 1725,
+    "eval_batch": 4,
+    "base_batch": 4,
+    "scale_batches": {
+      "672": 2
+    },
+    "enabled_scales": [
+      [
+        672,
+        768
+      ]
+    ],
+    "forwards_per_test_image": 2,
+    "probe": {
+      "base": {
+        "crop": 392,
+        "resize": 448,
+        "batch": 4,
+        "seconds": 5.201898813247681,
+        "seconds_per_image": 1.3004747033119202,
+        "peak_mib": 1154.81640625,
+        "enabled": true
+      },
+      "672": {
+        "crop": 672,
+        "resize": 768,
+        "batch": 2,
+        "seconds": 0.5981037616729736,
+        "seconds_per_image": 0.2990518808364868,
+        "peak_mib": 1958.419921875,
+        "enabled": true
+      }
+    },
+    "seconds_total": 1472.7217063903809,
+    "gpu_peak_mib_max": 1980.48876953125
+  },
+  "files": {
+    "per_class_dir": "/kaggle/working/per_class",
+    "progress": "/kaggle/working/progress.json",
+    "status": "/kaggle/working/status.json"
+  }
+}

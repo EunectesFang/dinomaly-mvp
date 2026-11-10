@@ -1,0 +1,13 @@
+{
+  "slug": "eunectesqaq/dinomaly-image-conditioned-v10",
+  "fingerprint": "5a440a6370ef0b02",
+  "classes_total": 3,
+  "classes_done": [
+    "bottle",
+    "screw",
+    "wood"
+  ],
+  "current": null,
+  "latest": null,
+  "updated": "2026-11-05 23:38:40"
+}

@@ -1,0 +1,166 @@
+{
+  "class": "wood",
+  "fingerprint": "5a440a6370ef0b02",
+  "n_test": 79,
+  "n_normal": 19,
+  "n_anomaly": 60,
+  "n_gt_positive_pixels": 252458,
+  "n_gt_negative_pixels": 4924886,
+  "scales": [
+    {
+      "name": "hi672",
+      "crop": 672,
+      "resize": 768,
+      "fov": 0.875,
+      "batch": 2
+    }
+  ],
+  "image_metrics": {
+    "I-AUROC": 0.999122807017544,
+    "I-AP": 0.9997267759562843,
+    "I-F1": 0.9917354871935002
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant; never gated or replaced",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "463e7d6013159b1d5a53a8fc358e695d57cc41072c0306dc275c6b7942c20c25"
+  },
+  "calibration": {
+    "n": 48,
+    "min": 0.053975533694028854,
+    "median": 0.05802626349031925,
+    "q95": 0.06263228114694357,
+    "q99": 0.06362166427075863,
+    "max": 0.06377115845680237,
+    "denom95": 0.005,
+    "denom99": 0.00559540078043938,
+    "min_denom_clamped": true,
+    "scores_sha256": "35224ab160afdfc1449410364703add6562917aa3bc183d1b07c2a4270c53186",
+    "class": "wood",
+    "selection": "sorted train/good paths, evenly spaced",
+    "n_selected": 48,
+    "source": "original 448->392 global postprocessed top1% image score",
+    "test_labels_used": false,
+    "seconds": 5.072027683258057
+  },
+  "gate": {
+    "mild": {
+      "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)",
+      "mean": 0.9574065941180564,
+      "min": 0.21519274405890884,
+      "max": 1.0,
+      "frac_below_0.2": 0.0,
+      "frac_above_0.8": 0.9367088607594937
+    },
+    "sharp": {
+      "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)",
+      "mean": 0.9485017818975728,
+      "min": 0.1388505624848408,
+      "max": 1.0,
+      "frac_below_0.2": 0.02531645569620253,
+      "frac_above_0.8": 0.9367088607594937
+    }
+  },
+  "guide": {
+    "radius": 7,
+    "epsilon": 0.0025,
+    "baseline_variant": "stage-7 full grayscale guided filter output"
+  },
+  "variants": {
+    "guide_baseline": {
+      "metrics": {
+        "I-AUROC": 0.999122807017544,
+        "I-AP": 0.9997267759562843,
+        "I-F1": 0.9917354871935002,
+        "P-AUROC": 0.9798067768846008,
+        "P-AP": 0.7521418773562054,
+        "P-F1": 0.6909763559547984,
+        "P-AUPRO": 0.9443402106635163,
+        "P-AUROC-anom": 0.973916365807046,
+        "P-AP-anom": 0.752996022350803
+      },
+      "recall": {
+        "R@FPR0.001": 0.20257230905734816,
+        "R@FPR0.01": 0.5938294686640946,
+        "R@FPR0.05": 0.8895895554904182
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.17922121286392212,
+        "T@FPR0.01": 0.13349059224128723,
+        "T@FPR0.05": 0.09461025148630142
+      }
+    },
+    "guide_gate_mild": {
+      "metrics": {
+        "I-AUROC": 0.999122807017544,
+        "I-AP": 0.9997267759562843,
+        "I-F1": 0.9917354871935002,
+        "P-AUROC": 0.9798504274589741,
+        "P-AP": 0.752157982803425,
+        "P-F1": 0.6909763559547984,
+        "P-AUPRO": 0.9410384378769523,
+        "P-AUROC-anom": 0.9739163658791687,
+        "P-AP-anom": 0.752996022343107
+      },
+      "recall": {
+        "R@FPR0.001": 0.20257230905734816,
+        "R@FPR0.01": 0.5938294686640946,
+        "R@FPR0.05": 0.8895895554904182
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.17922121286392212,
+        "T@FPR0.01": 0.13349059224128723,
+        "T@FPR0.05": 0.09461025148630142
+      }
+    },
+    "guide_gate_sharp": {
+      "metrics": {
+        "I-AUROC": 0.999122807017544,
+        "I-AP": 0.9997267759562843,
+        "I-F1": 0.9917354871935002,
+        "P-AUROC": 0.9798832130771333,
+        "P-AP": 0.7521740168911336,
+        "P-F1": 0.6909763559547984,
+        "P-AUPRO": 0.937955563856809,
+        "P-AUROC-anom": 0.9739163662085658,
+        "P-AP-anom": 0.7529960219477676
+      },
+      "recall": {
+        "R@FPR0.001": 0.20257230905734816,
+        "R@FPR0.01": 0.5938294686640946,
+        "R@FPR0.05": 0.8895895554904182
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.17922121286392212,
+        "T@FPR0.01": 0.13349059224128723,
+        "T@FPR0.05": 0.09461024403572083
+      }
+    },
+    "guide_gate_mild_medsub": {
+      "metrics": {
+        "I-AUROC": 0.999122807017544,
+        "I-AP": 0.9997267759562843,
+        "I-F1": 0.9917354871935002,
+        "P-AUROC": 0.9728673032894783,
+        "P-AP": 0.7370016418306319,
+        "P-F1": 0.6874411460572398,
+        "P-AUPRO": 0.9364073042864026,
+        "P-AUROC-anom": 0.9677585026304688,
+        "P-AP-anom": 0.7390402573840736
+      },
+      "recall": {
+        "R@FPR0.001": 0.19613163377670742,
+        "R@FPR0.01": 0.5770068684692107,
+        "R@FPR0.05": 0.8727669552955343
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.11570251733064651,
+        "T@FPR0.01": 0.07072536647319794,
+        "T@FPR0.05": 0.030340123921632767
+      }
+    }
+  },
+  "seconds": 45.38228988647461,
+  "gpu_peak_mib": 1961.630859375
+}

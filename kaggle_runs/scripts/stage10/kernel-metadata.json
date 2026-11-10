@@ -1,0 +1,18 @@
+{
+  "id": "eunectesqaq/dinomaly-image-conditioned-v10",
+  "title": "dinomaly image conditioned v10",
+  "code_file": "dinomaly_image_conditioned_v10.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "eunectesqaq/dinomaly-base-10k"
+  ]
+}

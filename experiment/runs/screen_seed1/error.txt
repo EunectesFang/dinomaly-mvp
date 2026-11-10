@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "E:\dinomaly-mvp\experiment\screen_mvp.py", line 515, in <module>
+    main()
+  File "E:\dinomaly-mvp\experiment\screen_mvp.py", line 446, in main
+    torch.cuda.reset_peak_memory_stats(0)
+  File "D:\MINICONDA\envs\py312\Lib\site-packages\torch\cuda\memory.py", line 370, in reset_peak_memory_stats
+    return torch._C._cuda_resetPeakMemoryStats(device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Invalid device argument 

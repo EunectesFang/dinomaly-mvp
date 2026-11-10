@@ -1,0 +1,14 @@
+{
+  "slug": "eunectesqaq/dinomaly-image-conditioned-v10",
+  "fingerprint": "5a440a6370ef0b02",
+  "status": "complete",
+  "updated": "2026-11-05 23:38:40",
+  "classes_done": [
+    "bottle",
+    "screw",
+    "wood"
+  ],
+  "classes_total": 3,
+  "report": "E:/dinomaly-mvp/kaggle_runs/stage10-local\\image_conditioned_report.json",
+  "markdown": null
+}

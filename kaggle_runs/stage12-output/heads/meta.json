@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b9ffe02b625cd14f",
+  "classes": [
+    "leather",
+    "capsule",
+    "grid",
+    "screw"
+  ],
+  "epochs": 10,
+  "train_batch": 2,
+  "lr": 0.0003,
+  "updates_per_head": 1920,
+  "config": {
+    "source": "MVTec train/good only",
+    "classes": [
+      "leather",
+      "capsule",
+      "grid",
+      "screw"
+    ],
+    "train_per_class": 96,
+    "calib_per_class": 16,
+    "seed": 1,
+    "epochs": 10,
+    "lr": 0.0003,
+    "weight_decay": 0.0,
+    "batch": 2,
+    "optimizer": "AdamW",
+    "schedule": "constant lr",
+    "head": "Conv3x3(1536->256)-GroupNorm-GELU-Conv3x3(256->256)-GroupNorm-GELU-Conv1x1(256->1536, groups=2)",
+    "head_parameters": 4328448,
+    "loss": "per-group mean cosine distance at masked positions; equal group weights; clean target detached",
+    "c1": "clean input, same head/loss positions, test error at all positions",
+    "m1": "masked input at token entrance, same head/loss positions, test only at each position's masked pass",
+    "same_initialization": true,
+    "same_updates_per_head": true,
+    "calibration_disjoint_from_training": true,
+    "test_images_or_labels_used_for_fit": false,
+    "external_data": false
+  }
+}

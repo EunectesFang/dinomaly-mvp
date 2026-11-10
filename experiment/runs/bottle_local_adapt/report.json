@@ -1,0 +1,1011 @@
+{
+  "development_stage": true,
+  "development_stage_note": "The official bottle test set has been inspected in earlier runs. Scores below are development-stage results, not a locked confirmation.",
+  "no_independent_normal_validation_set": true,
+  "no_independent_normal_validation_set_note": "The 5000-step model has already seen all 209 normal training images. This run uses all 209 again and does not hold any of them out. There is no independent normal validation set, and the checkpoint is not chosen on validation or test.",
+  "class_name": "bottle",
+  "hypothesis": "匹配局部视野的正常重建训练，能降低局部误报，并保留局部与全局的互补。",
+  "device": "cuda:0",
+  "seed": 1,
+  "weights": "E:\\dinomaly-mvp\\experiment\\runs\\bottle_sep_b6\\dinomaly_bottle.pt",
+  "weights_unchanged": {
+    "sha256": "d80b5b6c4c69beaa0873368172bd7c82adb9bdb6207b5171d28c4a96408233bc",
+    "bytes": 245736618,
+    "mtime_ns": 1793708005976624200
+  },
+  "checkpoint_keys_loaded": [
+    "bottleneck",
+    "decoder"
+  ],
+  "base_checkpoint_step": 5000,
+  "saved_checkpoints": {
+    "local_adapt": "E:\\dinomaly-mvp\\experiment\\runs\\bottle_local_adapt\\local_adapt_step1000.pt",
+    "full_extra": "E:\\dinomaly-mvp\\experiment\\runs\\bottle_local_adapt\\full_extra_step1000.pt",
+    "saved_steps": [
+      1000
+    ],
+    "best_checkpoint_selection": false
+  },
+  "hyperparameters_fixed_before_test": {
+    "steps": 1000,
+    "lr": 0.0002,
+    "p": 0.9,
+    "factor": 0.1,
+    "fusion": "0.5*global+0.5*local",
+    "window": {
+      "crop_size": 392,
+      "window": 196,
+      "stride": 98,
+      "starts": [
+        0,
+        98,
+        196
+      ],
+      "n_windows": 9,
+      "covers_full_crop": true,
+      "no_remainder_window": true,
+      "hann": "scipy.signal.windows.hann(196, sym=True), endpoints are 0",
+      "overlap_weight": "w = 0.1 + 0.9 * outer(hann(196), hann(196))",
+      "weight_min": 0.1,
+      "weight_max": 0.9998832062635877,
+      "weight_corner": 0.1,
+      "rgb_zoom": "bilinear 196 to 392, align_corners=False, from RGB in [0, 1]",
+      "rgb_then": "ImageNet normalize after zoom; normalized tensors are not zoomed",
+      "map_paste": "28x28 two-group mean distance, bilinear to 196, align_corners=True",
+      "every_test_image_runs_all_9_windows": true,
+      "no_high_score_crop": true
+    },
+    "batch_candidates": [
+      6,
+      4
+    ],
+    "grad_clip_max_norm": 0.1
+  },
+  "train_good": 209,
+  "test_images": 83,
+  "test_anomaly": 63,
+  "test_good": 20,
+  "training": {
+    "local_adapt": {
+      "kind": "local_adapt",
+      "steps": 1000,
+      "saved_step": 1000,
+      "checkpoint": "E:\\dinomaly-mvp\\experiment\\runs\\bottle_local_adapt\\local_adapt_step1000.pt",
+      "batch_size": 6,
+      "lr": 0.0002,
+      "lr_schedule": "constant",
+      "p": 0.9,
+      "factor": 0.1,
+      "optimizer": "StableAdamW betas=(0.9, 0.999) weight_decay=1e-4 amsgrad=True eps=1e-8",
+      "grad_clip_max_norm": 0.1,
+      "encoder_frozen": true,
+      "model_train": true,
+      "bottleneck_dropout_p": 0.2,
+      "dropout_left_on": true,
+      "sampling_pool": 209,
+      "no_held_out_train_images": true,
+      "drop_last": true,
+      "images_dropped_per_epoch": 5,
+      "seconds": 402.0848788000003,
+      "step_seconds_mean": 0.3994335646000582,
+      "step_seconds_mean_every_100": [
+        0.3631461500000296,
+        0.3757296470000074,
+        0.4020152830002553,
+        0.4162633160000769,
+        0.3977731569999742,
+        0.40823664500014273,
+        0.4107214240001122,
+        0.40407895000011196,
+        0.411412633999862,
+        0.4049584400000094
+      ],
+      "loss_every_100": [
+        0.05634981393814087,
+        0.05133802816271782,
+        0.04741908609867096,
+        0.04714163392782211,
+        0.046307362616062164,
+        0.04378229379653931,
+        0.042811837047338486,
+        0.0454719178378582,
+        0.041736893355846405,
+        0.044652827084064484
+      ],
+      "loss_mean_every_100": [
+        0.07158498659729957,
+        0.053696629852056504,
+        0.049843903556466104,
+        0.047058811374008656,
+        0.04616185132414102,
+        0.04445207331329584,
+        0.04383351840078831,
+        0.04307747446000576,
+        0.04237217303365469,
+        0.04848992470651865
+      ],
+      "peak_allocated_mib": 4587.5,
+      "seed": 1
+    },
+    "full_extra": {
+      "kind": "full_extra",
+      "steps": 1000,
+      "saved_step": 1000,
+      "checkpoint": "E:\\dinomaly-mvp\\experiment\\runs\\bottle_local_adapt\\full_extra_step1000.pt",
+      "batch_size": 6,
+      "lr": 0.0002,
+      "lr_schedule": "constant",
+      "p": 0.9,
+      "factor": 0.1,
+      "optimizer": "StableAdamW betas=(0.9, 0.999) weight_decay=1e-4 amsgrad=True eps=1e-8",
+      "grad_clip_max_norm": 0.1,
+      "encoder_frozen": true,
+      "model_train": true,
+      "bottleneck_dropout_p": 0.2,
+      "dropout_left_on": true,
+      "sampling_pool": 209,
+      "no_held_out_train_images": true,
+      "drop_last": true,
+      "images_dropped_per_epoch": 5,
+      "seconds": 421.2776377000009,
+      "step_seconds_mean": 0.4177898632000906,
+      "step_seconds_mean_every_100": [
+        0.40692761300018904,
+        0.4181817050001337,
+        0.40723908200008735,
+        0.40879648600006474,
+        0.39432695700019393,
+        0.4301026980000097,
+        0.4216422679999596,
+        0.43174788100004663,
+        0.4401155890000518,
+        0.41881835300016973
+      ],
+      "loss_every_100": [
+        0.0204835943877697,
+        0.02031935378909111,
+        0.02092558704316616,
+        0.020103007555007935,
+        0.02042534574866295,
+        0.020214354619383812,
+        0.020372336730360985,
+        0.02027687430381775,
+        0.019743185490369797,
+        0.020082812756299973
+      ],
+      "loss_mean_every_100": [
+        0.021006262004375456,
+        0.020541955418884754,
+        0.020550347194075586,
+        0.020416617430746554,
+        0.020288620516657828,
+        0.020230031721293926,
+        0.020133968517184256,
+        0.020040762946009635,
+        0.02002600271254778,
+        0.019907836336642504
+      ],
+      "peak_allocated_mib": 4590.4,
+      "seed": 1
+    },
+    "batch_size": 6,
+    "oom_restarted_both_from_the_5000_step_copy": false
+  },
+  "evaluation_batch_size": {
+    "base": 6,
+    "adapted": 6,
+    "extra": 6
+  },
+  "forwards": {
+    "base_full": 83,
+    "base_windows": 747,
+    "adapted_full": 0,
+    "adapted_windows": 747,
+    "extra_full": 83,
+    "extra_windows": 747,
+    "fuse_adapted_global_source": "original 5000-step checkpoint, not the adapted weights"
+  },
+  "window": {
+    "crop_size": 392,
+    "window": 196,
+    "stride": 98,
+    "starts": [
+      0,
+      98,
+      196
+    ],
+    "n_windows": 9,
+    "covers_full_crop": true,
+    "no_remainder_window": true,
+    "hann": "scipy.signal.windows.hann(196, sym=True), endpoints are 0",
+    "overlap_weight": "w = 0.1 + 0.9 * outer(hann(196), hann(196))",
+    "weight_min": 0.1,
+    "weight_max": 0.9998832062635877,
+    "weight_corner": 0.1,
+    "rgb_zoom": "bilinear 196 to 392, align_corners=False, from RGB in [0, 1]",
+    "rgb_then": "ImageNet normalize after zoom; normalized tensors are not zoomed",
+    "map_paste": "28x28 two-group mean distance, bilinear to 196, align_corners=True",
+    "every_test_image_runs_all_9_windows": true,
+    "no_high_score_crop": true
+  },
+  "postprocess": {
+    "distance": "two-group mean cosine distance",
+    "to_392": "bilinear align_corners=True",
+    "to_256": "bilinear align_corners=False",
+    "gaussian": "5x5 sigma=4",
+    "fusion_before_256": "0.5*global_392+0.5*local_392",
+    "local_rgb": "denormalize to RGB, crop 196, bilinear zoom to 392 align_corners=False, then ImageNet normalize",
+    "max_abs_diff_average_first_vs_official_global": 1.1920928955078125e-07,
+    "fusion_weight_sum_min": 0.10000000149011612
+  },
+  "reference_global_base_pixel_ap": 0.8842199527833942,
+  "global_base_pixel_ap": 0.8842199527833942,
+  "global_base_pixel_ap_abs_diff_vs_0.8842199527833942": 0.0,
+  "global_base_pixel_ap_in_0.86_0.91": true,
+  "image_auroc_global_base_top1pct_mean": 1.0,
+  "image_auroc_note": "Computed once from global_base. Score is the mean of the highest 1% pixels on the final 256 gaussian map.",
+  "region_definition": {
+    "structure": "9x9 all ones, one binary erosion and one binary dilation, origin centered, border_value 0",
+    "interior": "eroded defect mask",
+    "inner_edge": "original defect mask minus erosion",
+    "outer_neighborhood": "dilation minus original defect mask",
+    "far_normal": "outside dilation and gt==0",
+    "average": "micro-average over pooled pixels; good images have empty defect masks and contribute to far_normal",
+    "empty_interior_images": 22,
+    "empty_interior_good_images": 20,
+    "empty_interior_anomaly_images": 2
+  },
+  "methods": {
+    "global_base": {
+      "pixel_auroc": 0.9912778483567047,
+      "pixel_ap": 0.8842199527833942,
+      "pixel_f1_max": 0.8349934113679105,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2086373003848796,
+        "0.01": 0.7460316937525291,
+        "0.05": 0.9782646541259281
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.2086254434584584,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7460312232395758,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9782646541259281,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.23051176876094784,
+        "inner_edge": 0.1963864006303392,
+        "outer_neighborhood": 0.14747292109030188,
+        "far_normal": 0.03226812744383287
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "local_unadapted": {
+      "pixel_auroc": 0.9765165628940419,
+      "pixel_ap": 0.854673010025564,
+      "pixel_f1_max": 0.7905296262695682,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2958350193380824,
+        "0.01": 0.7059082311536037,
+        "0.05": 0.8998089717409921
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.2958350193380824,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7059082311536037,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.8998089717409921,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.2728822612724333,
+        "inner_edge": 0.25609286411913645,
+        "outer_neighborhood": 0.20281755042041197,
+        "far_normal": 0.11600478554932105
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "fuse_unadapted": {
+      "pixel_auroc": 0.9894768855052491,
+      "pixel_ap": 0.8915238527008814,
+      "pixel_f1_max": 0.8314735609273707,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2823504474578185,
+        "0.01": 0.7515381068440815,
+        "0.05": 0.9647256438969765
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.2823336501453885,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7515362247922686,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9647256438969765,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.25169701509142217,
+        "inner_edge": 0.22623963249369589,
+        "outer_neighborhood": 0.17514523560022532,
+        "far_normal": 0.07413645649458347
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "local_adapted": {
+      "pixel_auroc": 0.9922312726144925,
+      "pixel_ap": 0.909301523240379,
+      "pixel_f1_max": 0.8513099599588896,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.3169461827284105,
+        "0.01": 0.798252514891735,
+        "0.05": 0.9785575484393085
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.31694223041960345,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7982511033528753,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9785563721569255,
+          "realized_fpr": 0.04999980057514129
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.16923427113727396,
+        "inner_edge": 0.15047366395622266,
+        "outer_neighborhood": 0.10809835231065068,
+        "far_normal": 0.03890812757512833
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "fuse_adapted": {
+      "pixel_auroc": 0.9922806208430077,
+      "pixel_ap": 0.9015297254222007,
+      "pixel_f1_max": 0.847171449382433,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.27301340020890774,
+        "0.01": 0.7836675543677717,
+        "0.05": 0.980483122700368
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.27301043597730246,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7836675543677717,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.980483122700368,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.19987301996067694,
+        "inner_edge": 0.17343003231084622,
+        "outer_neighborhood": 0.12778563676094978,
+        "far_normal": 0.03558812750860915
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "global_extra": {
+      "pixel_auroc": 0.9912653214487459,
+      "pixel_ap": 0.883792933248293,
+      "pixel_f1_max": 0.8339102881811183,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2019191282336003,
+        "0.01": 0.7421269067537429,
+        "0.05": 0.9785234362502
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.20186181975589787,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7421259657278365,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9785234362502,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.23528715728626665,
+        "inner_edge": 0.20003645634197167,
+        "outer_neighborhood": 0.15000484083728852,
+        "far_normal": 0.03276913172978773
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "local_extra": {
+      "pixel_auroc": 0.976428608421454,
+      "pixel_ap": 0.8527001146794886,
+      "pixel_f1_max": 0.7895780468855551,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.28975994429126634,
+        "0.01": 0.6993050523680917,
+        "0.05": 0.8982468687362963
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.289706588122371,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.6993022292903723,
+          "realized_fpr": 0.009999760690169552
+        },
+        "0.05": {
+          "recall": 0.8982468687362963,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.2781613668805704,
+        "inner_edge": 0.26151565950605565,
+        "outer_neighborhood": 0.20755167013412856,
+        "far_normal": 0.11723641583347337
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    },
+    "fuse_extra": {
+      "pixel_auroc": 0.9893962499950681,
+      "pixel_ap": 0.8902967948028866,
+      "pixel_f1_max": 0.8291889509060545,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2800818692538605,
+        "0.01": 0.7464330413016271,
+        "0.05": 0.9636740474465262
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.280079893099457,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7464311592498142,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9636740474465262,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.25672426208262195,
+        "inner_edge": 0.23077605793632747,
+        "outer_neighborhood": 0.17877825546694381,
+        "far_normal": 0.0750027737872963
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "inner_edge": 123432,
+        "outer_neighborhood": 132814,
+        "far_normal": 4881606
+      }
+    }
+  },
+  "splits": {
+    "by_defect_type": {
+      "broken_large": {
+        "n_defect_images": 20,
+        "methods": {
+          "global_base": {
+            "pixel_ap": 0.9322309538148253,
+            "pixel_auroc": 0.9949211999230168,
+            "n_images": 40,
+            "positive_pixels": 207755,
+            "negative_pixels": 2413685,
+            "recall_at_normal_fpr_0.001": 0.9972178768260692,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9972178768260692,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_unadapted": {
+            "pixel_ap": 0.9436817002158241,
+            "pixel_auroc": 0.9955086662136889,
+            "n_images": 40,
+            "positive_pixels": 207755,
+            "negative_pixels": 2413685,
+            "recall_at_normal_fpr_0.001": 0.9919039252966234,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9919039252966234,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_adapted": {
+            "pixel_ap": 0.9443377150157555,
+            "pixel_auroc": 0.9956919761820562,
+            "n_images": 40,
+            "positive_pixels": 207755,
+            "negative_pixels": 2413685,
+            "recall_at_normal_fpr_0.001": 0.9966787802940964,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9966787802940964,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_extra": {
+            "pixel_ap": 0.9422546952103132,
+            "pixel_auroc": 0.9954176903964568,
+            "n_images": 40,
+            "positive_pixels": 207755,
+            "negative_pixels": 2413685,
+            "recall_at_normal_fpr_0.001": 0.9915718033260331,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9915718033260331,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          }
+        }
+      },
+      "broken_small": {
+        "n_defect_images": 22,
+        "methods": {
+          "global_base": {
+            "pixel_ap": 0.9253144719875848,
+            "pixel_auroc": 0.9983467694316718,
+            "n_images": 42,
+            "positive_pixels": 61368,
+            "negative_pixels": 2691144,
+            "recall_at_normal_fpr_0.001": 0.9988919306478947,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9988919306478947,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_unadapted": {
+            "pixel_ap": 0.9353096581148187,
+            "pixel_auroc": 0.9985258352331747,
+            "n_images": 42,
+            "positive_pixels": 61368,
+            "negative_pixels": 2691144,
+            "recall_at_normal_fpr_0.001": 0.9943129970016947,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9943129970016947,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_adapted": {
+            "pixel_ap": 0.9396665047378293,
+            "pixel_auroc": 0.9986157338663166,
+            "n_images": 42,
+            "positive_pixels": 61368,
+            "negative_pixels": 2691144,
+            "recall_at_normal_fpr_0.001": 0.9983053056967801,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9983053056967801,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_extra": {
+            "pixel_ap": 0.935922983498317,
+            "pixel_auroc": 0.9985539501891896,
+            "n_images": 42,
+            "positive_pixels": 61368,
+            "negative_pixels": 2691144,
+            "recall_at_normal_fpr_0.001": 0.9944107678268804,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9944107678268804,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          }
+        }
+      },
+      "contamination": {
+        "n_defect_images": 21,
+        "methods": {
+          "global_base": {
+            "pixel_ap": 0.8332808818064685,
+            "pixel_auroc": 0.9914924796814297,
+            "n_images": 41,
+            "positive_pixels": 155945,
+            "negative_pixels": 2531031,
+            "recall_at_normal_fpr_0.001": 0.9558864984449646,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9558818814325564,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_unadapted": {
+            "pixel_ap": 0.8275345394476196,
+            "pixel_auroc": 0.9863684881650724,
+            "n_images": 41,
+            "positive_pixels": 155945,
+            "negative_pixels": 2531031,
+            "recall_at_normal_fpr_0.001": 0.8576916220462343,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.857687005033826,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_adapted": {
+            "pixel_ap": 0.8558204009873319,
+            "pixel_auroc": 0.9922496198673818,
+            "n_images": 41,
+            "positive_pixels": 155945,
+            "negative_pixels": 2531031,
+            "recall_at_normal_fpr_0.001": 0.9530488313187342,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.9530026611946519,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          },
+          "fuse_extra": {
+            "pixel_ap": 0.8264466314764811,
+            "pixel_auroc": 0.9863419341741029,
+            "n_images": 41,
+            "positive_pixels": 155945,
+            "negative_pixels": 2531031,
+            "recall_at_normal_fpr_0.001": 0.8488102856776428,
+            "recall_at_normal_fpr_0.001_discrete": {
+              "recall": 0.8488056686652345,
+              "realized_fpr": 0.00099945068359375
+            },
+            "recall_normal_pixels": "all pixels of all normal test images",
+            "recall_positive_pixels": "gt==1 pixels of this defect type only",
+            "pixel_ap_images": "all normal test images plus this defect type"
+          }
+        }
+      }
+    },
+    "by_area": {
+      "small": {
+        "rule": "anomaly test images only; small means defect_pixels_256 < median; large means defect_pixels_256 >= median",
+        "median_used_only_to_describe_groups": true,
+        "median_defect_pixels_256": 5169.0,
+        "n_defect_images": 31,
+        "methods": {
+          "global_base": {
+            "pixel_ap": 0.8346639323690922,
+            "pixel_auroc": 0.9966072348559735,
+            "n_images": 51,
+            "positive_pixels": 76478,
+            "negative_pixels": 3265858,
+            "pixel_ap_images": "all normal test images plus this area group"
+          },
+          "fuse_unadapted": {
+            "pixel_ap": 0.8676903473473306,
+            "pixel_auroc": 0.996807708818557,
+            "n_images": 51,
+            "positive_pixels": 76478,
+            "negative_pixels": 3265858,
+            "pixel_ap_images": "all normal test images plus this area group"
+          },
+          "fuse_adapted": {
+            "pixel_ap": 0.8635995953041921,
+            "pixel_auroc": 0.9970475895264379,
+            "n_images": 51,
+            "positive_pixels": 76478,
+            "negative_pixels": 3265858,
+            "pixel_ap_images": "all normal test images plus this area group"
+          },
+          "fuse_extra": {
+            "pixel_ap": 0.867035992914069,
+            "pixel_auroc": 0.9968177168945818,
+            "n_images": 51,
+            "positive_pixels": 76478,
+            "negative_pixels": 3265858,
+            "pixel_ap_images": "all normal test images plus this area group"
+          }
+        }
+      },
+      "large": {
+        "rule": "anomaly test images only; small means defect_pixels_256 < median; large means defect_pixels_256 >= median",
+        "median_used_only_to_describe_groups": true,
+        "median_defect_pixels_256": 5169.0,
+        "n_defect_images": 32,
+        "methods": {
+          "global_base": {
+            "pixel_ap": 0.9108096457908825,
+            "pixel_auroc": 0.9906599016397064,
+            "n_images": 52,
+            "positive_pixels": 348590,
+            "negative_pixels": 3059282,
+            "pixel_ap_images": "all normal test images plus this area group"
+          },
+          "fuse_unadapted": {
+            "pixel_ap": 0.9099286614203678,
+            "pixel_auroc": 0.9880999009262947,
+            "n_images": 52,
+            "positive_pixels": 348590,
+            "negative_pixels": 3059282,
+            "pixel_ap_images": "all normal test images plus this area group"
+          },
+          "fuse_adapted": {
+            "pixel_ap": 0.9226600411065284,
+            "pixel_auroc": 0.9916461872020343,
+            "n_images": 52,
+            "positive_pixels": 348590,
+            "negative_pixels": 3059282,
+            "pixel_ap_images": "all normal test images plus this area group"
+          },
+          "fuse_extra": {
+            "pixel_ap": 0.9085123406185043,
+            "pixel_auroc": 0.9879944071332885,
+            "n_images": 52,
+            "positive_pixels": 348590,
+            "negative_pixels": 3059282,
+            "pixel_ap_images": "all normal test images plus this area group"
+          }
+        }
+      }
+    },
+    "area_counts": {
+      "n_anomaly": 63,
+      "n_small": 31,
+      "n_large": 32,
+      "median_defect_pixels_256": 5169.0,
+      "min_defect_pixels_256": 611,
+      "max_defect_pixels_256": 23454,
+      "median_is_not_a_score_threshold": true
+    }
+  },
+  "fuse_adapted_minus_global_base_pixel_ap": {
+    "by_defect_type": {
+      "broken_large": {
+        "fuse_adapted_pixel_ap": 0.9443377150157555,
+        "global_base_pixel_ap": 0.9322309538148253,
+        "fuse_adapted_minus_global_base": 0.012106761200930127
+      },
+      "broken_small": {
+        "fuse_adapted_pixel_ap": 0.9396665047378293,
+        "global_base_pixel_ap": 0.9253144719875848,
+        "fuse_adapted_minus_global_base": 0.014352032750244548
+      },
+      "contamination": {
+        "fuse_adapted_pixel_ap": 0.8558204009873319,
+        "global_base_pixel_ap": 0.8332808818064685,
+        "fuse_adapted_minus_global_base": 0.022539519180863388
+      }
+    },
+    "by_area": {
+      "small": {
+        "fuse_adapted_pixel_ap": 0.8635995953041921,
+        "global_base_pixel_ap": 0.8346639323690922,
+        "fuse_adapted_minus_global_base": 0.02893566293509986
+      },
+      "large": {
+        "fuse_adapted_pixel_ap": 0.9226600411065284,
+        "global_base_pixel_ap": 0.9108096457908825,
+        "fuse_adapted_minus_global_base": 0.011850395315645912
+      }
+    }
+  },
+  "cases": {
+    "global_missed_adapted_local_recovered": {
+      "rule": "anomaly images with nonempty interior, local_adapted interior mean > global_base interior mean, and global_base interior mean below the median of those positive-gap interiors; largest gap first",
+      "images": [
+        {
+          "path": "E:\\dinomaly-mvp\\data\\mvtec_anomaly_detection\\bottle\\test\\contamination\\002.png",
+          "defect_type": "contamination",
+          "label": 1,
+          "defect_pixels_256": 1652,
+          "interior_mean": {
+            "global_base": 0.1989314233773298,
+            "local_unadapted": 0.23683328464535472,
+            "local_adapted": 0.18928302154403936
+          },
+          "far_normal_mean": {
+            "global_base": 0.03366943254476571,
+            "local_unadapted": 0.11832448878232266,
+            "local_adapted": 0.04005718691305619
+          }
+        },
+        {
+          "path": "E:\\dinomaly-mvp\\data\\mvtec_anomaly_detection\\bottle\\test\\contamination\\001.png",
+          "defect_type": "contamination",
+          "label": 1,
+          "defect_pixels_256": 6352,
+          "interior_mean": {
+            "global_base": 0.15967268005289942,
+            "local_unadapted": 0.22450509518988734,
+            "local_adapted": 0.13346362772095202
+          },
+          "far_normal_mean": {
+            "global_base": 0.03724753264118217,
+            "local_unadapted": 0.1201212300950616,
+            "local_adapted": 0.0411195820373133
+          }
+        },
+        {
+          "path": "E:\\dinomaly-mvp\\data\\mvtec_anomaly_detection\\bottle\\test\\contamination\\009.png",
+          "defect_type": "contamination",
+          "label": 1,
+          "defect_pixels_256": 12006,
+          "interior_mean": {
+            "global_base": 0.16237985131397456,
+            "local_unadapted": 0.20161076765356026,
+            "local_adapted": 0.134281117200553
+          },
+          "far_normal_mean": {
+            "global_base": 0.036153340158313375,
+            "local_unadapted": 0.12776163273999055,
+            "local_adapted": 0.04347473260965913
+          }
+        }
+      ]
+    },
+    "global_far_low_adapted_local_raises_far_normal": {
+      "rule": "test images whose global_base far-normal mean is below the median far-normal mean, and whose local_adapted far-normal mean is higher than global_base; largest increase first",
+      "images": [
+        {
+          "path": "E:\\dinomaly-mvp\\data\\mvtec_anomaly_detection\\bottle\\test\\good\\003.png",
+          "defect_type": "good",
+          "label": 0,
+          "defect_pixels_256": 0,
+          "interior_mean": {
+            "global_base": null,
+            "local_unadapted": null,
+            "local_adapted": null
+          },
+          "far_normal_mean": {
+            "global_base": 0.02054548906052922,
+            "local_unadapted": 0.1115041423825005,
+            "local_adapted": 0.033570803723574016
+          }
+        },
+        {
+          "path": "E:\\dinomaly-mvp\\data\\mvtec_anomaly_detection\\bottle\\test\\good\\008.png",
+          "defect_type": "good",
+          "label": 0,
+          "defect_pixels_256": 0,
+          "interior_mean": {
+            "global_base": null,
+            "local_unadapted": null,
+            "local_adapted": null
+          },
+          "far_normal_mean": {
+            "global_base": 0.02062552800266282,
+            "local_unadapted": 0.11096551662365073,
+            "local_adapted": 0.03340695805874816
+          }
+        },
+        {
+          "path": "E:\\dinomaly-mvp\\data\\mvtec_anomaly_detection\\bottle\\test\\good\\017.png",
+          "defect_type": "good",
+          "label": 0,
+          "defect_pixels_256": 0,
+          "interior_mean": {
+            "global_base": null,
+            "local_unadapted": null,
+            "local_adapted": null
+          },
+          "far_normal_mean": {
+            "global_base": 0.02169672345166518,
+            "local_unadapted": 0.11274318537167005,
+            "local_adapted": 0.034108381045964364
+          }
+        }
+      ]
+    }
+  },
+  "verdict_checks": {
+    "local_far_normal_mean_decreased_vs_local_unadapted": true,
+    "local_outer_neighborhood_mean_decreased_vs_local_unadapted": true,
+    "fuse_adapted_pixel_ap_ge_fuse_unadapted": true,
+    "fuse_adapted_pixel_ap_ge_global_base": true,
+    "fuse_adapted_recall_0.001_ge_fuse_unadapted": false,
+    "fuse_adapted_recall_0.001_ge_global_base": true,
+    "fuse_adapted_holds_or_improves_ap_and_recall_vs_both": false,
+    "fuse_extra_pixel_ap_ge_fuse_adapted": false,
+    "fuse_extra_recall_0.001_ge_fuse_adapted": true,
+    "fuse_extra_reaches_or_exceeds_fuse_adapted_on_ap_and_recall_0.001": false,
+    "comparison_rule": "Decreased means the adapted local micro-mean is strictly lower. Held or improved means fuse_adapted is greater than or equal to both baselines on pixel AP and on recall at normal FPR 0.001. fuse_extra reaches fuse_adapted only when both of those two metrics are greater than or equal."
+  },
+  "verdict": "适配后的局部图相对未适配局部图，远处正常均分从 0.116005 到 0.038908，降低；外侧邻域均分从 0.202818 到 0.108098，降低。fuse_adapted 的像素 AP=0.901530、召回@0.001=0.273013，相对 fuse_unadapted（AP=0.891524，召回=0.282350）和 global_base（AP=0.884220，召回=0.208637）没有同时保持或提高。fuse_extra 没有在像素 AP 和 0.001 召回上同时达到 fuse_adapted。像素 AP 低于 fuse_adapted，0.001 召回 达到或超过 fuse_adapted。",
+  "gpu_memory_used_before_load_mib": 0,
+  "peak_allocated_mib": 4590.4,
+  "torch": "2.6.0+cu124",
+  "gpu_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+}

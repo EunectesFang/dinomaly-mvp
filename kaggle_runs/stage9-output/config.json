@@ -1,0 +1,189 @@
+{
+  "slug": "eunectesqaq/dinomaly-combined-diagnostic-v9",
+  "stage": 6,
+  "script": "script.py",
+  "code_sha256": "8aef56021cab3f8459674f2019bad97d48103814431abfdc84f44595d849e32b",
+  "baseline": {
+    "resize": 448,
+    "crop": 392,
+    "fov": 0.875
+  },
+  "archived_baseline": {
+    "source": "stage 4 eunectesqaq/dinomaly-context-res-v4",
+    "variant": "fuse672",
+    "definition": "0.5 * base_global + 0.5 * hi672",
+    "stage4_pixel_ap_percent": 72.47,
+    "stage4_mean": {
+      "metrics": {
+        "I-AUROC": 0.9962293697223761,
+        "I-AP": 0.9980926073135531,
+        "I-F1": 0.9914942848565,
+        "P-AUROC": 0.9839427484278644,
+        "P-AP": 0.7247128126906136,
+        "P-F1": 0.7136586490415545,
+        "P-AUPRO": 0.952742818770344
+      },
+      "recall": {
+        "R@FPR0.001": 0.2230486114836818,
+        "R@FPR0.01": 0.7045086752029253,
+        "R@FPR0.05": 0.9431508867430506
+      }
+    }
+  },
+  "normal_reference": {
+    "source": "train/good only",
+    "memory_per_class": 40,
+    "calibration_per_class": 16,
+    "total_per_class": 56,
+    "selection": "sorted paths, evenly spaced indices, first 40 memory then 16 calibration, disjoint",
+    "test_images_used_for_fit": false,
+    "feature_groups": "ViTill encoder groups en[0], en[1] at 392",
+    "group_dim": 768,
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "top_k": 3,
+    "local_radius": 1,
+    "matching": "batched GEMM; free all patches; spatial +/-radius position candidates across all memory images, no padding candidates"
+  },
+  "calibration": {
+    "source": "16 disjoint train/good calibration normals per class",
+    "per_branch": [
+      "ref_free",
+      "ref_spatial",
+      "base_global",
+      "base_fuse672"
+    ],
+    "loc": "median",
+    "scale": "max(q95 - median, 0.01)",
+    "formula": "(x - median) / scale",
+    "positive_scale_floor": 0.01,
+    "used_for": "fusion variants only; standalone reference maps stay raw"
+  },
+  "gate": {
+    "source": "calibration normals only",
+    "rel_extra": "median((d_spatial - d_free) / max(d_free, 0.02))",
+    "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals",
+    "g_min": 0.15,
+    "g_max": 0.5,
+    "gate_k": 1.0,
+    "gate_r0": 0.25,
+    "distance_floor": 0.02,
+    "interpretation": "higher relative extra distance lowers the spatial weight; bounded fixed formula, no hard-coded class weights, no test labels"
+  },
+  "fusion_weights": {
+    "fixed": {
+      "ref_free": 0.5,
+      "ref_spatial": 0.5
+    },
+    "adaptive": {
+      "ref_free": "1 - g",
+      "ref_spatial": "g"
+    },
+    "ref_plus_base": {
+      "cal_base_fuse672": 0.5,
+      "ref_adaptive": 0.5
+    }
+  },
+  "conservative_fusion": {
+    "formula": "score = calib(base_fuse672) + w * clamp(calib(ref_spatial) - calib_q99, 0, cap) * agree; agree = 3x3 max-pool of [calib(base)>base_thr]; nothing is subtracted from base; pose alignment intentionally not applied in this run",
+    "reference_tail_quantile": 0.99,
+    "base_threshold": "calibrated median for conservative; calibrated q95 for strong",
+    "agreement_kernel": 3,
+    "weights": {
+      "conservative": 0.25,
+      "conservative_strong": 0.5
+    },
+    "caps": {
+      "conservative": 2.0,
+      "conservative_strong": 1.0
+    },
+    "pose_alignment_applied": false,
+    "pose_alignment_note": "deferred to protect the competition deadline; all variants are unaligned",
+    "subtracts_from_base": false
+  },
+  "variants": [
+    {
+      "name": "base_fuse672",
+      "definition": "same frozen 392+672 reconstruction baseline",
+      "primary": false
+    },
+    {
+      "name": "ref_conservative",
+      "definition": "stage 6 capped positive reference residual",
+      "primary": false
+    },
+    {
+      "name": "edge_detail",
+      "definition": "stage 7 capped guided detail residual",
+      "primary": false
+    },
+    {
+      "name": "combined",
+      "definition": "stage 7 edge detail plus stage 6 positive reference residual in calibrated units",
+      "primary": true
+    }
+  ],
+  "primary_variant": "combined",
+  "metrics": {
+    "keys": [
+      "I-AUROC",
+      "I-AP",
+      "I-F1",
+      "P-AUROC",
+      "P-AP",
+      "P-F1",
+      "P-AUPRO"
+    ],
+    "recall": [
+      "R@FPR0.001",
+      "R@FPR0.01",
+      "R@FPR0.05"
+    ],
+    "evaluation_grid": 256,
+    "mask_source": "exact original 448->392 gt transform, nearest to 256",
+    "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants",
+    "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+  },
+  "no_training": true,
+  "test_labels_used_for_selection_or_fit": false,
+  "classes_total": 15,
+  "eval_classes": [
+    "transistor",
+    "zipper",
+    "pill",
+    "screw"
+  ],
+  "partial": true,
+  "test_images_total": 1725,
+  "test_images_evaluated": 578,
+  "test_counts": {
+    "bottle": 83,
+    "cable": 150,
+    "capsule": 132,
+    "carpet": 117,
+    "grid": 78,
+    "hazelnut": 110,
+    "leather": 124,
+    "metal_nut": 115,
+    "pill": 167,
+    "screw": 160,
+    "tile": 117,
+    "toothbrush": 42,
+    "transistor": 100,
+    "wood": 79,
+    "zipper": 151
+  },
+  "eval_batch": 4,
+  "base_batch": 4,
+  "hi_batch": 2,
+  "ref_chunk": 2,
+  "hi672": {
+    "resize": 768,
+    "crop": 672,
+    "fov": 0.875
+  },
+  "base_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+  "stage1_metrics": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/metrics.json"
+}

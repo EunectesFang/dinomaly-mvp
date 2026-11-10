@@ -1,0 +1,135 @@
+{
+  "slug": "eunectesqaq/dinomaly-masked-recon-v12",
+  "stage": 12,
+  "script": "script.py",
+  "code_sha256": "42ced7c90373ba5008ffb21ab17078852b2fc92676db310e2df8e81ad11bca8b",
+  "baseline": {
+    "resize": 448,
+    "crop": 392,
+    "fov": 0.875
+  },
+  "high_res": {
+    "resize": 768,
+    "crop": 672,
+    "fov": 0.875,
+    "token_grid": [
+      48,
+      48
+    ],
+    "patch_size": 14
+  },
+  "masking": {
+    "block": 4,
+    "block_grid": [
+      12,
+      12
+    ],
+    "groups": 4,
+    "group_rule": "(block_row%2)*2 + block_col%2",
+    "coverage": "exactly once per patch; 25% per group",
+    "entrance": "encoder.prepare_tokens(x, masks=...) before attention"
+  },
+  "variants": [
+    "b0",
+    "c1",
+    "m1",
+    "b0_c1",
+    "b0_m1"
+  ],
+  "fusion": {
+    "b0_c1": "0.75*b0_norm + 0.25*c1_norm",
+    "b0_m1": "0.75*b0_norm + 0.25*m1_norm",
+    "scale": "per class/method max(p95-median, 0.005)"
+  },
+  "guide": {
+    "radius": 7,
+    "epsilon": 0.0025,
+    "gaussian": [
+      5,
+      4
+    ]
+  },
+  "training": {
+    "source": "MVTec train/good only",
+    "classes": [
+      "leather",
+      "capsule",
+      "grid",
+      "screw"
+    ],
+    "train_per_class": 96,
+    "calib_per_class": 16,
+    "seed": 1,
+    "epochs": 10,
+    "lr": 0.0003,
+    "weight_decay": 0.0,
+    "batch": 2,
+    "optimizer": "AdamW",
+    "schedule": "constant lr",
+    "head": "Conv3x3(1536->256)-GroupNorm-GELU-Conv3x3(256->256)-GroupNorm-GELU-Conv1x1(256->1536, groups=2)",
+    "head_parameters": 4328448,
+    "loss": "per-group mean cosine distance at masked positions; equal group weights; clean target detached",
+    "c1": "clean input, same head/loss positions, test error at all positions",
+    "m1": "masked input at token entrance, same head/loss positions, test only at each position's masked pass",
+    "same_initialization": true,
+    "same_updates_per_head": true,
+    "calibration_disjoint_from_training": true,
+    "test_images_or_labels_used_for_fit": false,
+    "external_data": false
+  },
+  "metrics": {
+    "keys": [
+      "I-AUROC",
+      "I-AP",
+      "I-F1",
+      "P-AUROC",
+      "P-AP",
+      "P-F1",
+      "P-AUPRO",
+      "P-AUROC-anom",
+      "P-AP-anom",
+      "P-AP-image"
+    ],
+    "recall": [
+      "R@FPR0.001",
+      "R@FPR0.01",
+      "R@FPR0.05"
+    ],
+    "evaluation_grid": 256,
+    "mask_source": "exact original 448->392 gt transform, nearest to 256",
+    "primary": "full-test pooled pixel AP (P-AP); class macro mean",
+    "anomaly_only_pooled": "P-AP-anom over anomaly test images",
+    "per_image": "P-AP-image: mean within class of per-image AP on valid anomaly images, then class macro"
+  },
+  "entry_condition_frozen": {
+    "min_P-AP_gain_vs_b0": 0.01,
+    "must_exceed": "b0_c1",
+    "min_nonnegative_class_count": 3,
+    "max_allowed_class_drop": 0.02
+  },
+  "classes_total": 4,
+  "eval_classes": [
+    "leather",
+    "capsule",
+    "grid",
+    "screw"
+  ],
+  "test_images_total": 494,
+  "test_counts": {
+    "leather": 124,
+    "capsule": 132,
+    "grid": 78,
+    "screw": 160
+  },
+  "partial": false,
+  "base_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+  "stage1_metrics": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/metrics.json",
+  "deviations": [
+    "Masked features are recomputed on the fly once per image per epoch instead of cached: four masked patterns per image would need ~13.6 GB float16. Clean targets are cached as float16 .npy and reused as C1 input, which is memory bounded.",
+    "C1 is scored at all 48x48 positions from one clean pass; M1 is scored only at each position's own masked pass, as specified.",
+    "The original 448->392 top-1% image score is reported separately; per-variant image metrics use each variant's own map top-1%.",
+    "Two condition-specific heads with identical architecture and identical initialization are used rather than one head updated by both conditions; joint updates would confound C1 and M1. Within each condition the head is shared across both feature groups.",
+    "AdamW with weight_decay=0.0 is used; the plan fixed only seed, epochs, learning rate and masks, so no extra regularization was introduced."
+  ]
+}

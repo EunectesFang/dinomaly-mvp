@@ -1,0 +1,18 @@
+{
+  "id": "eunectesqaq/dinomaly-synthetic-refine-v11",
+  "title": "dinomaly synthetic refine v11",
+  "code_file": "stage11.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "eunectesqaq/dinomaly-base-10k"
+  ]
+}

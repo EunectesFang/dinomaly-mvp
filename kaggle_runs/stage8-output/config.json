@@ -1,0 +1,182 @@
+{
+  "slug": "eunectesqaq/dinomaly-aligned-diagnostic-v8",
+  "stage": 8,
+  "diagnostic": true,
+  "not_full_benchmark": true,
+  "diagnostic_note": "targeted four-class diagnostic (578 official test images), explicitly not a full 15-class benchmark",
+  "diagnostic_class_rationale": {
+    "transistor": "v5 aligned-spatial-style win (ref_spatial P-AP 74.37 vs base 60.31)",
+    "zipper": "v5 fused-reference loss (ref_plus_base P-AP 75.50 vs base_fuse672 86.72)",
+    "pill": "v5 reference loss (ref_adaptive 54.06 vs base 74.50)",
+    "screw": "v5 spatial collapse (ref_spatial 12.84 vs base 61.27)"
+  },
+  "diagnostic_selected_after_full_test_init": true,
+  "script": "script.py",
+  "code_sha256": "1e3a5d6336c1664d7ae94db645ba39a6e965bb015c2bade086527ded4c89e683",
+  "baseline": {
+    "resize": 448,
+    "crop": 392,
+    "fov": 0.875
+  },
+  "archived_baseline": {
+    "source": "stage 4 eunectesqaq/dinomaly-context-res-v4",
+    "variant": "fuse672",
+    "definition": "0.5 * base_global + 0.5 * hi672",
+    "stage4_pixel_ap_percent": 72.47,
+    "stage4_mean": {
+      "metrics": {
+        "I-AUROC": 0.9962293697223761,
+        "I-AP": 0.9980926073135531,
+        "I-F1": 0.9914942848565,
+        "P-AUROC": 0.9839427484278644,
+        "P-AP": 0.7247128126906136,
+        "P-F1": 0.7136586490415545,
+        "P-AUPRO": 0.952742818770344
+      },
+      "recall": {
+        "R@FPR0.001": 0.2230486114836818,
+        "R@FPR0.01": 0.7045086752029253,
+        "R@FPR0.05": 0.9431508867430506
+      }
+    }
+  },
+  "normal_reference": {
+    "source": "train/good only",
+    "memory_per_class": 40,
+    "calibration_per_class": 16,
+    "total_per_class": 56,
+    "selection": "sorted paths, evenly spaced indices, first 40 memory then 16 calibration, disjoint",
+    "test_images_used_for_fit": false,
+    "feature_groups": "ViTill encoder groups en[0], en[1] at 392",
+    "group_dim": 768,
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "top_k": 3,
+    "local_radius": 1,
+    "shift_radius": 2,
+    "shift_prior_manhattan": 0.005,
+    "alignment": "per (test image, memory image) coherent shift (sr,sc) in [-2,2]^2; shift score = mean cosine similarity over in-image query positions minus 0.005*(|sr|+|sc|); candidates = +/-1 neighbourhood around the shifted coordinate; out-of-image positions masked; row falls back to the original zero-shift neighbourhood when fewer than top-3 finite candidates remain",
+    "matching": "batched GEMM; free all patches (unchanged); per-(test image, memory image) coherent shift in [-2,2]^2 selected by mean similarity minus 0.005 Manhattan prior; +/-1 local tolerance around the shifted coordinate; out-of-image masked; zero-shift fallback for rows with fewer than top-k finite candidates"
+  },
+  "calibration": {
+    "source": "16 disjoint train/good calibration normals per class",
+    "per_branch": [
+      "ref_free",
+      "ref_spatial_aligned",
+      "base_fuse672"
+    ],
+    "loc": "median",
+    "scale": "max(q95 - median, 0.01)",
+    "formula": "(x - median) / scale",
+    "positive_scale_floor": 0.01,
+    "used_for": "fusion variants only; standalone reference maps stay raw"
+  },
+  "gate": {
+    "source": "calibration normals only; aligned spatial branch",
+    "rel_extra": "median((d_aligned - d_free) / max(d_free, 0.02))",
+    "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_aligned - d_free) / max(d_free, 0.02)) over calibration normals",
+    "g_min": 0.15,
+    "g_max": 0.5,
+    "gate_k": 1.0,
+    "gate_r0": 0.25,
+    "distance_floor": 0.02,
+    "interpretation": "higher relative extra distance lowers the spatial weight; bounded fixed formula, no hard-coded class weights, no test labels"
+  },
+  "fusion_weights": {
+    "adaptive_aligned": {
+      "ref_free": "1 - g",
+      "ref_spatial_aligned": "g"
+    },
+    "aligned_plus_base": {
+      "cal_base_fuse672": 0.5,
+      "ref_adaptive_aligned": 0.5
+    },
+    "stage5_formula_preserved": true
+  },
+  "variants": [
+    {
+      "name": "base_fuse672",
+      "definition": "archived stage-4 392+672 baseline: 0.5 * base_global + 0.5 * hi672 (control)",
+      "primary": false
+    },
+    {
+      "name": "ref_spatial_aligned",
+      "definition": "raw aligned spatial normal-reference map: 1 - mean top-3 cosine sim around the per-(test image, memory image) coherent shift selected in [-2,2]^2, +/-1 local tolerance",
+      "primary": false
+    },
+    {
+      "name": "ref_adaptive_aligned",
+      "definition": "(1-g) * calib(ref_free) + g * calib(ref_spatial_aligned); g from aligned calibration normals with the exact stage-5 gate",
+      "primary": false
+    },
+    {
+      "name": "aligned_plus_base",
+      "definition": "0.5 * calib(base_fuse672) + 0.5 * ref_adaptive_aligned (stage-5 ref_plus_base formula with the aligned branch; PRIMARY)",
+      "primary": true
+    }
+  ],
+  "primary_variant": "aligned_plus_base",
+  "metrics": {
+    "keys": [
+      "I-AUROC",
+      "I-AP",
+      "I-F1",
+      "P-AUROC",
+      "P-AP",
+      "P-F1",
+      "P-AUPRO"
+    ],
+    "recall": [
+      "R@FPR0.001",
+      "R@FPR0.01",
+      "R@FPR0.05"
+    ],
+    "evaluation_grid": 256,
+    "mask_source": "exact original 448->392 gt transform, nearest to 256",
+    "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants",
+    "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+  },
+  "no_training": true,
+  "test_labels_used_for_selection_or_fit": false,
+  "stage5_control_embedded_unchanged": true,
+  "classes_total": 15,
+  "eval_classes": [
+    "transistor",
+    "zipper",
+    "pill",
+    "screw"
+  ],
+  "partial": true,
+  "test_images_total": 1725,
+  "test_images_evaluated": 578,
+  "test_counts": {
+    "bottle": 83,
+    "cable": 150,
+    "capsule": 132,
+    "carpet": 117,
+    "grid": 78,
+    "hazelnut": 110,
+    "leather": 124,
+    "metal_nut": 115,
+    "pill": 167,
+    "screw": 160,
+    "tile": 117,
+    "toothbrush": 42,
+    "transistor": 100,
+    "wood": 79,
+    "zipper": 151
+  },
+  "eval_batch": 4,
+  "base_batch": 4,
+  "hi_batch": 2,
+  "ref_chunk": 2,
+  "hi672": {
+    "resize": 768,
+    "crop": 672,
+    "fov": 0.875
+  },
+  "base_checkpoint": "/kaggle/input/dinomaly-base-10k/model_10000.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+  "stage1_metrics": "/kaggle/input/dinomaly-base-10k/metrics.json"
+}

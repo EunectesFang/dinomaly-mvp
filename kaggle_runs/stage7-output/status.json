@@ -1,0 +1,26 @@
+{
+  "slug": "eunectesqaq/dinomaly-guided-boundary-v7",
+  "fingerprint": "16f778c2e53a9e15",
+  "status": "complete",
+  "updated": "2026-11-05 12:57:12",
+  "classes_done": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "classes_total": 15,
+  "report": "/kaggle/working/guided_boundary_report.json",
+  "markdown": null
+}

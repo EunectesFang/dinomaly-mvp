@@ -1,0 +1,25 @@
+{
+  "slug": "eunectesqaq/dinomaly-local-refine-v3",
+  "fingerprint": "f551582117827725",
+  "classes_total": 15,
+  "classes_done": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "current": null,
+  "latest": null,
+  "updated": "2026-11-05 11:16:33"
+}

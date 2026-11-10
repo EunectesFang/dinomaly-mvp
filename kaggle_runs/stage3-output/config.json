@@ -1,0 +1,82 @@
+{
+  "slug": "eunectesqaq/dinomaly-local-refine-v3",
+  "stage": 3,
+  "script": "script.py",
+  "code_sha256": "2b0b81c64ee55b7b1e345068f08d6cfadbb469ece9f217a3cda98977c734c35e",
+  "crop": 392,
+  "window": 196,
+  "starts": [
+    0,
+    98,
+    196
+  ],
+  "classes_total": 15,
+  "eval_classes": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "partial": false,
+  "test_images_total": 1725,
+  "test_images_evaluated": 1725,
+  "test_counts": {
+    "bottle": 83,
+    "cable": 150,
+    "capsule": 132,
+    "carpet": 117,
+    "grid": 78,
+    "hazelnut": 110,
+    "leather": 124,
+    "metal_nut": 115,
+    "pill": 167,
+    "screw": 160,
+    "tile": 117,
+    "toothbrush": 42,
+    "transistor": 100,
+    "wood": 79,
+    "zipper": 151
+  },
+  "eval_batch": 8,
+  "calib_batch": 6,
+  "calib_n": 24,
+  "shrink_k": 24,
+  "shrink_weight": 0.5,
+  "fprs": [
+    0.001,
+    0.01,
+    0.05
+  ],
+  "variants": [
+    "base_global",
+    "base_local_fuse",
+    "adapted_local_fuse",
+    "cal_scalar",
+    "cal_spatial",
+    "cal_fused"
+  ],
+  "base_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+  "adapted_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-local-adapt/local_adapt.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+  "adapted_sha256": "45bc75f70ebeb0bb4187ea7cc1494baf01f88f0dd7ea1f6400567290a5713eae",
+  "stage2_report": "/kaggle/input/notebooks/eunectesqaq/dinomaly-local-adapt/adapt_report.json",
+  "image_score_source": "baseline global top1% of postprocessed 256 map, computed once and reused for every variant",
+  "calibration_selection": "24 sorted train/good paths per class, evenly spaced with np.linspace endpoints included",
+  "calibration_fit": "per class, per branch: median/q95 scalar alignment and per-pixel mean background shrunk toward its global mean with weight n/(n+k)",
+  "bug_fixes": {
+    "bug1": "adapted fusion uses original baseline global, not adapted global",
+    "bug2": "fixed-FPR negatives/thresholds are per variant and per class"
+  },
+  "optional_highres_full_context": "skipped: a 448 full-image branch would change the official 256-mask crop protocol and delay launch"
+}

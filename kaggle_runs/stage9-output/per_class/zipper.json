@@ -1,0 +1,224 @@
+{
+  "class": "zipper",
+  "fingerprint": "95b0ea9131ba4fcb",
+  "n_test": 151,
+  "n_normal": 32,
+  "n_anomaly": 119,
+  "n_gt_positive_pixels": 271078,
+  "n_gt_negative_pixels": 9624858,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 240,
+    "memory_files": [
+      "000.png",
+      "004.png",
+      "009.png",
+      "013.png",
+      "017.png",
+      "022.png",
+      "026.png",
+      "030.png",
+      "035.png",
+      "039.png",
+      "043.png",
+      "048.png",
+      "052.png",
+      "056.png",
+      "061.png",
+      "065.png",
+      "070.png",
+      "074.png",
+      "078.png",
+      "083.png",
+      "087.png",
+      "091.png",
+      "096.png",
+      "100.png",
+      "104.png",
+      "109.png",
+      "113.png",
+      "117.png",
+      "122.png",
+      "126.png",
+      "130.png",
+      "135.png",
+      "139.png",
+      "143.png",
+      "148.png",
+      "152.png",
+      "156.png",
+      "161.png",
+      "165.png",
+      "169.png"
+    ],
+    "calibration_files": [
+      "174.png",
+      "178.png",
+      "183.png",
+      "187.png",
+      "191.png",
+      "196.png",
+      "200.png",
+      "204.png",
+      "209.png",
+      "213.png",
+      "217.png",
+      "222.png",
+      "226.png",
+      "230.png",
+      "235.png",
+      "239.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "calibration": {
+      "ref_free": {
+        "median": 0.27807360887527466,
+        "q95": 0.3853888511657715,
+        "q99": 0.4217050075531006,
+        "scale": 0.10731524229049683,
+        "n_values": 1048576
+      },
+      "ref_spatial": {
+        "median": 0.29932427406311035,
+        "q95": 0.41694507002830505,
+        "q99": 0.45886898040771484,
+        "scale": 0.1176207959651947,
+        "n_values": 1048576
+      },
+      "base_global": {
+        "median": 0.03641816973686218,
+        "q95": 0.04641806334257126,
+        "q99": 0.051497682929039,
+        "scale": 0.01,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.059489063918590546,
+        "q95": 0.08929817378520966,
+        "q99": 0.09658840298652649,
+        "scale": 0.02980910986661911,
+        "n_values": 1048576
+      }
+    },
+    "gate": {
+      "rel_extra_median": 0.0481988787651062,
+      "g_spatial": 0.43862770493354974,
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 1.0,
+    "I-AP": 0.9999999999999998,
+    "I-F1": 0.9999999500000026
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "6ccd3fb9c7a2773f6dc0bbb4015de3b44fba12f2b1201990cf1c8d853f31072d",
+    "stage1_baseline_delta": null
+  },
+  "variants": {
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9955812541386245,
+        "P-AP": 0.8671961556390471,
+        "P-F1": 0.8143222353029622,
+        "P-AUPRO": 0.980588373974324
+      },
+      "recall": {
+        "R@FPR0.001": 0.4424409210633102,
+        "R@FPR0.01": 0.9081260744140063,
+        "R@FPR0.05": 0.9895011767830661
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1519838273525238,
+        "T@FPR0.01": 0.11468739807605743,
+        "T@FPR0.05": 0.09434652328491211
+      }
+    },
+    "ref_conservative": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9955250767602679,
+        "P-AP": 0.8644218513829355,
+        "P-F1": 0.8102534888873559,
+        "P-AUPRO": 0.982313605886309
+      },
+      "recall": {
+        "R@FPR0.001": 0.42823098886667305,
+        "R@FPR0.01": 0.9023270055113288,
+        "R@FPR0.05": 0.9904603103165879
+      },
+      "thresholds": {
+        "T@FPR0.001": 3.294081926345825,
+        "T@FPR0.01": 1.93397855758667,
+        "T@FPR0.05": 1.1865870952606201
+      }
+    },
+    "edge_detail": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9955366938761444,
+        "P-AP": 0.8679223821329918,
+        "P-F1": 0.8142442247758066,
+        "P-AUPRO": 0.9814473841169506
+      },
+      "recall": {
+        "R@FPR0.001": 0.44548801451980613,
+        "R@FPR0.01": 0.9074288581146386,
+        "R@FPR0.05": 0.9893978854794561
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.15182700753211975,
+        "T@FPR0.01": 0.11471042037010193,
+        "T@FPR0.05": 0.09441520273685455
+      }
+    },
+    "combined": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.995481906078949,
+        "P-AP": 0.8651294958253467,
+        "P-F1": 0.8100164596626669,
+        "P-AUPRO": 0.9816446140934443
+      },
+      "recall": {
+        "R@FPR0.001": 0.43132235002471614,
+        "R@FPR0.01": 0.9019138402968887,
+        "R@FPR0.05": 0.9903496410627199
+      },
+      "thresholds": {
+        "T@FPR0.001": 3.2893784046173096,
+        "T@FPR0.01": 1.9340564012527466,
+        "T@FPR0.05": 1.1888235807418823
+      }
+    }
+  },
+  "seconds": 128.1477825641632,
+  "gpu_peak_mib": 2207.42578125
+}

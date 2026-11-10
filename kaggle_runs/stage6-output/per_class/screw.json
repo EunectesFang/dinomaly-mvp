@@ -1,0 +1,245 @@
+{
+  "class": "screw",
+  "fingerprint": "4bdd0a362109f05b",
+  "n_test": 160,
+  "n_normal": 41,
+  "n_anomaly": 119,
+  "n_gt_positive_pixels": 39664,
+  "n_gt_negative_pixels": 10446096,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 320,
+    "memory_files": [
+      "000.png",
+      "006.png",
+      "012.png",
+      "017.png",
+      "023.png",
+      "029.png",
+      "035.png",
+      "041.png",
+      "046.png",
+      "052.png",
+      "058.png",
+      "064.png",
+      "070.png",
+      "075.png",
+      "081.png",
+      "087.png",
+      "093.png",
+      "099.png",
+      "104.png",
+      "110.png",
+      "116.png",
+      "122.png",
+      "128.png",
+      "133.png",
+      "139.png",
+      "145.png",
+      "151.png",
+      "157.png",
+      "162.png",
+      "168.png",
+      "174.png",
+      "180.png",
+      "186.png",
+      "191.png",
+      "197.png",
+      "203.png",
+      "209.png",
+      "215.png",
+      "220.png",
+      "226.png"
+    ],
+    "calibration_files": [
+      "232.png",
+      "238.png",
+      "244.png",
+      "249.png",
+      "255.png",
+      "261.png",
+      "267.png",
+      "273.png",
+      "278.png",
+      "284.png",
+      "290.png",
+      "296.png",
+      "302.png",
+      "307.png",
+      "313.png",
+      "319.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "calibration": {
+      "ref_free": {
+        "median": 0.30799174308776855,
+        "q95": 0.42182788252830505,
+        "q99": 0.45991313457489014,
+        "scale": 0.1138361394405365,
+        "n_values": 1048576
+      },
+      "ref_spatial": {
+        "median": 0.3417220711708069,
+        "q95": 0.4784987270832062,
+        "q99": 0.53839111328125,
+        "scale": 0.1367766559123993,
+        "n_values": 1048576
+      },
+      "base_global": {
+        "median": 0.03297779709100723,
+        "q95": 0.05048922821879387,
+        "q99": 0.055937282741069794,
+        "scale": 0.017511431127786636,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.03915057331323624,
+        "q95": 0.06801708042621613,
+        "q99": 0.07570447027683258,
+        "scale": 0.02886650711297989,
+        "n_values": 1048576
+      }
+    },
+    "gate": {
+      "rel_extra_median": 0.066104955971241,
+      "g_spatial": 0.4186779177917591,
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 0.983398237343718,
+    "I-AP": 0.9946887003395251,
+    "I-F1": 0.9626555516675014
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "9e0b5a8a77fbe72205d5490b4c3b24eeaffb154b268300b630e999e95da53844",
+    "stage1_baseline_delta": null
+  },
+  "variants": {
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.994477720544336,
+        "P-AP": 0.6592856246268033,
+        "P-F1": 0.6475957672209693,
+        "P-AUPRO": 0.9749371644660824
+      },
+      "recall": {
+        "R@FPR0.001": 0.5741478418717225,
+        "R@FPR0.01": 0.9197256958450988,
+        "R@FPR0.05": 0.9759479628882614
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1156565397977829,
+        "T@FPR0.01": 0.08792322129011154,
+        "T@FPR0.05": 0.07435005903244019
+      }
+    },
+    "ref_adaptive": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9282691719785416,
+        "P-AP": 0.4225090614165373,
+        "P-F1": 0.4734675131978509,
+        "P-AUPRO": 0.7923472097599373
+      },
+      "recall": {
+        "R@FPR0.001": 0.389849737797499,
+        "R@FPR0.01": 0.5989058087938685,
+        "R@FPR0.05": 0.7490923759580476
+      },
+      "thresholds": {
+        "T@FPR0.001": 1.7921326160430908,
+        "T@FPR0.01": 1.37050199508667,
+        "T@FPR0.05": 1.0277044773101807
+      }
+    },
+    "ref_plus_base": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.98944801844117,
+        "P-AP": 0.6796340636302691,
+        "P-F1": 0.6528638569532407,
+        "P-AUPRO": 0.9631443791149754
+      },
+      "recall": {
+        "R@FPR0.001": 0.5946702299314239,
+        "R@FPR0.01": 0.8974384832593788,
+        "R@FPR0.05": 0.9644261799112546
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.019597291946411,
+        "T@FPR0.01": 1.2068729400634766,
+        "T@FPR0.05": 0.7771461009979248
+      }
+    },
+    "ref_conservative": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9944713975071119,
+        "P-AP": 0.6689941809207022,
+        "P-F1": 0.6499555142713994,
+        "P-AUPRO": 0.9743534627146122
+      },
+      "recall": {
+        "R@FPR0.001": 0.581081081081081,
+        "R@FPR0.01": 0.919549213392497,
+        "R@FPR0.05": 0.9758219039935457
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.685410737991333,
+        "T@FPR0.01": 1.7038178443908691,
+        "T@FPR0.05": 1.2263365983963013
+      }
+    },
+    "ref_conservative_strong": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9944231492452559,
+        "P-AP": 0.6706514709273371,
+        "P-F1": 0.6477378596317089,
+        "P-AUPRO": 0.9750538010556578
+      },
+      "recall": {
+        "R@FPR0.001": 0.5846611536910045,
+        "R@FPR0.01": 0.9171288826139572,
+        "R@FPR0.05": 0.9758219039935457
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.7180252075195312,
+        "T@FPR0.01": 1.7236788272857666,
+        "T@FPR0.05": 1.2304482460021973
+      }
+    }
+  },
+  "seconds": 144.65829610824585,
+  "gpu_peak_mib": 2204.42529296875
+}

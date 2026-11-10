@@ -1,0 +1,18 @@
+{
+  "id": "eunectesqaq/dinomaly-local-adapt",
+  "title": "dinomaly local adapt",
+  "code_file": "adapt_eval.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "eunectesqaq/dinomaly-base-10k"
+  ]
+}

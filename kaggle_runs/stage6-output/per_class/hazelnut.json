@@ -1,0 +1,245 @@
+{
+  "class": "hazelnut",
+  "fingerprint": "4bdd0a362109f05b",
+  "n_test": 110,
+  "n_normal": 40,
+  "n_anomaly": 70,
+  "n_gt_positive_pixels": 215723,
+  "n_gt_negative_pixels": 6993237,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 391,
+    "memory_files": [
+      "000.png",
+      "007.png",
+      "014.png",
+      "021.png",
+      "028.png",
+      "035.png",
+      "043.png",
+      "050.png",
+      "057.png",
+      "064.png",
+      "071.png",
+      "078.png",
+      "085.png",
+      "092.png",
+      "099.png",
+      "106.png",
+      "113.png",
+      "121.png",
+      "128.png",
+      "135.png",
+      "142.png",
+      "149.png",
+      "156.png",
+      "163.png",
+      "170.png",
+      "177.png",
+      "184.png",
+      "191.png",
+      "199.png",
+      "206.png",
+      "213.png",
+      "220.png",
+      "227.png",
+      "234.png",
+      "241.png",
+      "248.png",
+      "255.png",
+      "262.png",
+      "269.png",
+      "277.png"
+    ],
+    "calibration_files": [
+      "284.png",
+      "291.png",
+      "298.png",
+      "305.png",
+      "312.png",
+      "319.png",
+      "326.png",
+      "333.png",
+      "340.png",
+      "347.png",
+      "355.png",
+      "362.png",
+      "369.png",
+      "376.png",
+      "383.png",
+      "390.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "calibration": {
+      "ref_free": {
+        "median": 0.31591150164604187,
+        "q95": 0.4682713449001312,
+        "q99": 0.5153246521949768,
+        "scale": 0.15235984325408936,
+        "n_values": 1048576
+      },
+      "ref_spatial": {
+        "median": 0.331942617893219,
+        "q95": 0.5282460451126099,
+        "q99": 0.5802356004714966,
+        "scale": 0.19630342721939087,
+        "n_values": 1048576
+      },
+      "base_global": {
+        "median": 0.03751058131456375,
+        "q95": 0.054396528750658035,
+        "q99": 0.06004615128040314,
+        "scale": 0.016885947436094284,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.04664992913603783,
+        "q95": 0.06515976786613464,
+        "q99": 0.07243461906909943,
+        "scale": 0.018509838730096817,
+        "n_values": 1048576
+      }
+    },
+    "gate": {
+      "rel_extra_median": 0.036497171968221664,
+      "g_spatial": 0.45245861754560124,
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 1.0,
+    "I-AP": 0.9999999999999998,
+    "I-F1": 0.9999999500000026
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "ff1758dccc1c9106ebb57bcc02df97dd095fa8868fc2174feab5c1e3ec12f44c",
+    "stage1_baseline_delta": null
+  },
+  "variants": {
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9952771240119295,
+        "P-AP": 0.855778849096671,
+        "P-F1": 0.7892250076448775,
+        "P-AUPRO": 0.976015227860509
+      },
+      "recall": {
+        "R@FPR0.001": 0.39043124747940644,
+        "R@FPR0.01": 0.8573309290154504,
+        "R@FPR0.05": 0.995642560134988
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.15038514137268066,
+        "T@FPR0.01": 0.11258163303136826,
+        "T@FPR0.05": 0.07772336900234222
+      }
+    },
+    "ref_adaptive": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9922719327523343,
+        "P-AP": 0.8446139635031845,
+        "P-F1": 0.7894840290820875,
+        "P-AUPRO": 0.9531761104134807
+      },
+      "recall": {
+        "R@FPR0.001": 0.4085007161962331,
+        "R@FPR0.01": 0.8564177208735276,
+        "R@FPR0.05": 0.9740361482085823
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.099303960800171,
+        "T@FPR0.01": 1.6748065948486328,
+        "T@FPR0.05": 1.1664273738861084
+      }
+    },
+    "ref_plus_base": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9955624698071438,
+        "P-AP": 0.8653440232031778,
+        "P-F1": 0.797703237419567,
+        "P-AUPRO": 0.976058966829838
+      },
+      "recall": {
+        "R@FPR0.001": 0.41713215558841665,
+        "R@FPR0.01": 0.8719561660091877,
+        "R@FPR0.05": 0.995141918107944
+      },
+      "thresholds": {
+        "T@FPR0.001": 3.7959213256835938,
+        "T@FPR0.01": 2.582663059234619,
+        "T@FPR0.05": 1.3433177471160889
+      }
+    },
+    "ref_conservative": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9953845431778063,
+        "P-AP": 0.8585662362374117,
+        "P-F1": 0.7916574006051329,
+        "P-AUPRO": 0.9747099155124103
+      },
+      "recall": {
+        "R@FPR0.001": 0.3979362423107411,
+        "R@FPR0.01": 0.8616281064142441,
+        "R@FPR0.05": 0.9956611024322859
+      },
+      "thresholds": {
+        "T@FPR0.001": 5.737185478210449,
+        "T@FPR0.01": 3.6228818893432617,
+        "T@FPR0.05": 1.6837189197540283
+      }
+    },
+    "ref_conservative_strong": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9954718042094084,
+        "P-AP": 0.8608673827195322,
+        "P-F1": 0.7937406030659819,
+        "P-AUPRO": 0.976040601424823
+      },
+      "recall": {
+        "R@FPR0.001": 0.4027155194392809,
+        "R@FPR0.01": 0.8651511429008497,
+        "R@FPR0.05": 0.9956842803039082
+      },
+      "thresholds": {
+        "T@FPR0.001": 5.876062393188477,
+        "T@FPR0.01": 3.6841979026794434,
+        "T@FPR0.05": 1.6886577606201172
+      }
+    }
+  },
+  "seconds": 102.53273701667786,
+  "gpu_peak_mib": 2204.42529296875
+}

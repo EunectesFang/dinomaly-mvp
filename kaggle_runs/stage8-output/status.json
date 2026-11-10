@@ -1,0 +1,16 @@
+{
+  "slug": "eunectesqaq/dinomaly-aligned-diagnostic-v8",
+  "fingerprint": "9f62379aa463bcaa",
+  "status": "complete",
+  "updated": "2026-11-05 13:07:30",
+  "classes_done": [
+    "transistor",
+    "zipper",
+    "pill",
+    "screw"
+  ],
+  "classes_total": 4,
+  "report": "/kaggle/working/aligned_diagnostic_report.json",
+  "markdown": "/kaggle/working/aligned_diagnostic_report.md",
+  "markdown_error": null
+}

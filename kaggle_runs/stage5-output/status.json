@@ -1,0 +1,7 @@
+{
+  "slug": "eunectesqaq/dinomaly-normal-reference-v5",
+  "fingerprint": "fa88f11516537ac9",
+  "status": "failed",
+  "updated": "2026-11-05 12:18:52",
+  "error": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 1813, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"/kaggle/src/script.py\", line 1800, in main\n    write_markdown(report, report_md)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/src/script.py\", line 1261, in write_markdown\n    for name in res[\"deltas\"]:\n                ~~~^^^^^^^^^^\nKeyError: 'deltas'\n"
+}

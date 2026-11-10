@@ -1,0 +1,16 @@
+{
+  "id": "eunectesqaq/dinomaly-probe",
+  "title": "dinomaly probe",
+  "code_file": "probe.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

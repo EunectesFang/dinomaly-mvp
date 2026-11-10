@@ -1,0 +1,26 @@
+{
+  "slug": "eunectesqaq/dinomaly-local-refine-v3",
+  "fingerprint": "f551582117827725",
+  "status": "complete",
+  "updated": "2026-11-05 11:16:33",
+  "classes_done": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "classes_total": 15,
+  "report": "/kaggle/working/refine_report.json",
+  "markdown": "/kaggle/working/refine_report.md"
+}

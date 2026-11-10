@@ -1,0 +1,183 @@
+{
+  "slug": "eunectesqaq/dinomaly-image-conditioned-v10",
+  "stage": 10,
+  "script": "dinomaly_image_conditioned_v10.py",
+  "code_sha256": "50af5e4a05f72cd6619e6b329c06c8e284c0f5fdee5771f9d0c6f808d3fe651a",
+  "baseline": {
+    "resize": 448,
+    "crop": 392,
+    "fov": 0.875
+  },
+  "enabled_scales": [
+    {
+      "name": "hi672",
+      "crop": 672,
+      "resize": 768,
+      "fov": 0.875,
+      "batch": 2
+    }
+  ],
+  "variants": [
+    "guide_baseline",
+    "guide_gate_mild",
+    "guide_gate_sharp",
+    "guide_gate_mild_medsub"
+  ],
+  "fusion": {
+    "reference": "0.5 * base_global + 0.5 * hi672",
+    "pixel_map": "exact stage-7 full grayscale guided filter on the fusion; guide_baseline is ungated"
+  },
+  "guide": {
+    "source": "original 672 crop de-normalized to RGB 0..1, bilinear resized to 256, luminance grayscale",
+    "radius": 7,
+    "epsilon": 0.0025,
+    "box_pooling": "avg_pool2d(count_include_pad=False)"
+  },
+  "calibration": {
+    "source": "train/good only; original 448->392 top1% score",
+    "images_per_class": 48,
+    "selection": "sorted paths, evenly spaced",
+    "classes": {
+      "bottle": {
+        "n": 48,
+        "min": 0.049813877791166306,
+        "median": 0.05511448159813881,
+        "q95": 0.05999160911887884,
+        "q99": 0.06073966160416603,
+        "max": 0.061274368315935135,
+        "denom95": 0.005,
+        "denom99": 0.005625180006027221,
+        "min_denom_clamped": true,
+        "scores_sha256": "cdb577055ba6a3b5fb4faf62640965ff568a77428a81e13716674b1b06ff66ec",
+        "class": "bottle",
+        "selection": "sorted train/good paths, evenly spaced",
+        "n_selected": 48,
+        "source": "original 448->392 global postprocessed top1% image score",
+        "test_labels_used": false,
+        "seconds": 4.578952074050903
+      },
+      "screw": {
+        "n": 48,
+        "min": 0.05180267617106438,
+        "median": 0.057166945189237595,
+        "q95": 0.06172339618206024,
+        "q99": 0.06403530344367028,
+        "max": 0.06526932120323181,
+        "denom95": 0.005,
+        "denom99": 0.006868358254432688,
+        "min_denom_clamped": true,
+        "scores_sha256": "fb9408af8fd72f69f13d0c49b1b0533855f2a0a12f35d014b7f5a1d6b00fcd12",
+        "class": "screw",
+        "selection": "sorted train/good paths, evenly spaced",
+        "n_selected": 48,
+        "source": "original 448->392 global postprocessed top1% image score",
+        "test_labels_used": false,
+        "seconds": 4.468467473983765
+      },
+      "wood": {
+        "n": 48,
+        "min": 0.053975533694028854,
+        "median": 0.05802626349031925,
+        "q95": 0.06263228114694357,
+        "q99": 0.06362166427075863,
+        "max": 0.06377115845680237,
+        "denom95": 0.005,
+        "denom99": 0.00559540078043938,
+        "min_denom_clamped": true,
+        "scores_sha256": "35224ab160afdfc1449410364703add6562917aa3bc183d1b07c2a4270c53186",
+        "class": "wood",
+        "selection": "sorted train/good paths, evenly spaced",
+        "n_selected": 48,
+        "source": "original 448->392 global postprocessed top1% image score",
+        "test_labels_used": false,
+        "seconds": 5.072027683258057
+      }
+    },
+    "test_labels_used": false
+  },
+  "gate": {
+    "mild": {
+      "floor": 0.1,
+      "mid_key": "q95",
+      "width_scale": 2.0,
+      "min_denom": 0.005,
+      "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)"
+    },
+    "sharp": {
+      "floor": 0.03,
+      "mid_key": "q99",
+      "width_scale": 2.0,
+      "min_denom": 0.005,
+      "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)"
+    },
+    "application": "per-image multiplication of the pixel map; within-image ranking unchanged",
+    "median_subtraction_variant": "mild gate * (map - per-image median); cheap, post-hoc"
+  },
+  "metrics": {
+    "keys": [
+      "I-AUROC",
+      "I-AP",
+      "I-F1",
+      "P-AUROC",
+      "P-AP",
+      "P-F1",
+      "P-AUPRO",
+      "P-AUROC-anom",
+      "P-AP-anom"
+    ],
+    "recall": [
+      "R@FPR0.001",
+      "R@FPR0.01",
+      "R@FPR0.05"
+    ],
+    "evaluation_grid": 256,
+    "mask_source": "exact original 448->392 gt transform, nearest to 256",
+    "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants; never gated or replaced",
+    "diagnostic_anom_only": "P-*-anom restrict pixel metrics to anomaly test images only",
+    "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+  },
+  "no_training": true,
+  "test_labels_used_for_selection_or_fit": false,
+  "classes_total": 3,
+  "eval_classes": [
+    "bottle",
+    "screw",
+    "wood"
+  ],
+  "partial": false,
+  "test_images_total": 322,
+  "test_images_evaluated": 322,
+  "test_counts": {
+    "bottle": 83,
+    "screw": 160,
+    "wood": 79
+  },
+  "eval_batch": 2,
+  "base_batch": 2,
+  "scale_batches": {
+    "672": 2
+  },
+  "probe": {
+    "base": {
+      "crop": 392,
+      "resize": 448,
+      "batch": 2,
+      "seconds": 0.3944132328033447,
+      "seconds_per_image": 0.19720661640167236,
+      "peak_mib": 981.2890625,
+      "enabled": true
+    },
+    "672": {
+      "crop": 672,
+      "resize": 768,
+      "batch": 2,
+      "seconds": 0.7322914600372314,
+      "seconds_per_image": 0.3661457300186157,
+      "peak_mib": 1957.61328125,
+      "enabled": true
+    }
+  },
+  "base_checkpoint": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/model_10000.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+  "stage1_metrics": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/metrics.json"
+}

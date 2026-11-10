@@ -1,0 +1,26 @@
+{
+  "slug": "eunectesqaq/dinomaly-aligned-reference-v6",
+  "fingerprint": "4bdd0a362109f05b",
+  "status": "complete",
+  "updated": "2026-11-05 13:00:44",
+  "classes_done": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "classes_total": 15,
+  "report": "/kaggle/working/normal_reference_report.json",
+  "markdown": "/kaggle/working/normal_reference_report.md"
+}

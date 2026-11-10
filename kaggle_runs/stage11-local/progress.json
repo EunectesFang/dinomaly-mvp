@@ -1,0 +1,21 @@
+{
+  "slug": "eunectesqaq/dinomaly-synthetic-refine-v11",
+  "fingerprint": "adef21cf1185029f",
+  "classes_total": 3,
+  "classes_done": [
+    "bottle",
+    "screw",
+    "wood"
+  ],
+  "current": null,
+  "latest": {
+    "class": "wood",
+    "seconds": 36.61457920074463,
+    "P-AP": {
+      "v7_guide": 0.7521418773562054,
+      "learned_head": 0.659778642495966,
+      "blend_guarded": 0.6987650283013295
+    }
+  },
+  "updated": "2026-11-05 23:38:18"
+}

@@ -1,0 +1,183 @@
+{
+  "class_name": "bottle",
+  "task": "fixed-window local zoom diagnostic, no retraining",
+  "weights": "E:\\dinomaly-mvp\\experiment\\runs\\bottle_sep_b6\\dinomaly_bottle.pt",
+  "checkpoint_keys": [
+    "bottleneck",
+    "decoder"
+  ],
+  "device": "cuda:0",
+  "batch_size": 6,
+  "test_images": 83,
+  "test_anomaly": 63,
+  "test_good": 20,
+  "defect_pixels": 425068,
+  "normal_pixels": 5014420,
+  "windows_forwarded": 747,
+  "window": {
+    "crop_size": 392,
+    "window": 196,
+    "stride": 98,
+    "starts": [
+      0,
+      98,
+      196
+    ],
+    "n_windows": 9,
+    "covers_full_crop": true,
+    "no_remainder_window": true,
+    "hann": "scipy.signal.windows.hann(196, sym=True), endpoints are 0",
+    "overlap_weight": "w = 0.1 + 0.9 * outer(hann(196), hann(196))",
+    "weight_min": 0.1,
+    "weight_max": 0.9998832062635877,
+    "weight_corner": 0.1,
+    "rgb_zoom": "bilinear 196 to 392, align_corners=False, from RGB in [0, 1]",
+    "rgb_then": "ImageNet normalize after zoom; normalized tensors are not zoomed",
+    "map_paste": "28x28 two-group mean distance, bilinear to 196, align_corners=True",
+    "every_test_image_runs_all_9_windows": true,
+    "no_high_score_crop": true
+  },
+  "postprocess": {
+    "global_only": "28x28 two-group mean cosine distance -> bilinear 392 align_corners=True -> bilinear 256 align_corners=False -> conv gaussian kernel 5x5 sigma=4",
+    "official_equivalence": "scored global map uses bottle_sep_b6.cal_anomaly_maps (interpolate each group to 392, then mean). This is the linear equivalent of averaging the two 28x28 distances first.",
+    "max_abs_diff_average_first_vs_official": 1.1920928955078125e-07,
+    "local_only": "fused 392 map -> bilinear 256 align_corners=False -> same gaussian",
+    "fused": "0.5 * global_392 + 0.5 * local_392, then the same 256 resize and gaussian. No per-image min-max.",
+    "higher_is_more_anomalous": true
+  },
+  "fusion_weight_sum_min": 0.10000000149011612,
+  "denormalized_rgb_min": 0.10980391502380371,
+  "denormalized_rgb_max": 1.0,
+  "reference_official_pixel_ap": 0.8842199527833942,
+  "global_only_pixel_ap": 0.8842199527833942,
+  "global_only_pixel_ap_abs_diff_vs_0.8842199527833942": 0.0,
+  "global_only_pixel_ap_in_0.86_0.91": true,
+  "image_auroc_global_only_top1pct_mean": 1.0,
+  "image_auroc_note": "Computed once from global_only. Score is the mean of the highest 1% pixels on the final 256 gaussian map.",
+  "empty_interior_images": 22,
+  "empty_interior_good_images": 20,
+  "empty_interior_anomaly_images": 2,
+  "region_definition": {
+    "structure": "9x9 all ones, one erosion and one dilation, origin centered",
+    "interior": "eroded defect mask",
+    "boundary": "dilation minus erosion",
+    "far_normal": "outside dilation and gt==0",
+    "average": "micro-average over pooled pixels, including good images where the dilation is empty"
+  },
+  "methods": {
+    "global_only": {
+      "pixel_auroc": 0.9912778483567047,
+      "pixel_ap": 0.8842199527833942,
+      "pixel_f1_max": 0.8349934113679105,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2086373003848796,
+        "0.01": 0.7460316937525291,
+        "0.05": 0.9782646541259281
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.2086254434584584,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7460312232395758,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9782646541259281,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.23051176876094784,
+        "boundary": 0.1710342200240838,
+        "far_normal": 0.03226812744383287
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "boundary": 256246,
+        "far_normal": 4881606
+      }
+    },
+    "local_only": {
+      "pixel_auroc": 0.9765165628940419,
+      "pixel_ap": 0.854673010025564,
+      "pixel_f1_max": 0.7905296262695682,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2958350193380824,
+        "0.01": 0.7059082311536037,
+        "0.05": 0.8998089717409921
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.2958350193380824,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7059082311536037,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.8998089717409921,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.2728822612724333,
+        "boundary": 0.22847991596157538,
+        "far_normal": 0.11600478554932105
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "boundary": 256246,
+        "far_normal": 4881606
+      }
+    },
+    "fused": {
+      "pixel_auroc": 0.9894768855052491,
+      "pixel_ap": 0.8915238527008814,
+      "pixel_f1_max": 0.8314735609273707,
+      "pixel_f1_max_note": "threshold selected on the test set; optimistic",
+      "defect_recall_at_normal_fpr": {
+        "0.001": 0.2823504474578185,
+        "0.01": 0.7515381068440815,
+        "0.05": 0.9647256438969765
+      },
+      "defect_recall_at_normal_fpr_definition": "Linear interpolation on the pixel ROC. FPR is the false-positive rate among gt==0 pixels. Recall is the true-positive rate among gt==1 pixels. The operating FPR is exactly the named value. Higher score is more anomalous.",
+      "defect_recall_discrete_fpr_le_target": {
+        "0.001": {
+          "recall": 0.2823336501453885,
+          "realized_fpr": 0.0009999162415593428
+        },
+        "0.01": {
+          "recall": 0.7515362247922686,
+          "realized_fpr": 0.009999960115028258
+        },
+        "0.05": {
+          "recall": 0.9647256438969765,
+          "realized_fpr": 0.05
+        }
+      },
+      "region_micro_mean": {
+        "interior": 0.25169701509142217,
+        "boundary": 0.19975706796972517,
+        "far_normal": 0.07413645649458347
+      },
+      "region_pixel_counts": {
+        "interior": 301636,
+        "boundary": 256246,
+        "far_normal": 4881606
+      }
+    }
+  },
+  "peak_allocated_mib": 1276.2,
+  "peak_reserved_mib": 1636.0,
+  "gpu_memory_used_before_load_mib": 0,
+  "forward_seconds": 28.0,
+  "torch": "2.6.0+cu124",
+  "gpu_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+}

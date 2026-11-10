@@ -1,0 +1,19 @@
+{
+  "id": "eunectesqaq/dinomaly-local-refine-v3",
+  "title": "dinomaly local refine v3",
+  "code_file": "local_refine_v3.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "eunectesqaq/dinomaly-base-10k",
+    "eunectesqaq/dinomaly-local-adapt"
+  ]
+}

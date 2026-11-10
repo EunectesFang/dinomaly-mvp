@@ -1,0 +1,166 @@
+{
+  "class": "screw",
+  "fingerprint": "5a440a6370ef0b02",
+  "n_test": 160,
+  "n_normal": 41,
+  "n_anomaly": 119,
+  "n_gt_positive_pixels": 39664,
+  "n_gt_negative_pixels": 10446096,
+  "scales": [
+    {
+      "name": "hi672",
+      "crop": 672,
+      "resize": 768,
+      "fov": 0.875,
+      "batch": 2
+    }
+  ],
+  "image_metrics": {
+    "I-AUROC": 0.983398237343718,
+    "I-AP": 0.9946887003395251,
+    "I-F1": 0.9626555516675014
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant; never gated or replaced",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "590dc43e14af7e8a32a191bd40edaf966e1c1ae4f8a1dc2bfb9e2e4c35bd2b33"
+  },
+  "calibration": {
+    "n": 48,
+    "min": 0.05180267617106438,
+    "median": 0.057166945189237595,
+    "q95": 0.06172339618206024,
+    "q99": 0.06403530344367028,
+    "max": 0.06526932120323181,
+    "denom95": 0.005,
+    "denom99": 0.006868358254432688,
+    "min_denom_clamped": true,
+    "scores_sha256": "fb9408af8fd72f69f13d0c49b1b0533855f2a0a12f35d014b7f5a1d6b00fcd12",
+    "class": "screw",
+    "selection": "sorted train/good paths, evenly spaced",
+    "n_selected": 48,
+    "source": "original 448->392 global postprocessed top1% image score",
+    "test_labels_used": false,
+    "seconds": 4.468467473983765
+  },
+  "gate": {
+    "mild": {
+      "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)",
+      "mean": 0.9542968162898056,
+      "min": 0.27891229655588856,
+      "max": 0.9999999999999922,
+      "frac_below_0.2": 0.0,
+      "frac_above_0.8": 0.89375
+    },
+    "sharp": {
+      "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)",
+      "mean": 0.902278641112505,
+      "min": 0.18136993955697067,
+      "max": 0.9999999998897918,
+      "frac_below_0.2": 0.00625,
+      "frac_above_0.8": 0.8
+    }
+  },
+  "guide": {
+    "radius": 7,
+    "epsilon": 0.0025,
+    "baseline_variant": "stage-7 full grayscale guided filter output"
+  },
+  "variants": {
+    "guide_baseline": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9935720713526138,
+        "P-AP": 0.6227282907340276,
+        "P-F1": 0.6156344291088014,
+        "P-AUPRO": 0.9672397716063188,
+        "P-AUROC-anom": 0.9925988164961403,
+        "P-AP-anom": 0.6239514148190242
+      },
+      "recall": {
+        "R@FPR0.001": 0.5207745058491328,
+        "R@FPR0.01": 0.8900262202501008,
+        "R@FPR0.05": 0.9637706736587334
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1092003658413887,
+        "T@FPR0.01": 0.08469691872596741,
+        "T@FPR0.05": 0.07322615385055542
+      }
+    },
+    "guide_gate_mild": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9934386803023092,
+        "P-AP": 0.6222195006246575,
+        "P-F1": 0.6155443627474436,
+        "P-AUPRO": 0.9661108422166454,
+        "P-AUROC-anom": 0.9918772434688717,
+        "P-AP-anom": 0.6227912263911041
+      },
+      "recall": {
+        "R@FPR0.001": 0.5207492940701896,
+        "R@FPR0.01": 0.8881857603872529,
+        "R@FPR0.05": 0.9630899556272691
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1092003658413887,
+        "T@FPR0.01": 0.08455904573202133,
+        "T@FPR0.05": 0.07222235947847366
+      }
+    },
+    "guide_gate_sharp": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9910746864215827,
+        "P-AP": 0.6187870709758044,
+        "P-F1": 0.6147412192378874,
+        "P-AUPRO": 0.9539236451246043,
+        "P-AUROC-anom": 0.988634744227398,
+        "P-AP-anom": 0.6189895102214962
+      },
+      "recall": {
+        "R@FPR0.001": 0.5199425171440096,
+        "R@FPR0.01": 0.8830173457039129,
+        "R@FPR0.05": 0.9510135135135135
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.10920033603906631,
+        "T@FPR0.01": 0.08439309149980545,
+        "T@FPR0.05": 0.07135076820850372
+      }
+    },
+    "guide_gate_mild_medsub": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.99349003303942,
+        "P-AP": 0.6249642365191616,
+        "P-F1": 0.6152637841980669,
+        "P-AUPRO": 0.9655041493826578,
+        "P-AUROC-anom": 0.9920373435192932,
+        "P-AP-anom": 0.6254497839952283
+      },
+      "recall": {
+        "R@FPR0.001": 0.5227914481645825,
+        "R@FPR0.01": 0.8896480435659541,
+        "R@FPR0.05": 0.9626361436062929
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.06932780146598816,
+        "T@FPR0.01": 0.04467574506998062,
+        "T@FPR0.05": 0.03242289274930954
+      }
+    }
+  },
+  "seconds": 110.19062662124634,
+  "gpu_peak_mib": 1961.630859375
+}

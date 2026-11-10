@@ -1,0 +1,16 @@
+{
+  "id": "eunectesqaq/dinomaly-smoke",
+  "title": "dinomaly smoke",
+  "code_file": "smoke.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

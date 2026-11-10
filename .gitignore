@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# IDE
+.idea/
+
+# MVTec images and archives: too large, and not for redistribution
+data/
+
+# Checkpoints and backbone weights (several files exceed GitHub's 100 MB limit)
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+Dinomaly/backbones/
+
+# Packages vendored inside a Kaggle output pull
+kaggle_runs/**/deps/
+
+# Local logs and incomplete downloads
+logs/
+*.log
+*.kaggle-partial
+*.tar.xz
+*.zip
+
+# Upstream clone metadata, kept locally so Dinomaly can be restored as its own repo
+Dinomaly/.git.upstream/

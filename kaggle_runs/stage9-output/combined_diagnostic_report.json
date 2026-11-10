@@ -1,0 +1,1647 @@
+{
+  "experiment": {
+    "slug": "eunectesqaq/dinomaly-combined-diagnostic-v9",
+    "stage": 6,
+    "generated": "2026-11-05 13:11:43",
+    "partial": true,
+    "primary_variant": "combined"
+  },
+  "config": {
+    "slug": "eunectesqaq/dinomaly-combined-diagnostic-v9",
+    "stage": 6,
+    "script": "script.py",
+    "code_sha256": "8aef56021cab3f8459674f2019bad97d48103814431abfdc84f44595d849e32b",
+    "baseline": {
+      "resize": 448,
+      "crop": 392,
+      "fov": 0.875
+    },
+    "archived_baseline": {
+      "source": "stage 4 eunectesqaq/dinomaly-context-res-v4",
+      "variant": "fuse672",
+      "definition": "0.5 * base_global + 0.5 * hi672",
+      "stage4_pixel_ap_percent": 72.47,
+      "stage4_mean": {
+        "metrics": {
+          "I-AUROC": 0.9962293697223761,
+          "I-AP": 0.9980926073135531,
+          "I-F1": 0.9914942848565,
+          "P-AUROC": 0.9839427484278644,
+          "P-AP": 0.7247128126906136,
+          "P-F1": 0.7136586490415545,
+          "P-AUPRO": 0.952742818770344
+        },
+        "recall": {
+          "R@FPR0.001": 0.2230486114836818,
+          "R@FPR0.01": 0.7045086752029253,
+          "R@FPR0.05": 0.9431508867430506
+        }
+      }
+    },
+    "normal_reference": {
+      "source": "train/good only",
+      "memory_per_class": 40,
+      "calibration_per_class": 16,
+      "total_per_class": 56,
+      "selection": "sorted paths, evenly spaced indices, first 40 memory then 16 calibration, disjoint",
+      "test_images_used_for_fit": false,
+      "feature_groups": "ViTill encoder groups en[0], en[1] at 392",
+      "group_dim": 768,
+      "concat_dim": 1536,
+      "dimensionality_reduction": null,
+      "normalization": "per-group z-score from memory bank, concat, L2",
+      "top_k": 3,
+      "local_radius": 1,
+      "matching": "batched GEMM; free all patches; spatial +/-radius position candidates across all memory images, no padding candidates"
+    },
+    "calibration": {
+      "source": "16 disjoint train/good calibration normals per class",
+      "per_branch": [
+        "ref_free",
+        "ref_spatial",
+        "base_global",
+        "base_fuse672"
+      ],
+      "loc": "median",
+      "scale": "max(q95 - median, 0.01)",
+      "formula": "(x - median) / scale",
+      "positive_scale_floor": 0.01,
+      "used_for": "fusion variants only; standalone reference maps stay raw"
+    },
+    "gate": {
+      "source": "calibration normals only",
+      "rel_extra": "median((d_spatial - d_free) / max(d_free, 0.02))",
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals",
+      "g_min": 0.15,
+      "g_max": 0.5,
+      "gate_k": 1.0,
+      "gate_r0": 0.25,
+      "distance_floor": 0.02,
+      "interpretation": "higher relative extra distance lowers the spatial weight; bounded fixed formula, no hard-coded class weights, no test labels"
+    },
+    "fusion_weights": {
+      "fixed": {
+        "ref_free": 0.5,
+        "ref_spatial": 0.5
+      },
+      "adaptive": {
+        "ref_free": "1 - g",
+        "ref_spatial": "g"
+      },
+      "ref_plus_base": {
+        "cal_base_fuse672": 0.5,
+        "ref_adaptive": 0.5
+      }
+    },
+    "conservative_fusion": {
+      "formula": "score = calib(base_fuse672) + w * clamp(calib(ref_spatial) - calib_q99, 0, cap) * agree; agree = 3x3 max-pool of [calib(base)>base_thr]; nothing is subtracted from base; pose alignment intentionally not applied in this run",
+      "reference_tail_quantile": 0.99,
+      "base_threshold": "calibrated median for conservative; calibrated q95 for strong",
+      "agreement_kernel": 3,
+      "weights": {
+        "conservative": 0.25,
+        "conservative_strong": 0.5
+      },
+      "caps": {
+        "conservative": 2.0,
+        "conservative_strong": 1.0
+      },
+      "pose_alignment_applied": false,
+      "pose_alignment_note": "deferred to protect the competition deadline; all variants are unaligned",
+      "subtracts_from_base": false
+    },
+    "variants": [
+      {
+        "name": "base_fuse672",
+        "definition": "same frozen 392+672 reconstruction baseline",
+        "primary": false
+      },
+      {
+        "name": "ref_conservative",
+        "definition": "stage 6 capped positive reference residual",
+        "primary": false
+      },
+      {
+        "name": "edge_detail",
+        "definition": "stage 7 capped guided detail residual",
+        "primary": false
+      },
+      {
+        "name": "combined",
+        "definition": "stage 7 edge detail plus stage 6 positive reference residual in calibrated units",
+        "primary": true
+      }
+    ],
+    "primary_variant": "combined",
+    "metrics": {
+      "keys": [
+        "I-AUROC",
+        "I-AP",
+        "I-F1",
+        "P-AUROC",
+        "P-AP",
+        "P-F1",
+        "P-AUPRO"
+      ],
+      "recall": [
+        "R@FPR0.001",
+        "R@FPR0.01",
+        "R@FPR0.05"
+      ],
+      "evaluation_grid": 256,
+      "mask_source": "exact original 448->392 gt transform, nearest to 256",
+      "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants",
+      "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+    },
+    "no_training": true,
+    "test_labels_used_for_selection_or_fit": false,
+    "classes_total": 15,
+    "eval_classes": [
+      "transistor",
+      "zipper",
+      "pill",
+      "screw"
+    ],
+    "partial": true,
+    "test_images_total": 1725,
+    "test_images_evaluated": 578,
+    "test_counts": {
+      "bottle": 83,
+      "cable": 150,
+      "capsule": 132,
+      "carpet": 117,
+      "grid": 78,
+      "hazelnut": 110,
+      "leather": 124,
+      "metal_nut": 115,
+      "pill": 167,
+      "screw": 160,
+      "tile": 117,
+      "toothbrush": 42,
+      "transistor": 100,
+      "wood": 79,
+      "zipper": 151
+    },
+    "eval_batch": 4,
+    "base_batch": 4,
+    "hi_batch": 2,
+    "ref_chunk": 2,
+    "hi672": {
+      "resize": 768,
+      "crop": 672,
+      "fov": 0.875
+    },
+    "base_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+    "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+    "stage1_metrics": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/metrics.json"
+  },
+  "checkpoints": {
+    "base": {
+      "path": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+      "sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+      "iter": 10000,
+      "kind": null,
+      "reused_unchanged": true
+    }
+  },
+  "identity": {
+    "image_scores_identical_across_variants": true,
+    "image_score_max_abs_diff_across_variants": 0.0,
+    "image_scores_source": "one baseline-global score per test image, reused by every variant",
+    "no_training": true,
+    "checkpoint_reused_unchanged": true,
+    "normal_reference_source": "train/good only; memory and calibration are disjoint",
+    "test_labels_used_for_fitting": false,
+    "gate_source": "calibration normals only; fixed bounded formula",
+    "stage1_baseline_comparison": null
+  },
+  "results": {
+    "per_class": {
+      "transistor": {
+        "class": "transistor",
+        "fingerprint": "95b0ea9131ba4fcb",
+        "n_test": 100,
+        "n_normal": 60,
+        "n_anomaly": 40,
+        "n_gt_positive_pixels": 417101,
+        "n_gt_negative_pixels": 6136499,
+        "normal_reference": {
+          "source": "train/good only; test images never used for fitting",
+          "memory_count": 40,
+          "calibration_count": 16,
+          "total_per_class": 56,
+          "disjoint": true,
+          "train_good_available": 213,
+          "memory_files": [
+            "000.png",
+            "004.png",
+            "008.png",
+            "012.png",
+            "015.png",
+            "019.png",
+            "023.png",
+            "027.png",
+            "031.png",
+            "035.png",
+            "039.png",
+            "042.png",
+            "046.png",
+            "050.png",
+            "054.png",
+            "058.png",
+            "062.png",
+            "066.png",
+            "069.png",
+            "073.png",
+            "077.png",
+            "081.png",
+            "085.png",
+            "089.png",
+            "093.png",
+            "096.png",
+            "100.png",
+            "104.png",
+            "108.png",
+            "112.png",
+            "116.png",
+            "119.png",
+            "123.png",
+            "127.png",
+            "131.png",
+            "135.png",
+            "139.png",
+            "143.png",
+            "146.png",
+            "150.png"
+          ],
+          "calibration_files": [
+            "154.png",
+            "158.png",
+            "162.png",
+            "166.png",
+            "170.png",
+            "173.png",
+            "177.png",
+            "181.png",
+            "185.png",
+            "189.png",
+            "193.png",
+            "197.png",
+            "200.png",
+            "204.png",
+            "208.png",
+            "212.png"
+          ],
+          "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+          "feature_groups": [
+            768,
+            768
+          ],
+          "concat_dim": 1536,
+          "dimensionality_reduction": null,
+          "normalization": "per-group z-score from memory bank, concat, L2",
+          "bank_patches": 31360,
+          "patch_side": 28,
+          "top_k": 3,
+          "local_radius": 1,
+          "calibration": {
+            "ref_free": {
+              "median": 0.23695163428783417,
+              "q95": 0.34615203738212585,
+              "q99": 0.4051450192928314,
+              "scale": 0.10920040309429169,
+              "n_values": 1048576
+            },
+            "ref_spatial": {
+              "median": 0.2433171421289444,
+              "q95": 0.3730684220790863,
+              "q99": 0.453412264585495,
+              "scale": 0.1297512799501419,
+              "n_values": 1048576
+            },
+            "base_global": {
+              "median": 0.039845336228609085,
+              "q95": 0.0539737194776535,
+              "q99": 0.05944957956671715,
+              "scale": 0.014128383249044418,
+              "n_values": 1048576
+            },
+            "base_fuse672": {
+              "median": 0.04968532547354698,
+              "q95": 0.06852127611637115,
+              "q99": 0.07673186808824539,
+              "scale": 0.018835950642824173,
+              "n_values": 1048576
+            }
+          },
+          "gate": {
+            "rel_extra_median": 0.0,
+            "g_spatial": 0.5,
+            "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+          }
+        },
+        "image_metrics": {
+          "I-AUROC": 0.99125,
+          "I-AP": 0.983562569235511,
+          "I-F1": 0.9749999500000025
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "bd00f4567fc5cef3fcf3854367999d8edd154a421f7ba916baf01d09b7a96402",
+          "stage1_baseline_delta": null
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9248275333413035,
+              "P-AP": 0.5895012291765824,
+              "P-F1": 0.5663132803352096,
+              "P-AUPRO": 0.7699350571586548
+            },
+            "recall": {
+              "R@FPR0.001": 0.1300812033536242,
+              "R@FPR0.01": 0.39600000959000337,
+              "R@FPR0.05": 0.642614139021484
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.13583439588546753,
+              "T@FPR0.01": 0.09405115246772766,
+              "T@FPR0.05": 0.07738693803548813
+            }
+          },
+          "ref_conservative": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.933984895824586,
+              "P-AP": 0.625082514051941,
+              "P-F1": 0.601236621879971,
+              "P-AUPRO": 0.7828928886952489
+            },
+            "recall": {
+              "R@FPR0.001": 0.13753982848278953,
+              "R@FPR0.01": 0.43989345506244293,
+              "R@FPR0.05": 0.6839086935778145
+            },
+            "thresholds": {
+              "T@FPR0.001": 4.908949375152588,
+              "T@FPR0.01": 2.415656566619873,
+              "T@FPR0.05": 1.4820462465286255
+            }
+          },
+          "edge_detail": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9226852373706271,
+              "P-AP": 0.5840082090948343,
+              "P-F1": 0.5597264664685327,
+              "P-AUPRO": 0.7683261934412595
+            },
+            "recall": {
+              "R@FPR0.001": 0.1308891611384293,
+              "R@FPR0.01": 0.39184034562372183,
+              "R@FPR0.05": 0.6353712889683794
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.13615188002586365,
+              "T@FPR0.01": 0.09463657438755035,
+              "T@FPR0.05": 0.07782761752605438
+            }
+          },
+          "combined": {
+            "metrics": {
+              "I-AUROC": 0.99125,
+              "I-AP": 0.983562569235511,
+              "I-F1": 0.9749999500000025,
+              "P-AUROC": 0.9321273293463908,
+              "P-AP": 0.6199400924183416,
+              "P-F1": 0.595767798219477,
+              "P-AUPRO": 0.7938476551661465
+            },
+            "recall": {
+              "R@FPR0.001": 0.1387337839036588,
+              "R@FPR0.01": 0.43414424803584745,
+              "R@FPR0.05": 0.6769775186345753
+            },
+            "thresholds": {
+              "T@FPR0.001": 4.920495986938477,
+              "T@FPR0.01": 2.444483757019043,
+              "T@FPR0.05": 1.5054866075515747
+            }
+          }
+        },
+        "seconds": 84.59621548652649,
+        "gpu_peak_mib": 2207.42578125
+      },
+      "zipper": {
+        "class": "zipper",
+        "fingerprint": "95b0ea9131ba4fcb",
+        "n_test": 151,
+        "n_normal": 32,
+        "n_anomaly": 119,
+        "n_gt_positive_pixels": 271078,
+        "n_gt_negative_pixels": 9624858,
+        "normal_reference": {
+          "source": "train/good only; test images never used for fitting",
+          "memory_count": 40,
+          "calibration_count": 16,
+          "total_per_class": 56,
+          "disjoint": true,
+          "train_good_available": 240,
+          "memory_files": [
+            "000.png",
+            "004.png",
+            "009.png",
+            "013.png",
+            "017.png",
+            "022.png",
+            "026.png",
+            "030.png",
+            "035.png",
+            "039.png",
+            "043.png",
+            "048.png",
+            "052.png",
+            "056.png",
+            "061.png",
+            "065.png",
+            "070.png",
+            "074.png",
+            "078.png",
+            "083.png",
+            "087.png",
+            "091.png",
+            "096.png",
+            "100.png",
+            "104.png",
+            "109.png",
+            "113.png",
+            "117.png",
+            "122.png",
+            "126.png",
+            "130.png",
+            "135.png",
+            "139.png",
+            "143.png",
+            "148.png",
+            "152.png",
+            "156.png",
+            "161.png",
+            "165.png",
+            "169.png"
+          ],
+          "calibration_files": [
+            "174.png",
+            "178.png",
+            "183.png",
+            "187.png",
+            "191.png",
+            "196.png",
+            "200.png",
+            "204.png",
+            "209.png",
+            "213.png",
+            "217.png",
+            "222.png",
+            "226.png",
+            "230.png",
+            "235.png",
+            "239.png"
+          ],
+          "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+          "feature_groups": [
+            768,
+            768
+          ],
+          "concat_dim": 1536,
+          "dimensionality_reduction": null,
+          "normalization": "per-group z-score from memory bank, concat, L2",
+          "bank_patches": 31360,
+          "patch_side": 28,
+          "top_k": 3,
+          "local_radius": 1,
+          "calibration": {
+            "ref_free": {
+              "median": 0.27807360887527466,
+              "q95": 0.3853888511657715,
+              "q99": 0.4217050075531006,
+              "scale": 0.10731524229049683,
+              "n_values": 1048576
+            },
+            "ref_spatial": {
+              "median": 0.29932427406311035,
+              "q95": 0.41694507002830505,
+              "q99": 0.45886898040771484,
+              "scale": 0.1176207959651947,
+              "n_values": 1048576
+            },
+            "base_global": {
+              "median": 0.03641816973686218,
+              "q95": 0.04641806334257126,
+              "q99": 0.051497682929039,
+              "scale": 0.01,
+              "n_values": 1048576
+            },
+            "base_fuse672": {
+              "median": 0.059489063918590546,
+              "q95": 0.08929817378520966,
+              "q99": 0.09658840298652649,
+              "scale": 0.02980910986661911,
+              "n_values": 1048576
+            }
+          },
+          "gate": {
+            "rel_extra_median": 0.0481988787651062,
+            "g_spatial": 0.43862770493354974,
+            "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+          }
+        },
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "6ccd3fb9c7a2773f6dc0bbb4015de3b44fba12f2b1201990cf1c8d853f31072d",
+          "stage1_baseline_delta": null
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9955812541386245,
+              "P-AP": 0.8671961556390471,
+              "P-F1": 0.8143222353029622,
+              "P-AUPRO": 0.980588373974324
+            },
+            "recall": {
+              "R@FPR0.001": 0.4424409210633102,
+              "R@FPR0.01": 0.9081260744140063,
+              "R@FPR0.05": 0.9895011767830661
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1519838273525238,
+              "T@FPR0.01": 0.11468739807605743,
+              "T@FPR0.05": 0.09434652328491211
+            }
+          },
+          "ref_conservative": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9955250767602679,
+              "P-AP": 0.8644218513829355,
+              "P-F1": 0.8102534888873559,
+              "P-AUPRO": 0.982313605886309
+            },
+            "recall": {
+              "R@FPR0.001": 0.42823098886667305,
+              "R@FPR0.01": 0.9023270055113288,
+              "R@FPR0.05": 0.9904603103165879
+            },
+            "thresholds": {
+              "T@FPR0.001": 3.294081926345825,
+              "T@FPR0.01": 1.93397855758667,
+              "T@FPR0.05": 1.1865870952606201
+            }
+          },
+          "edge_detail": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9955366938761444,
+              "P-AP": 0.8679223821329918,
+              "P-F1": 0.8142442247758066,
+              "P-AUPRO": 0.9814473841169506
+            },
+            "recall": {
+              "R@FPR0.001": 0.44548801451980613,
+              "R@FPR0.01": 0.9074288581146386,
+              "R@FPR0.05": 0.9893978854794561
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.15182700753211975,
+              "T@FPR0.01": 0.11471042037010193,
+              "T@FPR0.05": 0.09441520273685455
+            }
+          },
+          "combined": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.995481906078949,
+              "P-AP": 0.8651294958253467,
+              "P-F1": 0.8100164596626669,
+              "P-AUPRO": 0.9816446140934443
+            },
+            "recall": {
+              "R@FPR0.001": 0.43132235002471614,
+              "R@FPR0.01": 0.9019138402968887,
+              "R@FPR0.05": 0.9903496410627199
+            },
+            "thresholds": {
+              "T@FPR0.001": 3.2893784046173096,
+              "T@FPR0.01": 1.9340564012527466,
+              "T@FPR0.05": 1.1888235807418823
+            }
+          }
+        },
+        "seconds": 128.1477825641632,
+        "gpu_peak_mib": 2207.42578125
+      },
+      "pill": {
+        "class": "pill",
+        "fingerprint": "95b0ea9131ba4fcb",
+        "n_test": 167,
+        "n_normal": 26,
+        "n_anomaly": 141,
+        "n_gt_positive_pixels": 496895,
+        "n_gt_negative_pixels": 10447617,
+        "normal_reference": {
+          "source": "train/good only; test images never used for fitting",
+          "memory_count": 40,
+          "calibration_count": 16,
+          "total_per_class": 56,
+          "disjoint": true,
+          "train_good_available": 267,
+          "memory_files": [
+            "000.png",
+            "005.png",
+            "010.png",
+            "015.png",
+            "019.png",
+            "024.png",
+            "029.png",
+            "034.png",
+            "039.png",
+            "044.png",
+            "048.png",
+            "053.png",
+            "058.png",
+            "063.png",
+            "068.png",
+            "073.png",
+            "077.png",
+            "082.png",
+            "087.png",
+            "092.png",
+            "097.png",
+            "102.png",
+            "106.png",
+            "111.png",
+            "116.png",
+            "121.png",
+            "126.png",
+            "131.png",
+            "135.png",
+            "140.png",
+            "145.png",
+            "150.png",
+            "155.png",
+            "160.png",
+            "164.png",
+            "169.png",
+            "174.png",
+            "179.png",
+            "184.png",
+            "189.png"
+          ],
+          "calibration_files": [
+            "193.png",
+            "198.png",
+            "203.png",
+            "208.png",
+            "213.png",
+            "218.png",
+            "222.png",
+            "227.png",
+            "232.png",
+            "237.png",
+            "242.png",
+            "247.png",
+            "251.png",
+            "256.png",
+            "261.png",
+            "266.png"
+          ],
+          "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+          "feature_groups": [
+            768,
+            768
+          ],
+          "concat_dim": 1536,
+          "dimensionality_reduction": null,
+          "normalization": "per-group z-score from memory bank, concat, L2",
+          "bank_patches": 31360,
+          "patch_side": 28,
+          "top_k": 3,
+          "local_radius": 1,
+          "calibration": {
+            "ref_free": {
+              "median": 0.26919859647750854,
+              "q95": 0.3907076418399811,
+              "q99": 0.4310173988342285,
+              "scale": 0.12150904536247253,
+              "n_values": 1048576
+            },
+            "ref_spatial": {
+              "median": 0.278268039226532,
+              "q95": 0.41159647703170776,
+              "q99": 0.4571978449821472,
+              "scale": 0.13332843780517578,
+              "n_values": 1048576
+            },
+            "base_global": {
+              "median": 0.036251261830329895,
+              "q95": 0.04829757288098335,
+              "q99": 0.0535462461411953,
+              "scale": 0.012046311050653458,
+              "n_values": 1048576
+            },
+            "base_fuse672": {
+              "median": 0.04575338959693909,
+              "q95": 0.059690773487091064,
+              "q99": 0.06734965741634369,
+              "scale": 0.013937383890151978,
+              "n_values": 1048576
+            }
+          },
+          "gate": {
+            "rel_extra_median": 0.0,
+            "g_spatial": 0.5,
+            "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+          }
+        },
+        "image_metrics": {
+          "I-AUROC": 0.9920894708128751,
+          "I-AP": 0.9986187195143849,
+          "I-F1": 0.9858155528368819
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "223d2a1feff6c0245df6d9b62e4f973018f6828636e2e759c1fd14a5b2404f3c",
+          "stage1_baseline_delta": null
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9754204475463726,
+              "P-AP": 0.7425064490658501,
+              "P-F1": 0.7093033833782402,
+              "P-AUPRO": 0.97712044500069
+            },
+            "recall": {
+              "R@FPR0.001": 0.1650509665019773,
+              "R@FPR0.01": 0.6620855512734078,
+              "R@FPR0.05": 0.8742953742742431
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12253513932228088,
+              "T@FPR0.01": 0.08673900365829468,
+              "T@FPR0.05": 0.06632933765649796
+            }
+          },
+          "ref_conservative": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.975249683798428,
+              "P-AP": 0.7394027293301869,
+              "P-F1": 0.7065965482443967,
+              "P-AUPRO": 0.9767751988584636
+            },
+            "recall": {
+              "R@FPR0.001": 0.16029140965395103,
+              "R@FPR0.01": 0.6576801940047696,
+              "R@FPR0.05": 0.8737016874792461
+            },
+            "thresholds": {
+              "T@FPR0.001": 5.817963600158691,
+              "T@FPR0.01": 3.045799493789673,
+              "T@FPR0.05": 1.4870392084121704
+            }
+          },
+          "edge_detail": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9749599943420214,
+              "P-AP": 0.7455341240076017,
+              "P-F1": 0.7114809381784825,
+              "P-AUPRO": 0.9780795895563331
+            },
+            "recall": {
+              "R@FPR0.001": 0.16763702593103172,
+              "R@FPR0.01": 0.6664325461113515,
+              "R@FPR0.05": 0.8754666478833556
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.12288206815719604,
+              "T@FPR0.01": 0.08677887916564941,
+              "T@FPR0.05": 0.06641609221696854
+            }
+          },
+          "combined": {
+            "metrics": {
+              "I-AUROC": 0.9920894708128751,
+              "I-AP": 0.9986187195143849,
+              "I-F1": 0.9858155528368819,
+              "P-AUROC": 0.9747940370321638,
+              "P-AP": 0.7424812976496766,
+              "P-F1": 0.7087646339558024,
+              "P-AUPRO": 0.9778348973984037
+            },
+            "recall": {
+              "R@FPR0.001": 0.16346713088278209,
+              "R@FPR0.01": 0.6621016512542891,
+              "R@FPR0.05": 0.8747823986959016
+            },
+            "thresholds": {
+              "T@FPR0.001": 5.832115650177002,
+              "T@FPR0.01": 3.050694704055786,
+              "T@FPR0.05": 1.4934594631195068
+            }
+          }
+        },
+        "seconds": 142.94772744178772,
+        "gpu_peak_mib": 2207.42578125
+      },
+      "screw": {
+        "class": "screw",
+        "fingerprint": "95b0ea9131ba4fcb",
+        "n_test": 160,
+        "n_normal": 41,
+        "n_anomaly": 119,
+        "n_gt_positive_pixels": 39664,
+        "n_gt_negative_pixels": 10446096,
+        "normal_reference": {
+          "source": "train/good only; test images never used for fitting",
+          "memory_count": 40,
+          "calibration_count": 16,
+          "total_per_class": 56,
+          "disjoint": true,
+          "train_good_available": 320,
+          "memory_files": [
+            "000.png",
+            "006.png",
+            "012.png",
+            "017.png",
+            "023.png",
+            "029.png",
+            "035.png",
+            "041.png",
+            "046.png",
+            "052.png",
+            "058.png",
+            "064.png",
+            "070.png",
+            "075.png",
+            "081.png",
+            "087.png",
+            "093.png",
+            "099.png",
+            "104.png",
+            "110.png",
+            "116.png",
+            "122.png",
+            "128.png",
+            "133.png",
+            "139.png",
+            "145.png",
+            "151.png",
+            "157.png",
+            "162.png",
+            "168.png",
+            "174.png",
+            "180.png",
+            "186.png",
+            "191.png",
+            "197.png",
+            "203.png",
+            "209.png",
+            "215.png",
+            "220.png",
+            "226.png"
+          ],
+          "calibration_files": [
+            "232.png",
+            "238.png",
+            "244.png",
+            "249.png",
+            "255.png",
+            "261.png",
+            "267.png",
+            "273.png",
+            "278.png",
+            "284.png",
+            "290.png",
+            "296.png",
+            "302.png",
+            "307.png",
+            "313.png",
+            "319.png"
+          ],
+          "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+          "feature_groups": [
+            768,
+            768
+          ],
+          "concat_dim": 1536,
+          "dimensionality_reduction": null,
+          "normalization": "per-group z-score from memory bank, concat, L2",
+          "bank_patches": 31360,
+          "patch_side": 28,
+          "top_k": 3,
+          "local_radius": 1,
+          "calibration": {
+            "ref_free": {
+              "median": 0.30799174308776855,
+              "q95": 0.42182788252830505,
+              "q99": 0.45991313457489014,
+              "scale": 0.1138361394405365,
+              "n_values": 1048576
+            },
+            "ref_spatial": {
+              "median": 0.3417220711708069,
+              "q95": 0.4784987270832062,
+              "q99": 0.53839111328125,
+              "scale": 0.1367766559123993,
+              "n_values": 1048576
+            },
+            "base_global": {
+              "median": 0.03297779709100723,
+              "q95": 0.05048922821879387,
+              "q99": 0.055937282741069794,
+              "scale": 0.017511431127786636,
+              "n_values": 1048576
+            },
+            "base_fuse672": {
+              "median": 0.03915057331323624,
+              "q95": 0.06801708042621613,
+              "q99": 0.07570447027683258,
+              "scale": 0.02886650711297989,
+              "n_values": 1048576
+            }
+          },
+          "gate": {
+            "rel_extra_median": 0.066104955971241,
+            "g_spatial": 0.4186779177917591,
+            "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+          }
+        },
+        "image_metrics": {
+          "I-AUROC": 0.983398237343718,
+          "I-AP": 0.9946887003395251,
+          "I-F1": 0.9626555516675014
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "9e0b5a8a77fbe72205d5490b4c3b24eeaffb154b268300b630e999e95da53844",
+          "stage1_baseline_delta": null
+        },
+        "variants": {
+          "base_fuse672": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.994477720544336,
+              "P-AP": 0.6592856246268033,
+              "P-F1": 0.6475957672209693,
+              "P-AUPRO": 0.9749371644660824
+            },
+            "recall": {
+              "R@FPR0.001": 0.5741478418717225,
+              "R@FPR0.01": 0.9197256958450988,
+              "R@FPR0.05": 0.9759479628882614
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1156565397977829,
+              "T@FPR0.01": 0.08792322129011154,
+              "T@FPR0.05": 0.07435005903244019
+            }
+          },
+          "ref_conservative": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9944713975071119,
+              "P-AP": 0.6689941809207022,
+              "P-F1": 0.6499555142713994,
+              "P-AUPRO": 0.9743534627146122
+            },
+            "recall": {
+              "R@FPR0.001": 0.581081081081081,
+              "R@FPR0.01": 0.919549213392497,
+              "R@FPR0.05": 0.9758219039935457
+            },
+            "thresholds": {
+              "T@FPR0.001": 2.685410737991333,
+              "T@FPR0.01": 1.7038178443908691,
+              "T@FPR0.05": 1.2263365983963013
+            }
+          },
+          "edge_detail": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9940725590525172,
+              "P-AP": 0.6604610622858875,
+              "P-F1": 0.6490656611015968,
+              "P-AUPRO": 0.9730445489641718
+            },
+            "recall": {
+              "R@FPR0.001": 0.5780304558289633,
+              "R@FPR0.01": 0.9171793061718435,
+              "R@FPR0.05": 0.9731242436466317
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.11683161556720734,
+              "T@FPR0.01": 0.08899341523647308,
+              "T@FPR0.05": 0.07509932667016983
+            }
+          },
+          "combined": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9940721529718672,
+              "P-AP": 0.6701779036663736,
+              "P-F1": 0.6515076725191054,
+              "P-AUPRO": 0.9726140063907736
+            },
+            "recall": {
+              "R@FPR0.001": 0.5865772488906817,
+              "R@FPR0.01": 0.9162212585720049,
+              "R@FPR0.05": 0.9730486083098023
+            },
+            "thresholds": {
+              "T@FPR0.001": 2.7246246337890625,
+              "T@FPR0.01": 1.7411658763885498,
+              "T@FPR0.05": 1.251977801322937
+            }
+          }
+        },
+        "seconds": 133.25383520126343,
+        "gpu_peak_mib": 2207.42578125
+      }
+    },
+    "mean": {
+      "base_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.9916844270391483,
+          "I-AP": 0.9942174972723552,
+          "I-F1": 0.9808677511260971,
+          "P-AUROC": 0.9725767388926592,
+          "P-AP": 0.7146223646270707,
+          "P-F1": 0.6843836665593453,
+          "P-AUPRO": 0.9256452601499378
+        },
+        "recall": {
+          "R@FPR0.001": 0.32793023319765857,
+          "R@FPR0.01": 0.7214843327806291,
+          "R@FPR0.05": 0.8705896632417637
+        }
+      },
+      "ref_conservative": {
+        "metrics": {
+          "I-AUROC": 0.9916844270391483,
+          "I-AP": 0.9942174972723552,
+          "I-F1": 0.9808677511260971,
+          "P-AUROC": 0.9748077634725985,
+          "P-AP": 0.7244753189214413,
+          "P-F1": 0.6920105433207808,
+          "P-AUPRO": 0.9290837890386585
+        },
+        "recall": {
+          "R@FPR0.001": 0.3267858270211237,
+          "R@FPR0.01": 0.7298624669927596,
+          "R@FPR0.05": 0.8809731488417986
+        }
+      },
+      "edge_detail": {
+        "metrics": {
+          "I-AUROC": 0.9916844270391483,
+          "I-AP": 0.9942174972723552,
+          "I-F1": 0.9808677511260971,
+          "P-AUROC": 0.9718136211603275,
+          "P-AP": 0.7144814443803289,
+          "P-F1": 0.6836293226311047,
+          "P-AUPRO": 0.9252244290196787
+        },
+        "recall": {
+          "R@FPR0.001": 0.33051116435455763,
+          "R@FPR0.01": 0.7207202640053888,
+          "R@FPR0.05": 0.8683400164944557
+        }
+      },
+      "combined": {
+        "metrics": {
+          "I-AUROC": 0.9916844270391483,
+          "I-AP": 0.9942174972723552,
+          "I-F1": 0.9808677511260971,
+          "P-AUROC": 0.9741188563573427,
+          "P-AP": 0.7244321973899346,
+          "P-F1": 0.6915141410892629,
+          "P-AUPRO": 0.931485293262192
+        },
+        "recall": {
+          "R@FPR0.001": 0.3300251284254597,
+          "R@FPR0.01": 0.7285952495397575,
+          "R@FPR0.05": 0.8787895416757497
+        }
+      }
+    },
+    "image_mean": {
+      "I-AUROC": 0.9916844270391483,
+      "I-AP": 0.9942174972723552,
+      "I-F1": 0.9808677511260971
+    },
+    "archived_baseline_comparison": {
+      "base_fuse672_vs_stage4_fuse672": {
+        "stage4_variant": "fuse672",
+        "metrics_pp": {
+          "I-AUROC": -0.4544942683227804,
+          "I-AP": -0.38751100411978934,
+          "I-F1": -1.0626533730402898,
+          "P-AUROC": -1.136600953520528,
+          "P-AP": -1.0090448063542867,
+          "P-F1": -2.9274982482209166,
+          "P-AUPRO": -2.7097558620406192
+        },
+        "recall_pp": {
+          "R@FPR0.001": 10.488162171397677,
+          "R@FPR0.01": 1.6975657577703807,
+          "R@FPR0.05": -7.256122350128691
+        },
+        "max_abs_metric_pp": 2.9274982482209166
+      },
+      "image_mean_pp": {
+        "I-AUROC": -0.4544942683227804,
+        "I-AP": -0.38751100411978934,
+        "I-F1": -1.0626533730402898
+      }
+    }
+  },
+  "deltas": {
+    "ref_conservative - base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": 0.002231024579939289,
+        "P-AP": 0.009852954294370608,
+        "P-F1": 0.007626876761435475,
+        "P-AUPRO": 0.00343852888872076
+      },
+      "recall": {
+        "R@FPR0.001": -0.0011444061765348845,
+        "R@FPR0.01": 0.008378134212130517,
+        "R@FPR0.05": 0.01038348560003488
+      }
+    },
+    "edge_detail - base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.0007631177323316196,
+        "P-AP": -0.000140920246741838,
+        "P-F1": -0.0007543439282406972,
+        "P-AUPRO": -0.0004208311302590362
+      },
+      "recall": {
+        "R@FPR0.001": 0.002580931156899058,
+        "R@FPR0.01": -0.0007640687752402675,
+        "R@FPR0.05": -0.0022496467473079873
+      }
+    },
+    "combined - base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": 0.001542117464683579,
+        "P-AP": 0.009809832762863846,
+        "P-F1": 0.007130474529917552,
+        "P-AUPRO": 0.005840033112254228
+      },
+      "recall": {
+        "R@FPR0.001": 0.0020948952278011523,
+        "R@FPR0.01": 0.0071109167591284494,
+        "R@FPR0.05": 0.008199878433986063
+      }
+    },
+    "combined - ref_conservative": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.0006889071152557102,
+        "P-AP": -4.3121531506762345e-05,
+        "P-F1": -0.0004964022315179228,
+        "P-AUPRO": 0.0024015042235334683
+      },
+      "recall": {
+        "R@FPR0.001": 0.003239301404336037,
+        "R@FPR0.01": -0.0012672174530020675,
+        "R@FPR0.05": -0.0021836071660488177
+      }
+    },
+    "combined - edge_detail": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": 0.0023052351970151985,
+        "P-AP": 0.009950753009605684,
+        "P-F1": 0.00788481845815825,
+        "P-AUPRO": 0.006260864242513264
+      },
+      "recall": {
+        "R@FPR0.001": -0.0004860359290979055,
+        "R@FPR0.01": 0.007874985534368717,
+        "R@FPR0.05": 0.01044952518129405
+      }
+    }
+  },
+  "per_class_deltas": {
+    "ref_conservative - base_fuse672": {
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.009157362483282472,
+          "P-AP": 0.03558128487535861,
+          "P-F1": 0.0349233415447614,
+          "P-AUPRO": 0.012957831536594022
+        },
+        "recall": {
+          "R@FPR0.001": 0.007458625129165342,
+          "R@FPR0.01": 0.04389344547243956,
+          "R@FPR0.05": 0.041294554556330465
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -5.6177378356614405e-05,
+          "P-AP": -0.0027743042561115816,
+          "P-F1": -0.004068746415606284,
+          "P-AUPRO": 0.0017252319119850368
+        },
+        "recall": {
+          "R@FPR0.001": -0.014209932196637132,
+          "R@FPR0.01": -0.005799068902677451,
+          "R@FPR0.05": 0.0009591335335217277
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00017076374794455784,
+          "P-AP": -0.0031037197356631463,
+          "P-F1": -0.0027068351338435104,
+          "P-AUPRO": -0.00034524614222630756
+        },
+        "recall": {
+          "R@FPR0.001": -0.0047595568480262584,
+          "R@FPR0.01": -0.004405357268638221,
+          "R@FPR0.05": -0.0005936867949969393
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -6.323037224142958e-06,
+          "P-AP": 0.009708556293898885,
+          "P-F1": 0.002359747050430072,
+          "P-AUPRO": -0.0005837017514701559
+        },
+        "recall": {
+          "R@FPR0.001": 0.0069332392093585105,
+          "R@FPR0.01": -0.00017648245260182271,
+          "R@FPR0.05": -0.00012605889471561937
+        }
+      }
+    },
+    "edge_detail - base_fuse672": {
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.002142295970676389,
+          "P-AP": -0.005493020081748123,
+          "P-F1": -0.006586813866676811,
+          "P-AUPRO": -0.0016088637173953257
+        },
+        "recall": {
+          "R@FPR0.001": 0.0008079577848051078,
+          "R@FPR0.01": -0.004159663966281535,
+          "R@FPR0.05": -0.007242850053104655
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -4.4560262480120016e-05,
+          "P-AP": 0.000726226493944715,
+          "P-F1": -7.801052715561418e-05,
+          "P-AUPRO": 0.0008590101426266816
+        },
+        "recall": {
+          "R@FPR0.001": 0.003047093456495953,
+          "R@FPR0.01": -0.0006972162993676978,
+          "R@FPR0.05": -0.00010329130361008687
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00046045320435117443,
+          "P-AP": 0.0030276749417516013,
+          "P-F1": 0.0021775548002422873,
+          "P-AUPRO": 0.0009591445556431655
+        },
+        "recall": {
+          "R@FPR0.001": 0.0025860594290544325,
+          "R@FPR0.01": 0.004346994837943652,
+          "R@FPR0.05": 0.0011712736091125109
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00040516149181879513,
+          "P-AP": 0.001175437659084233,
+          "P-F1": 0.0014698938806274597,
+          "P-AUPRO": -0.001892615501910555
+        },
+        "recall": {
+          "R@FPR0.001": 0.003882613957240766,
+          "R@FPR0.01": -0.002546389673255267,
+          "R@FPR0.05": -0.0028237192416296075
+        }
+      }
+    },
+    "combined - base_fuse672": {
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0072997960050872335,
+          "P-AP": 0.03043886324175915,
+          "P-F1": 0.02945451788426745,
+          "P-AUPRO": 0.02391259800749168
+        },
+        "recall": {
+          "R@FPR0.001": 0.008652580550034622,
+          "R@FPR0.01": 0.03814423844584408,
+          "R@FPR0.05": 0.03436337961309133
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -9.934805967548588e-05,
+          "P-AP": -0.0020666598137003556,
+          "P-F1": -0.0043057756402953284,
+          "P-AUPRO": 0.0010562401191203108
+        },
+        "recall": {
+          "R@FPR0.001": -0.011118571038594038,
+          "R@FPR0.01": -0.0062122341171175766,
+          "R@FPR0.05": 0.0008484642796537933
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0006264105142087528,
+          "P-AP": -2.5151416173430086e-05,
+          "P-F1": -0.000538749422437812,
+          "P-AUPRO": 0.0007144523977137274
+        },
+        "recall": {
+          "R@FPR0.001": -0.0015838356191952008,
+          "R@FPR0.01": 1.6099980881256748e-05,
+          "R@FPR0.05": 0.00048702442165848847
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00040556757246879016,
+          "P-AP": 0.010892279039570352,
+          "P-F1": 0.003911905298136009,
+          "P-AUPRO": -0.0023231580753088066
+        },
+        "recall": {
+          "R@FPR0.001": 0.012429407018959227,
+          "R@FPR0.01": -0.0035044372730939077,
+          "R@FPR0.05": -0.0028993545784590236
+        }
+      }
+    },
+    "combined - ref_conservative": {
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0018575664781952383,
+          "P-AP": -0.005142421633599459,
+          "P-F1": -0.005468823660493949,
+          "P-AUPRO": 0.010954766470897659
+        },
+        "recall": {
+          "R@FPR0.001": 0.0011939554208692804,
+          "R@FPR0.01": -0.005749207026595482,
+          "R@FPR0.05": -0.006931174943239138
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -4.317068131887147e-05,
+          "P-AP": 0.000707644442411226,
+          "P-F1": -0.00023702922468904486,
+          "P-AUPRO": -0.000668991792864726
+        },
+        "recall": {
+          "R@FPR0.001": 0.0030913611580430933,
+          "R@FPR0.01": -0.00041316521444012544,
+          "R@FPR0.05": -0.00011066925386793436
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.000455646766264195,
+          "P-AP": 0.003078568319489716,
+          "P-F1": 0.0021680857114056984,
+          "P-AUPRO": 0.001059698539940035
+        },
+        "recall": {
+          "R@FPR0.001": 0.0031757212288310577,
+          "R@FPR0.01": 0.004421457249519478,
+          "R@FPR0.05": 0.0010807112166554278
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0003992445352446472,
+          "P-AP": 0.0011837227456714672,
+          "P-F1": 0.001552158247705937,
+          "P-AUPRO": -0.0017394563238386507
+        },
+        "recall": {
+          "R@FPR0.001": 0.005496167809600716,
+          "R@FPR0.01": -0.003327954820492085,
+          "R@FPR0.05": -0.002773295683743404
+        }
+      }
+    },
+    "combined - edge_detail": {
+      "transistor": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.009442091975763622,
+          "P-AP": 0.035931883323507274,
+          "P-F1": 0.03604133175094426,
+          "P-AUPRO": 0.025521461724887007
+        },
+        "recall": {
+          "R@FPR0.001": 0.007844622765229514,
+          "R@FPR0.01": 0.042303902412125616,
+          "R@FPR0.05": 0.04160622966619598
+        }
+      },
+      "zipper": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -5.478779719536586e-05,
+          "P-AP": -0.0027928863076450705,
+          "P-F1": -0.004227765113139714,
+          "P-AUPRO": 0.00019722997649362917
+        },
+        "recall": {
+          "R@FPR0.001": -0.014165664495089991,
+          "R@FPR0.01": -0.005515017817749879,
+          "R@FPR0.05": 0.0009517555832638802
+        }
+      },
+      "pill": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0001659573098575784,
+          "P-AP": -0.0030528263579250314,
+          "P-F1": -0.0027163042226800993,
+          "P-AUPRO": -0.0002446921579294381
+        },
+        "recall": {
+          "R@FPR0.001": -0.004169895048249633,
+          "R@FPR0.01": -0.004330894857062395,
+          "R@FPR0.05": -0.0006842491874540224
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -4.0608064999503313e-07,
+          "P-AP": 0.009716841380486119,
+          "P-F1": 0.0024420114175085494,
+          "P-AUPRO": -0.0004305425733982515
+        },
+        "recall": {
+          "R@FPR0.001": 0.00854679306171846,
+          "R@FPR0.01": -0.0009580475998386406,
+          "R@FPR0.05": -7.563533682941603e-05
+        }
+      }
+    }
+  },
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.11.0+cu130",
+    "cuda_available": true,
+    "classes_evaluated": 4,
+    "test_images_evaluated": 578,
+    "eval_batch": 4,
+    "base_batch": 4,
+    "hi_batch": 2,
+    "ref_chunk": 2,
+    "forwards_per_test_image": 2,
+    "seconds_total": 488.94556069374084,
+    "gpu_peak_mib_max": 2207.42578125
+  },
+  "files": {
+    "per_class_dir": "/kaggle/working/per_class",
+    "progress": "/kaggle/working/progress.json",
+    "status": "/kaggle/working/status.json"
+  }
+}

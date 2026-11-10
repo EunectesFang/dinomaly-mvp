@@ -1,0 +1,372 @@
+{
+  "class": "zipper",
+  "fingerprint": "9f62379aa463bcaa",
+  "n_test": 151,
+  "n_normal": 32,
+  "n_anomaly": 119,
+  "n_gt_positive_pixels": 271078,
+  "n_gt_negative_pixels": 9624858,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 240,
+    "memory_files": [
+      "000.png",
+      "004.png",
+      "009.png",
+      "013.png",
+      "017.png",
+      "022.png",
+      "026.png",
+      "030.png",
+      "035.png",
+      "039.png",
+      "043.png",
+      "048.png",
+      "052.png",
+      "056.png",
+      "061.png",
+      "065.png",
+      "070.png",
+      "074.png",
+      "078.png",
+      "083.png",
+      "087.png",
+      "091.png",
+      "096.png",
+      "100.png",
+      "104.png",
+      "109.png",
+      "113.png",
+      "117.png",
+      "122.png",
+      "126.png",
+      "130.png",
+      "135.png",
+      "139.png",
+      "143.png",
+      "148.png",
+      "152.png",
+      "156.png",
+      "161.png",
+      "165.png",
+      "169.png"
+    ],
+    "calibration_files": [
+      "174.png",
+      "178.png",
+      "183.png",
+      "187.png",
+      "191.png",
+      "196.png",
+      "200.png",
+      "204.png",
+      "209.png",
+      "213.png",
+      "217.png",
+      "222.png",
+      "226.png",
+      "230.png",
+      "235.png",
+      "239.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "shift_radius": 2,
+    "shift_prior_manhattan": 0.005,
+    "alignment": "per (test image, memory image) coherent shift (sr,sc) in [-2,2]^2; shift score = mean cosine similarity over in-image query positions minus 0.005*(|sr|+|sc|); candidates = +/-1 neighbourhood around the shifted coordinate; out-of-image positions masked; row falls back to the original zero-shift neighbourhood when fewer than top-3 finite candidates remain",
+    "calibration": {
+      "ref_free": {
+        "median": 0.27807360887527466,
+        "q95": 0.3853888511657715,
+        "scale": 0.10731524229049683,
+        "n_values": 1048576
+      },
+      "ref_spatial_aligned": {
+        "median": 0.30204689502716064,
+        "q95": 0.4202575981616974,
+        "scale": 0.11821070313453674,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.059489063918590546,
+        "q95": 0.08929817378520966,
+        "scale": 0.02980910986661911,
+        "n_values": 1048576
+      }
+    },
+    "calibration_shift_alignment": {
+      "shift_radius": 2,
+      "shift_prior_manhattan": 0.005,
+      "shift_counts": {
+        "-1,0": 87,
+        "0,-1": 13,
+        "0,0": 439,
+        "1,-1": 6,
+        "1,0": 90,
+        "-1,1": 1,
+        "1,1": 1,
+        "-1,-1": 2,
+        "0,1": 1
+      },
+      "pairs": 640,
+      "rows": 12544,
+      "fallback_rows": 0,
+      "fallback_fraction": 0.0,
+      "zero_shift_pairs": 439,
+      "zero_shift_fraction": 0.6859375,
+      "invalid_shift_score_pairs": 0,
+      "mean_abs_sr": 0.29218750447034836,
+      "mean_abs_sc": 0.03750000102445483
+    },
+    "gate": {
+      "rel_extra_median": 0.05539334937930107,
+      "g_spatial": 0.430439988397493,
+      "source": "disjoint calibration normals; aligned spatial branch",
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_aligned - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 1.0,
+    "I-AP": 0.9999999999999998,
+    "I-F1": 0.9999999500000026
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "6ccd3fb9c7a2773f6dc0bbb4015de3b44fba12f2b1201990cf1c8d853f31072d",
+    "stage1_baseline_delta": null
+  },
+  "test_shift_alignment": {
+    "shift_radius": 2,
+    "shift_prior_manhattan": 0.005,
+    "shift_counts": {
+      "-1,-1": 10,
+      "-1,0": 779,
+      "0,0": 4205,
+      "1,0": 799,
+      "0,-1": 66,
+      "1,-1": 26,
+      "-1,1": 28,
+      "0,1": 97,
+      "1,1": 24,
+      "-2,0": 5,
+      "2,-1": 1
+    },
+    "pairs": 6040,
+    "rows": 118384,
+    "fallback_rows": 0,
+    "fallback_fraction": 0.0,
+    "zero_shift_pairs": 4205,
+    "zero_shift_fraction": 0.6961920529801324,
+    "invalid_shift_score_pairs": 0,
+    "mean_abs_sr": 0.2781250064726919,
+    "mean_abs_sc": 0.041776316755108144
+  },
+  "v5_control_comparison": {
+    "source": "downloaded stage-5 per-class JSON; unchanged control",
+    "v5_n_test": 151,
+    "v5_metrics": {
+      "base_fuse672": {
+        "metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026,
+          "P-AUROC": 0.9955812541386245,
+          "P-AP": 0.8671961556390471,
+          "P-F1": 0.8143222353029622,
+          "P-AUPRO": 0.980588373974324
+        },
+        "recall": {
+          "R@FPR0.001": 0.4424409210633102,
+          "R@FPR0.01": 0.9081260744140063,
+          "R@FPR0.05": 0.9895011767830661
+        }
+      },
+      "ref_spatial": {
+        "metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026,
+          "P-AUROC": 0.8271785784496536,
+          "P-AP": 0.3665753563126447,
+          "P-F1": 0.4127755933984812,
+          "P-AUPRO": 0.6784522122525529
+        },
+        "recall": {
+          "R@FPR0.001": 0.15473775075808438,
+          "R@FPR0.01": 0.3515261290108382,
+          "R@FPR0.05": 0.5104176657640974
+        }
+      },
+      "ref_plus_base": {
+        "metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026,
+          "P-AUROC": 0.9810730688044449,
+          "P-AP": 0.7549975827894198,
+          "P-F1": 0.7056820277747335,
+          "P-AUPRO": 0.947687534028262
+        },
+        "recall": {
+          "R@FPR0.001": 0.33764820457580474,
+          "R@FPR0.01": 0.736754734799578,
+          "R@FPR0.05": 0.9225757899940239
+        }
+      }
+    },
+    "deltas_pp": {
+      "base_fuse672 - v5_base_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0,
+          "P-AP": 0.0,
+          "P-F1": 0.0,
+          "P-AUPRO": 0.0
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 0.0
+        }
+      },
+      "ref_spatial_aligned - v5_ref_spatial": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.3898994878574591,
+          "P-AP": -0.5751381765880637,
+          "P-F1": -0.3230910719765223,
+          "P-AUPRO": 0.023527666922928958
+        },
+        "recall": {
+          "R@FPR0.001": -0.3190963486524173,
+          "R@FPR0.01": -0.31540737352348525,
+          "R@FPR0.05": -0.47071322645142466
+        }
+      },
+      "aligned_plus_base - v5_ref_plus_base": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.014673186091573864,
+          "P-AP": -0.029296064762940333,
+          "P-F1": -0.012558685729502361,
+          "P-AUPRO": 0.017134903740800844
+        },
+        "recall": {
+          "R@FPR0.001": -0.07377950257859145,
+          "R@FPR0.01": -0.029142903518541985,
+          "R@FPR0.05": -0.03172518610879971
+        }
+      }
+    }
+  },
+  "variants": {
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9955812541386245,
+        "P-AP": 0.8671961556390471,
+        "P-F1": 0.8143222353029622,
+        "P-AUPRO": 0.980588373974324
+      },
+      "recall": {
+        "R@FPR0.001": 0.4424409210633102,
+        "R@FPR0.01": 0.9081260744140063,
+        "R@FPR0.05": 0.9895011767830661
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1519838273525238,
+        "T@FPR0.01": 0.11468739807605743,
+        "T@FPR0.05": 0.09434652328491211
+      }
+    },
+    "ref_spatial_aligned": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.823279583571079,
+        "P-AP": 0.36082397454676407,
+        "P-F1": 0.40954468267871597,
+        "P-AUPRO": 0.6786874889217822
+      },
+      "recall": {
+        "R@FPR0.001": 0.1515467872715602,
+        "R@FPR0.01": 0.34837205527560333,
+        "R@FPR0.05": 0.5057105334995832
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.6811585426330566,
+        "T@FPR0.01": 0.5644570589065552,
+        "T@FPR0.05": 0.48029521107673645
+      }
+    },
+    "ref_adaptive_aligned": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.8346205574202574,
+        "P-AP": 0.38243894829805036,
+        "P-F1": 0.42815976124750676,
+        "P-AUPRO": 0.6909389517042087
+      },
+      "recall": {
+        "R@FPR0.001": 0.15941168224643829,
+        "R@FPR0.01": 0.36848803665365687,
+        "R@FPR0.05": 0.5280989235570573
+      },
+      "thresholds": {
+        "T@FPR0.001": 3.16271710395813,
+        "T@FPR0.01": 2.21018385887146,
+        "T@FPR0.05": 1.5141232013702393
+      }
+    },
+    "aligned_plus_base": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9809263369435292,
+        "P-AP": 0.7547046221417903,
+        "P-F1": 0.7055564409174385,
+        "P-AUPRO": 0.94785888306567
+      },
+      "recall": {
+        "R@FPR0.001": 0.33691040955001883,
+        "R@FPR0.01": 0.7364633057643926,
+        "R@FPR0.05": 0.9222585381329359
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.826127767562866,
+        "T@FPR0.01": 1.6924564838409424,
+        "T@FPR0.05": 0.9905660152435303
+      }
+    }
+  },
+  "seconds": 124.71763753890991,
+  "gpu_peak_mib": 2204.42529296875
+}

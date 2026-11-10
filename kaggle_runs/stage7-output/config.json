@@ -1,0 +1,128 @@
+{
+  "slug": "eunectesqaq/dinomaly-guided-boundary-v7",
+  "stage": 7,
+  "script": "script.py",
+  "code_sha256": "c83ba09de825f9dff5ae998efc81911efd01af6973b5ac29db3e4ed316eaa055",
+  "baseline": {
+    "resize": 448,
+    "crop": 392,
+    "fov": 0.875
+  },
+  "enabled_scales": [
+    {
+      "name": "hi672",
+      "crop": 672,
+      "resize": 768,
+      "fov": 0.875,
+      "batch": 2
+    }
+  ],
+  "variants": [
+    "base_fuse672",
+    "box2_fuse672",
+    "guide_fuse672",
+    "detail_fuse672"
+  ],
+  "fusion": {
+    "reference": "0.5 * base_global + 0.5 * hi672",
+    "box_control": "two-pass avg_pool2d box smoothing",
+    "guided": "grayscale local-linear guided filter",
+    "detail": "base_fuse672 + strength * clipped(guided - box2)"
+  },
+  "guide": {
+    "source": "original 672 crop de-normalized to RGB 0..1, bilinear resized to 256, luminance grayscale",
+    "radius": 7,
+    "epsilon": 0.0025,
+    "detail_strength": 0.5,
+    "detail_cap_fraction": 0.1,
+    "box_pooling": "avg_pool2d(count_include_pad=False)"
+  },
+  "metrics": {
+    "keys": [
+      "I-AUROC",
+      "I-AP",
+      "I-F1",
+      "P-AUROC",
+      "P-AP",
+      "P-F1",
+      "P-AUPRO"
+    ],
+    "recall": [
+      "R@FPR0.001",
+      "R@FPR0.01",
+      "R@FPR0.05"
+    ],
+    "evaluation_grid": 256,
+    "mask_source": "exact original 448->392 gt transform, nearest to 256",
+    "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants",
+    "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+  },
+  "no_training": true,
+  "test_labels_used_for_selection_or_fit": false,
+  "classes_total": 15,
+  "eval_classes": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "partial": false,
+  "test_images_total": 1725,
+  "test_images_evaluated": 1725,
+  "test_counts": {
+    "bottle": 83,
+    "cable": 150,
+    "capsule": 132,
+    "carpet": 117,
+    "grid": 78,
+    "hazelnut": 110,
+    "leather": 124,
+    "metal_nut": 115,
+    "pill": 167,
+    "screw": 160,
+    "tile": 117,
+    "toothbrush": 42,
+    "transistor": 100,
+    "wood": 79,
+    "zipper": 151
+  },
+  "eval_batch": 4,
+  "base_batch": 4,
+  "scale_batches": {
+    "672": 2
+  },
+  "probe": {
+    "base": {
+      "crop": 392,
+      "resize": 448,
+      "batch": 4,
+      "seconds": 5.201898813247681,
+      "seconds_per_image": 1.3004747033119202,
+      "peak_mib": 1154.81640625,
+      "enabled": true
+    },
+    "672": {
+      "crop": 672,
+      "resize": 768,
+      "batch": 2,
+      "seconds": 0.5981037616729736,
+      "seconds_per_image": 0.2990518808364868,
+      "peak_mib": 1958.419921875,
+      "enabled": true
+    }
+  },
+  "base_checkpoint": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/model_10000.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+  "stage1_metrics": "/kaggle/input/notebooks/eunectesqaq/dinomaly-base-10k/metrics.json"
+}

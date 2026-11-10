@@ -1,0 +1,224 @@
+{
+  "class": "screw",
+  "fingerprint": "95b0ea9131ba4fcb",
+  "n_test": 160,
+  "n_normal": 41,
+  "n_anomaly": 119,
+  "n_gt_positive_pixels": 39664,
+  "n_gt_negative_pixels": 10446096,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 320,
+    "memory_files": [
+      "000.png",
+      "006.png",
+      "012.png",
+      "017.png",
+      "023.png",
+      "029.png",
+      "035.png",
+      "041.png",
+      "046.png",
+      "052.png",
+      "058.png",
+      "064.png",
+      "070.png",
+      "075.png",
+      "081.png",
+      "087.png",
+      "093.png",
+      "099.png",
+      "104.png",
+      "110.png",
+      "116.png",
+      "122.png",
+      "128.png",
+      "133.png",
+      "139.png",
+      "145.png",
+      "151.png",
+      "157.png",
+      "162.png",
+      "168.png",
+      "174.png",
+      "180.png",
+      "186.png",
+      "191.png",
+      "197.png",
+      "203.png",
+      "209.png",
+      "215.png",
+      "220.png",
+      "226.png"
+    ],
+    "calibration_files": [
+      "232.png",
+      "238.png",
+      "244.png",
+      "249.png",
+      "255.png",
+      "261.png",
+      "267.png",
+      "273.png",
+      "278.png",
+      "284.png",
+      "290.png",
+      "296.png",
+      "302.png",
+      "307.png",
+      "313.png",
+      "319.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "calibration": {
+      "ref_free": {
+        "median": 0.30799174308776855,
+        "q95": 0.42182788252830505,
+        "q99": 0.45991313457489014,
+        "scale": 0.1138361394405365,
+        "n_values": 1048576
+      },
+      "ref_spatial": {
+        "median": 0.3417220711708069,
+        "q95": 0.4784987270832062,
+        "q99": 0.53839111328125,
+        "scale": 0.1367766559123993,
+        "n_values": 1048576
+      },
+      "base_global": {
+        "median": 0.03297779709100723,
+        "q95": 0.05048922821879387,
+        "q99": 0.055937282741069794,
+        "scale": 0.017511431127786636,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.03915057331323624,
+        "q95": 0.06801708042621613,
+        "q99": 0.07570447027683258,
+        "scale": 0.02886650711297989,
+        "n_values": 1048576
+      }
+    },
+    "gate": {
+      "rel_extra_median": 0.066104955971241,
+      "g_spatial": 0.4186779177917591,
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 0.983398237343718,
+    "I-AP": 0.9946887003395251,
+    "I-F1": 0.9626555516675014
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "9e0b5a8a77fbe72205d5490b4c3b24eeaffb154b268300b630e999e95da53844",
+    "stage1_baseline_delta": null
+  },
+  "variants": {
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.994477720544336,
+        "P-AP": 0.6592856246268033,
+        "P-F1": 0.6475957672209693,
+        "P-AUPRO": 0.9749371644660824
+      },
+      "recall": {
+        "R@FPR0.001": 0.5741478418717225,
+        "R@FPR0.01": 0.9197256958450988,
+        "R@FPR0.05": 0.9759479628882614
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1156565397977829,
+        "T@FPR0.01": 0.08792322129011154,
+        "T@FPR0.05": 0.07435005903244019
+      }
+    },
+    "ref_conservative": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9944713975071119,
+        "P-AP": 0.6689941809207022,
+        "P-F1": 0.6499555142713994,
+        "P-AUPRO": 0.9743534627146122
+      },
+      "recall": {
+        "R@FPR0.001": 0.581081081081081,
+        "R@FPR0.01": 0.919549213392497,
+        "R@FPR0.05": 0.9758219039935457
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.685410737991333,
+        "T@FPR0.01": 1.7038178443908691,
+        "T@FPR0.05": 1.2263365983963013
+      }
+    },
+    "edge_detail": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9940725590525172,
+        "P-AP": 0.6604610622858875,
+        "P-F1": 0.6490656611015968,
+        "P-AUPRO": 0.9730445489641718
+      },
+      "recall": {
+        "R@FPR0.001": 0.5780304558289633,
+        "R@FPR0.01": 0.9171793061718435,
+        "R@FPR0.05": 0.9731242436466317
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.11683161556720734,
+        "T@FPR0.01": 0.08899341523647308,
+        "T@FPR0.05": 0.07509932667016983
+      }
+    },
+    "combined": {
+      "metrics": {
+        "I-AUROC": 0.983398237343718,
+        "I-AP": 0.9946887003395251,
+        "I-F1": 0.9626555516675014,
+        "P-AUROC": 0.9940721529718672,
+        "P-AP": 0.6701779036663736,
+        "P-F1": 0.6515076725191054,
+        "P-AUPRO": 0.9726140063907736
+      },
+      "recall": {
+        "R@FPR0.001": 0.5865772488906817,
+        "R@FPR0.01": 0.9162212585720049,
+        "R@FPR0.05": 0.9730486083098023
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.7246246337890625,
+        "T@FPR0.01": 1.7411658763885498,
+        "T@FPR0.05": 1.251977801322937
+      }
+    }
+  },
+  "seconds": 133.25383520126343,
+  "gpu_peak_mib": 2207.42578125
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "eunectesqaq/dinomaly-masked-recon-v12",
+  "fingerprint": "b9ffe02b625cd14f",
+  "status": "complete",
+  "updated": "2026-11-06 04:25:18",
+  "classes_done": [
+    "leather",
+    "capsule",
+    "grid",
+    "screw"
+  ],
+  "classes_total": 4,
+  "report": "/kaggle/working/masked_recon_report.json",
+  "markdown": null
+}

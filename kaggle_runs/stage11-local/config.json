@@ -1,0 +1,85 @@
+{
+  "slug": "eunectesqaq/dinomaly-synthetic-refine-v11",
+  "stage": 11,
+  "script": "stage11.py",
+  "code_sha256": "ebcb504fb4114a8e86af200489ee8ba4f450e27d6916f360d2374a26398069a7",
+  "baseline": {
+    "resize": 448,
+    "crop": 392
+  },
+  "high_res": {
+    "resize": 768,
+    "crop": 672
+  },
+  "variants": [
+    "v7_guide",
+    "learned_head",
+    "blend_guarded"
+  ],
+  "fusion": "0.5 * base_global + 0.5 * hi672",
+  "guide": {
+    "radius": 7,
+    "epsilon": 0.0025
+  },
+  "training": {
+    "source": "MVTec train/good only",
+    "classes": [
+      "bottle",
+      "screw",
+      "wood"
+    ],
+    "good_images_per_class": 16,
+    "synthetic_images_per_class": 16,
+    "pairs_total": 96,
+    "synthetic": "irregular ellipse; moved/replaced/contrast patch",
+    "seed": 1105,
+    "epochs": 20,
+    "batch": 8,
+    "optimizer": "AdamW lr 1e-3 wd 1e-4",
+    "schedule": "MultiStepLR 0.3 at 55% and 82%",
+    "loss": "pixel BCE pos_weight + 0.5 soft Dice",
+    "head": "Conv3x3(10->24)-GroupNorm-ReLU-Conv3x3(24->1)",
+    "test_images_or_labels_used_for_fit": false,
+    "external_data": false
+  },
+  "blend": {
+    "alpha": 0.5,
+    "guard_cap": 0.25,
+    "definition": "guided + 0.5*scale*clip(head_prob - normalized(guided), -0.25, 0.25)"
+  },
+  "metrics": {
+    "keys": [
+      "I-AUROC",
+      "I-AP",
+      "I-F1",
+      "P-AUROC",
+      "P-AP",
+      "P-F1",
+      "P-AUPRO"
+    ],
+    "recall": [
+      "R@FPR0.001",
+      "R@FPR0.01",
+      "R@FPR0.05"
+    ],
+    "evaluation_grid": 256,
+    "mask_source": "exact original 448->392 gt, nearest to 256",
+    "image_score": "original baseline top1% reused unchanged"
+  },
+  "classes_total": 3,
+  "eval_classes": [
+    "bottle",
+    "screw",
+    "wood"
+  ],
+  "partial": false,
+  "test_images_total": 322,
+  "test_images_evaluated": 322,
+  "test_counts": {
+    "bottle": 83,
+    "screw": 160,
+    "wood": 79
+  },
+  "base_checkpoint": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/model_10000.pt",
+  "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218"
+}

@@ -1,0 +1,2323 @@
+{
+  "fingerprint": "b9ffe02b625cd14f",
+  "feature_shape": [
+    2,
+    768,
+    48,
+    48
+  ],
+  "dtype": "float16",
+  "entries": [
+    {
+      "item": "leather",
+      "local_index": 0,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/001.png",
+      "npy": "/kaggle/working/cache_clean/leather/0000.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 1,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/004.png",
+      "npy": "/kaggle/working/cache_clean/leather/0001.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 2,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/005.png",
+      "npy": "/kaggle/working/cache_clean/leather/0002.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 3,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/008.png",
+      "npy": "/kaggle/working/cache_clean/leather/0003.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 4,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/009.png",
+      "npy": "/kaggle/working/cache_clean/leather/0004.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 5,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/014.png",
+      "npy": "/kaggle/working/cache_clean/leather/0005.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 6,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/016.png",
+      "npy": "/kaggle/working/cache_clean/leather/0006.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 7,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/018.png",
+      "npy": "/kaggle/working/cache_clean/leather/0007.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 8,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/019.png",
+      "npy": "/kaggle/working/cache_clean/leather/0008.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 9,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/020.png",
+      "npy": "/kaggle/working/cache_clean/leather/0009.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 10,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/021.png",
+      "npy": "/kaggle/working/cache_clean/leather/0010.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 11,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/022.png",
+      "npy": "/kaggle/working/cache_clean/leather/0011.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 12,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/024.png",
+      "npy": "/kaggle/working/cache_clean/leather/0012.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 13,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/026.png",
+      "npy": "/kaggle/working/cache_clean/leather/0013.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 14,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/027.png",
+      "npy": "/kaggle/working/cache_clean/leather/0014.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 15,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/031.png",
+      "npy": "/kaggle/working/cache_clean/leather/0015.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 16,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/032.png",
+      "npy": "/kaggle/working/cache_clean/leather/0016.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 17,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/034.png",
+      "npy": "/kaggle/working/cache_clean/leather/0017.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 18,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/038.png",
+      "npy": "/kaggle/working/cache_clean/leather/0018.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 19,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/040.png",
+      "npy": "/kaggle/working/cache_clean/leather/0019.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 20,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/044.png",
+      "npy": "/kaggle/working/cache_clean/leather/0020.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 21,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/047.png",
+      "npy": "/kaggle/working/cache_clean/leather/0021.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 22,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/054.png",
+      "npy": "/kaggle/working/cache_clean/leather/0022.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 23,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/057.png",
+      "npy": "/kaggle/working/cache_clean/leather/0023.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 24,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/061.png",
+      "npy": "/kaggle/working/cache_clean/leather/0024.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 25,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/065.png",
+      "npy": "/kaggle/working/cache_clean/leather/0025.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 26,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/066.png",
+      "npy": "/kaggle/working/cache_clean/leather/0026.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 27,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/067.png",
+      "npy": "/kaggle/working/cache_clean/leather/0027.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 28,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/070.png",
+      "npy": "/kaggle/working/cache_clean/leather/0028.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 29,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/074.png",
+      "npy": "/kaggle/working/cache_clean/leather/0029.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 30,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/078.png",
+      "npy": "/kaggle/working/cache_clean/leather/0030.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 31,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/079.png",
+      "npy": "/kaggle/working/cache_clean/leather/0031.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 32,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/080.png",
+      "npy": "/kaggle/working/cache_clean/leather/0032.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 33,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/081.png",
+      "npy": "/kaggle/working/cache_clean/leather/0033.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 34,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/083.png",
+      "npy": "/kaggle/working/cache_clean/leather/0034.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 35,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/086.png",
+      "npy": "/kaggle/working/cache_clean/leather/0035.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 36,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/087.png",
+      "npy": "/kaggle/working/cache_clean/leather/0036.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 37,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/088.png",
+      "npy": "/kaggle/working/cache_clean/leather/0037.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 38,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/099.png",
+      "npy": "/kaggle/working/cache_clean/leather/0038.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 39,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/103.png",
+      "npy": "/kaggle/working/cache_clean/leather/0039.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 40,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/105.png",
+      "npy": "/kaggle/working/cache_clean/leather/0040.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 41,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/106.png",
+      "npy": "/kaggle/working/cache_clean/leather/0041.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 42,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/107.png",
+      "npy": "/kaggle/working/cache_clean/leather/0042.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 43,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/108.png",
+      "npy": "/kaggle/working/cache_clean/leather/0043.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 44,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/111.png",
+      "npy": "/kaggle/working/cache_clean/leather/0044.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 45,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/113.png",
+      "npy": "/kaggle/working/cache_clean/leather/0045.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 46,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/117.png",
+      "npy": "/kaggle/working/cache_clean/leather/0046.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 47,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/119.png",
+      "npy": "/kaggle/working/cache_clean/leather/0047.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 48,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/120.png",
+      "npy": "/kaggle/working/cache_clean/leather/0048.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 49,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/123.png",
+      "npy": "/kaggle/working/cache_clean/leather/0049.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 50,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/124.png",
+      "npy": "/kaggle/working/cache_clean/leather/0050.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 51,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/125.png",
+      "npy": "/kaggle/working/cache_clean/leather/0051.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 52,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/134.png",
+      "npy": "/kaggle/working/cache_clean/leather/0052.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 53,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/135.png",
+      "npy": "/kaggle/working/cache_clean/leather/0053.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 54,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/144.png",
+      "npy": "/kaggle/working/cache_clean/leather/0054.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 55,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/145.png",
+      "npy": "/kaggle/working/cache_clean/leather/0055.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 56,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/149.png",
+      "npy": "/kaggle/working/cache_clean/leather/0056.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 57,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/150.png",
+      "npy": "/kaggle/working/cache_clean/leather/0057.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 58,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/152.png",
+      "npy": "/kaggle/working/cache_clean/leather/0058.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 59,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/153.png",
+      "npy": "/kaggle/working/cache_clean/leather/0059.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 60,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/155.png",
+      "npy": "/kaggle/working/cache_clean/leather/0060.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 61,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/156.png",
+      "npy": "/kaggle/working/cache_clean/leather/0061.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 62,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/158.png",
+      "npy": "/kaggle/working/cache_clean/leather/0062.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 63,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/159.png",
+      "npy": "/kaggle/working/cache_clean/leather/0063.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 64,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/162.png",
+      "npy": "/kaggle/working/cache_clean/leather/0064.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 65,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/163.png",
+      "npy": "/kaggle/working/cache_clean/leather/0065.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 66,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/166.png",
+      "npy": "/kaggle/working/cache_clean/leather/0066.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 67,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/171.png",
+      "npy": "/kaggle/working/cache_clean/leather/0067.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 68,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/172.png",
+      "npy": "/kaggle/working/cache_clean/leather/0068.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 69,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/175.png",
+      "npy": "/kaggle/working/cache_clean/leather/0069.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 70,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/176.png",
+      "npy": "/kaggle/working/cache_clean/leather/0070.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 71,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/177.png",
+      "npy": "/kaggle/working/cache_clean/leather/0071.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 72,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/178.png",
+      "npy": "/kaggle/working/cache_clean/leather/0072.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 73,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/181.png",
+      "npy": "/kaggle/working/cache_clean/leather/0073.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 74,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/186.png",
+      "npy": "/kaggle/working/cache_clean/leather/0074.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 75,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/188.png",
+      "npy": "/kaggle/working/cache_clean/leather/0075.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 76,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/189.png",
+      "npy": "/kaggle/working/cache_clean/leather/0076.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 77,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/192.png",
+      "npy": "/kaggle/working/cache_clean/leather/0077.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 78,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/194.png",
+      "npy": "/kaggle/working/cache_clean/leather/0078.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 79,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/195.png",
+      "npy": "/kaggle/working/cache_clean/leather/0079.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 80,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/198.png",
+      "npy": "/kaggle/working/cache_clean/leather/0080.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 81,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/201.png",
+      "npy": "/kaggle/working/cache_clean/leather/0081.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 82,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/206.png",
+      "npy": "/kaggle/working/cache_clean/leather/0082.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 83,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/208.png",
+      "npy": "/kaggle/working/cache_clean/leather/0083.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 84,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/209.png",
+      "npy": "/kaggle/working/cache_clean/leather/0084.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 85,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/211.png",
+      "npy": "/kaggle/working/cache_clean/leather/0085.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 86,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/214.png",
+      "npy": "/kaggle/working/cache_clean/leather/0086.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 87,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/215.png",
+      "npy": "/kaggle/working/cache_clean/leather/0087.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 88,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/219.png",
+      "npy": "/kaggle/working/cache_clean/leather/0088.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 89,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/222.png",
+      "npy": "/kaggle/working/cache_clean/leather/0089.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 90,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/223.png",
+      "npy": "/kaggle/working/cache_clean/leather/0090.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 91,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/224.png",
+      "npy": "/kaggle/working/cache_clean/leather/0091.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 92,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/226.png",
+      "npy": "/kaggle/working/cache_clean/leather/0092.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 93,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/233.png",
+      "npy": "/kaggle/working/cache_clean/leather/0093.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 94,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/237.png",
+      "npy": "/kaggle/working/cache_clean/leather/0094.npy"
+    },
+    {
+      "item": "leather",
+      "local_index": 95,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/train/good/242.png",
+      "npy": "/kaggle/working/cache_clean/leather/0095.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 0,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/004.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0000.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 1,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/005.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0001.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 2,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/006.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0002.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 3,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/008.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0003.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 4,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/009.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0004.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 5,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/018.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0005.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 6,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/019.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0006.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 7,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/020.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0007.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 8,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/022.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0008.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 9,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/023.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0009.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 10,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/024.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0010.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 11,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/026.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0011.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 12,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/027.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0012.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 13,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/029.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0013.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 14,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/030.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0014.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 15,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/031.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0015.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 16,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/032.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0016.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 17,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/034.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0017.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 18,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/037.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0018.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 19,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/038.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0019.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 20,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/043.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0020.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 21,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/044.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0021.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 22,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/047.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0022.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 23,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/048.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0023.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 24,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/054.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0024.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 25,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/057.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0025.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 26,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/061.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0026.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 27,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/065.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0027.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 28,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/066.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0028.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 29,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/070.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0029.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 30,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/071.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0030.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 31,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/073.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0031.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 32,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/074.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0032.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 33,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/078.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0033.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 34,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/079.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0034.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 35,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/080.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0035.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 36,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/081.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0036.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 37,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/083.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0037.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 38,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/084.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0038.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 39,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/086.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0039.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 40,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/088.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0040.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 41,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/090.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0041.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 42,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/094.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0042.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 43,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/096.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0043.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 44,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/097.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0044.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 45,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/099.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0045.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 46,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/101.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0046.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 47,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/103.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0047.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 48,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/105.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0048.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 49,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/107.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0049.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 50,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/108.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0050.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 51,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/109.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0051.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 52,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/110.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0052.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 53,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/111.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0053.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 54,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/117.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0054.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 55,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/119.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0055.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 56,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/121.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0056.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 57,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/123.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0057.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 58,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/124.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0058.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 59,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/125.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0059.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 60,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/126.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0060.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 61,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/130.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0061.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 62,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/131.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0062.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 63,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/135.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0063.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 64,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/136.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0064.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 65,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/138.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0065.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 66,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/139.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0066.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 67,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/140.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0067.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 68,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/142.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0068.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 69,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/143.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0069.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 70,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/144.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0070.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 71,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/148.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0071.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 72,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/149.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0072.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 73,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/150.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0073.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 74,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/153.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0074.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 75,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/155.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0075.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 76,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/156.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0076.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 77,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/157.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0077.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 78,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/159.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0078.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 79,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/166.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0079.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 80,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/172.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0080.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 81,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/177.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0081.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 82,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/181.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0082.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 83,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/183.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0083.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 84,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/184.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0084.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 85,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/185.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0085.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 86,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/186.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0086.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 87,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/189.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0087.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 88,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/197.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0088.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 89,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/198.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0089.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 90,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/199.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0090.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 91,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/201.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0091.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 92,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/203.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0092.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 93,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/208.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0093.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 94,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/213.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0094.npy"
+    },
+    {
+      "item": "capsule",
+      "local_index": 95,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/capsule/train/good/214.png",
+      "npy": "/kaggle/working/cache_clean/capsule/0095.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 0,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/001.png",
+      "npy": "/kaggle/working/cache_clean/grid/0000.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 1,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/004.png",
+      "npy": "/kaggle/working/cache_clean/grid/0001.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 2,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/005.png",
+      "npy": "/kaggle/working/cache_clean/grid/0002.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 3,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/006.png",
+      "npy": "/kaggle/working/cache_clean/grid/0003.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 4,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/008.png",
+      "npy": "/kaggle/working/cache_clean/grid/0004.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 5,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/009.png",
+      "npy": "/kaggle/working/cache_clean/grid/0005.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 6,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/013.png",
+      "npy": "/kaggle/working/cache_clean/grid/0006.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 7,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/014.png",
+      "npy": "/kaggle/working/cache_clean/grid/0007.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 8,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/016.png",
+      "npy": "/kaggle/working/cache_clean/grid/0008.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 9,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/018.png",
+      "npy": "/kaggle/working/cache_clean/grid/0009.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 10,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/019.png",
+      "npy": "/kaggle/working/cache_clean/grid/0010.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 11,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/020.png",
+      "npy": "/kaggle/working/cache_clean/grid/0011.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 12,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/023.png",
+      "npy": "/kaggle/working/cache_clean/grid/0012.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 13,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/024.png",
+      "npy": "/kaggle/working/cache_clean/grid/0013.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 14,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/027.png",
+      "npy": "/kaggle/working/cache_clean/grid/0014.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 15,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/029.png",
+      "npy": "/kaggle/working/cache_clean/grid/0015.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 16,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/031.png",
+      "npy": "/kaggle/working/cache_clean/grid/0016.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 17,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/032.png",
+      "npy": "/kaggle/working/cache_clean/grid/0017.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 18,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/040.png",
+      "npy": "/kaggle/working/cache_clean/grid/0018.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 19,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/043.png",
+      "npy": "/kaggle/working/cache_clean/grid/0019.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 20,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/044.png",
+      "npy": "/kaggle/working/cache_clean/grid/0020.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 21,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/047.png",
+      "npy": "/kaggle/working/cache_clean/grid/0021.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 22,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/048.png",
+      "npy": "/kaggle/working/cache_clean/grid/0022.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 23,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/052.png",
+      "npy": "/kaggle/working/cache_clean/grid/0023.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 24,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/059.png",
+      "npy": "/kaggle/working/cache_clean/grid/0024.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 25,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/061.png",
+      "npy": "/kaggle/working/cache_clean/grid/0025.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 26,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/067.png",
+      "npy": "/kaggle/working/cache_clean/grid/0026.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 27,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/070.png",
+      "npy": "/kaggle/working/cache_clean/grid/0027.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 28,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/078.png",
+      "npy": "/kaggle/working/cache_clean/grid/0028.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 29,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/079.png",
+      "npy": "/kaggle/working/cache_clean/grid/0029.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 30,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/080.png",
+      "npy": "/kaggle/working/cache_clean/grid/0030.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 31,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/081.png",
+      "npy": "/kaggle/working/cache_clean/grid/0031.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 32,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/083.png",
+      "npy": "/kaggle/working/cache_clean/grid/0032.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 33,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/084.png",
+      "npy": "/kaggle/working/cache_clean/grid/0033.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 34,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/086.png",
+      "npy": "/kaggle/working/cache_clean/grid/0034.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 35,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/087.png",
+      "npy": "/kaggle/working/cache_clean/grid/0035.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 36,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/088.png",
+      "npy": "/kaggle/working/cache_clean/grid/0036.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 37,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/090.png",
+      "npy": "/kaggle/working/cache_clean/grid/0037.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 38,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/096.png",
+      "npy": "/kaggle/working/cache_clean/grid/0038.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 39,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/097.png",
+      "npy": "/kaggle/working/cache_clean/grid/0039.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 40,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/099.png",
+      "npy": "/kaggle/working/cache_clean/grid/0040.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 41,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/103.png",
+      "npy": "/kaggle/working/cache_clean/grid/0041.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 42,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/105.png",
+      "npy": "/kaggle/working/cache_clean/grid/0042.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 43,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/106.png",
+      "npy": "/kaggle/working/cache_clean/grid/0043.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 44,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/108.png",
+      "npy": "/kaggle/working/cache_clean/grid/0044.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 45,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/113.png",
+      "npy": "/kaggle/working/cache_clean/grid/0045.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 46,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/119.png",
+      "npy": "/kaggle/working/cache_clean/grid/0046.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 47,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/121.png",
+      "npy": "/kaggle/working/cache_clean/grid/0047.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 48,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/123.png",
+      "npy": "/kaggle/working/cache_clean/grid/0048.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 49,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/125.png",
+      "npy": "/kaggle/working/cache_clean/grid/0049.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 50,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/126.png",
+      "npy": "/kaggle/working/cache_clean/grid/0050.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 51,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/127.png",
+      "npy": "/kaggle/working/cache_clean/grid/0051.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 52,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/130.png",
+      "npy": "/kaggle/working/cache_clean/grid/0052.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 53,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/133.png",
+      "npy": "/kaggle/working/cache_clean/grid/0053.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 54,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/135.png",
+      "npy": "/kaggle/working/cache_clean/grid/0054.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 55,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/138.png",
+      "npy": "/kaggle/working/cache_clean/grid/0055.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 56,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/141.png",
+      "npy": "/kaggle/working/cache_clean/grid/0056.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 57,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/147.png",
+      "npy": "/kaggle/working/cache_clean/grid/0057.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 58,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/148.png",
+      "npy": "/kaggle/working/cache_clean/grid/0058.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 59,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/152.png",
+      "npy": "/kaggle/working/cache_clean/grid/0059.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 60,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/157.png",
+      "npy": "/kaggle/working/cache_clean/grid/0060.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 61,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/159.png",
+      "npy": "/kaggle/working/cache_clean/grid/0061.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 62,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/160.png",
+      "npy": "/kaggle/working/cache_clean/grid/0062.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 63,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/163.png",
+      "npy": "/kaggle/working/cache_clean/grid/0063.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 64,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/166.png",
+      "npy": "/kaggle/working/cache_clean/grid/0064.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 65,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/167.png",
+      "npy": "/kaggle/working/cache_clean/grid/0065.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 66,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/173.png",
+      "npy": "/kaggle/working/cache_clean/grid/0066.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 67,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/176.png",
+      "npy": "/kaggle/working/cache_clean/grid/0067.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 68,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/178.png",
+      "npy": "/kaggle/working/cache_clean/grid/0068.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 69,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/180.png",
+      "npy": "/kaggle/working/cache_clean/grid/0069.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 70,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/181.png",
+      "npy": "/kaggle/working/cache_clean/grid/0070.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 71,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/191.png",
+      "npy": "/kaggle/working/cache_clean/grid/0071.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 72,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/192.png",
+      "npy": "/kaggle/working/cache_clean/grid/0072.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 73,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/193.png",
+      "npy": "/kaggle/working/cache_clean/grid/0073.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 74,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/201.png",
+      "npy": "/kaggle/working/cache_clean/grid/0074.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 75,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/203.png",
+      "npy": "/kaggle/working/cache_clean/grid/0075.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 76,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/206.png",
+      "npy": "/kaggle/working/cache_clean/grid/0076.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 77,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/208.png",
+      "npy": "/kaggle/working/cache_clean/grid/0077.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 78,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/211.png",
+      "npy": "/kaggle/working/cache_clean/grid/0078.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 79,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/213.png",
+      "npy": "/kaggle/working/cache_clean/grid/0079.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 80,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/216.png",
+      "npy": "/kaggle/working/cache_clean/grid/0080.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 81,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/217.png",
+      "npy": "/kaggle/working/cache_clean/grid/0081.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 82,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/220.png",
+      "npy": "/kaggle/working/cache_clean/grid/0082.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 83,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/228.png",
+      "npy": "/kaggle/working/cache_clean/grid/0083.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 84,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/229.png",
+      "npy": "/kaggle/working/cache_clean/grid/0084.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 85,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/234.png",
+      "npy": "/kaggle/working/cache_clean/grid/0085.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 86,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/235.png",
+      "npy": "/kaggle/working/cache_clean/grid/0086.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 87,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/237.png",
+      "npy": "/kaggle/working/cache_clean/grid/0087.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 88,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/242.png",
+      "npy": "/kaggle/working/cache_clean/grid/0088.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 89,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/244.png",
+      "npy": "/kaggle/working/cache_clean/grid/0089.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 90,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/253.png",
+      "npy": "/kaggle/working/cache_clean/grid/0090.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 91,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/257.png",
+      "npy": "/kaggle/working/cache_clean/grid/0091.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 92,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/258.png",
+      "npy": "/kaggle/working/cache_clean/grid/0092.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 93,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/259.png",
+      "npy": "/kaggle/working/cache_clean/grid/0093.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 94,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/260.png",
+      "npy": "/kaggle/working/cache_clean/grid/0094.npy"
+    },
+    {
+      "item": "grid",
+      "local_index": 95,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/grid/train/good/261.png",
+      "npy": "/kaggle/working/cache_clean/grid/0095.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 0,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/004.png",
+      "npy": "/kaggle/working/cache_clean/screw/0000.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 1,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/005.png",
+      "npy": "/kaggle/working/cache_clean/screw/0001.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 2,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/006.png",
+      "npy": "/kaggle/working/cache_clean/screw/0002.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 3,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/007.png",
+      "npy": "/kaggle/working/cache_clean/screw/0003.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 4,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/010.png",
+      "npy": "/kaggle/working/cache_clean/screw/0004.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 5,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/013.png",
+      "npy": "/kaggle/working/cache_clean/screw/0005.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 6,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/015.png",
+      "npy": "/kaggle/working/cache_clean/screw/0006.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 7,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/018.png",
+      "npy": "/kaggle/working/cache_clean/screw/0007.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 8,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/021.png",
+      "npy": "/kaggle/working/cache_clean/screw/0008.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 9,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/023.png",
+      "npy": "/kaggle/working/cache_clean/screw/0009.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 10,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/024.png",
+      "npy": "/kaggle/working/cache_clean/screw/0010.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 11,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/027.png",
+      "npy": "/kaggle/working/cache_clean/screw/0011.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 12,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/029.png",
+      "npy": "/kaggle/working/cache_clean/screw/0012.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 13,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/031.png",
+      "npy": "/kaggle/working/cache_clean/screw/0013.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 14,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/032.png",
+      "npy": "/kaggle/working/cache_clean/screw/0014.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 15,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/043.png",
+      "npy": "/kaggle/working/cache_clean/screw/0015.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 16,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/051.png",
+      "npy": "/kaggle/working/cache_clean/screw/0016.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 17,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/054.png",
+      "npy": "/kaggle/working/cache_clean/screw/0017.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 18,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/059.png",
+      "npy": "/kaggle/working/cache_clean/screw/0018.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 19,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/065.png",
+      "npy": "/kaggle/working/cache_clean/screw/0019.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 20,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/067.png",
+      "npy": "/kaggle/working/cache_clean/screw/0020.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 21,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/080.png",
+      "npy": "/kaggle/working/cache_clean/screw/0021.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 22,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/082.png",
+      "npy": "/kaggle/working/cache_clean/screw/0022.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 23,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/083.png",
+      "npy": "/kaggle/working/cache_clean/screw/0023.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 24,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/084.png",
+      "npy": "/kaggle/working/cache_clean/screw/0024.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 25,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/087.png",
+      "npy": "/kaggle/working/cache_clean/screw/0025.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 26,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/088.png",
+      "npy": "/kaggle/working/cache_clean/screw/0026.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 27,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/090.png",
+      "npy": "/kaggle/working/cache_clean/screw/0027.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 28,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/093.png",
+      "npy": "/kaggle/working/cache_clean/screw/0028.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 29,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/099.png",
+      "npy": "/kaggle/working/cache_clean/screw/0029.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 30,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/107.png",
+      "npy": "/kaggle/working/cache_clean/screw/0030.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 31,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/108.png",
+      "npy": "/kaggle/working/cache_clean/screw/0031.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 32,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/110.png",
+      "npy": "/kaggle/working/cache_clean/screw/0032.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 33,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/111.png",
+      "npy": "/kaggle/working/cache_clean/screw/0033.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 34,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/113.png",
+      "npy": "/kaggle/working/cache_clean/screw/0034.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 35,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/121.png",
+      "npy": "/kaggle/working/cache_clean/screw/0035.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 36,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/122.png",
+      "npy": "/kaggle/working/cache_clean/screw/0036.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 37,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/123.png",
+      "npy": "/kaggle/working/cache_clean/screw/0037.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 38,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/127.png",
+      "npy": "/kaggle/working/cache_clean/screw/0038.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 39,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/130.png",
+      "npy": "/kaggle/working/cache_clean/screw/0039.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 40,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/131.png",
+      "npy": "/kaggle/working/cache_clean/screw/0040.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 41,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/133.png",
+      "npy": "/kaggle/working/cache_clean/screw/0041.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 42,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/135.png",
+      "npy": "/kaggle/working/cache_clean/screw/0042.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 43,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/136.png",
+      "npy": "/kaggle/working/cache_clean/screw/0043.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 44,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/141.png",
+      "npy": "/kaggle/working/cache_clean/screw/0044.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 45,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/147.png",
+      "npy": "/kaggle/working/cache_clean/screw/0045.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 46,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/148.png",
+      "npy": "/kaggle/working/cache_clean/screw/0046.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 47,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/153.png",
+      "npy": "/kaggle/working/cache_clean/screw/0047.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 48,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/163.png",
+      "npy": "/kaggle/working/cache_clean/screw/0048.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 49,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/165.png",
+      "npy": "/kaggle/working/cache_clean/screw/0049.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 50,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/171.png",
+      "npy": "/kaggle/working/cache_clean/screw/0050.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 51,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/178.png",
+      "npy": "/kaggle/working/cache_clean/screw/0051.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 52,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/181.png",
+      "npy": "/kaggle/working/cache_clean/screw/0052.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 53,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/185.png",
+      "npy": "/kaggle/working/cache_clean/screw/0053.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 54,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/186.png",
+      "npy": "/kaggle/working/cache_clean/screw/0054.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 55,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/188.png",
+      "npy": "/kaggle/working/cache_clean/screw/0055.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 56,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/189.png",
+      "npy": "/kaggle/working/cache_clean/screw/0056.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 57,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/191.png",
+      "npy": "/kaggle/working/cache_clean/screw/0057.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 58,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/194.png",
+      "npy": "/kaggle/working/cache_clean/screw/0058.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 59,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/196.png",
+      "npy": "/kaggle/working/cache_clean/screw/0059.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 60,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/197.png",
+      "npy": "/kaggle/working/cache_clean/screw/0060.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 61,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/198.png",
+      "npy": "/kaggle/working/cache_clean/screw/0061.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 62,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/206.png",
+      "npy": "/kaggle/working/cache_clean/screw/0062.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 63,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/207.png",
+      "npy": "/kaggle/working/cache_clean/screw/0063.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 64,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/208.png",
+      "npy": "/kaggle/working/cache_clean/screw/0064.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 65,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/209.png",
+      "npy": "/kaggle/working/cache_clean/screw/0065.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 66,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/218.png",
+      "npy": "/kaggle/working/cache_clean/screw/0066.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 67,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/221.png",
+      "npy": "/kaggle/working/cache_clean/screw/0067.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 68,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/222.png",
+      "npy": "/kaggle/working/cache_clean/screw/0068.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 69,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/226.png",
+      "npy": "/kaggle/working/cache_clean/screw/0069.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 70,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/229.png",
+      "npy": "/kaggle/working/cache_clean/screw/0070.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 71,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/232.png",
+      "npy": "/kaggle/working/cache_clean/screw/0071.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 72,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/234.png",
+      "npy": "/kaggle/working/cache_clean/screw/0072.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 73,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/239.png",
+      "npy": "/kaggle/working/cache_clean/screw/0073.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 74,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/240.png",
+      "npy": "/kaggle/working/cache_clean/screw/0074.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 75,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/242.png",
+      "npy": "/kaggle/working/cache_clean/screw/0075.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 76,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/249.png",
+      "npy": "/kaggle/working/cache_clean/screw/0076.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 77,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/252.png",
+      "npy": "/kaggle/working/cache_clean/screw/0077.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 78,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/253.png",
+      "npy": "/kaggle/working/cache_clean/screw/0078.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 79,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/257.png",
+      "npy": "/kaggle/working/cache_clean/screw/0079.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 80,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/258.png",
+      "npy": "/kaggle/working/cache_clean/screw/0080.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 81,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/260.png",
+      "npy": "/kaggle/working/cache_clean/screw/0081.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 82,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/261.png",
+      "npy": "/kaggle/working/cache_clean/screw/0082.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 83,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/262.png",
+      "npy": "/kaggle/working/cache_clean/screw/0083.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 84,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/268.png",
+      "npy": "/kaggle/working/cache_clean/screw/0084.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 85,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/272.png",
+      "npy": "/kaggle/working/cache_clean/screw/0085.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 86,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/275.png",
+      "npy": "/kaggle/working/cache_clean/screw/0086.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 87,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/283.png",
+      "npy": "/kaggle/working/cache_clean/screw/0087.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 88,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/291.png",
+      "npy": "/kaggle/working/cache_clean/screw/0088.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 89,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/301.png",
+      "npy": "/kaggle/working/cache_clean/screw/0089.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 90,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/308.png",
+      "npy": "/kaggle/working/cache_clean/screw/0090.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 91,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/313.png",
+      "npy": "/kaggle/working/cache_clean/screw/0091.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 92,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/314.png",
+      "npy": "/kaggle/working/cache_clean/screw/0092.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 93,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/315.png",
+      "npy": "/kaggle/working/cache_clean/screw/0093.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 94,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/317.png",
+      "npy": "/kaggle/working/cache_clean/screw/0094.npy"
+    },
+    {
+      "item": "screw",
+      "local_index": 95,
+      "path": "/kaggle/input/datasets/ipythonx/mvtec-ad/screw/train/good/318.png",
+      "npy": "/kaggle/working/cache_clean/screw/0095.npy"
+    }
+  ],
+  "split_sha": {
+    "leather": "3ac4bdae74ad19bd3c931498eb93b0a81523783a0391e184078ba157a25f5b52",
+    "capsule": "88c3146fe7aadb03c98527563d5498ea55402b0f6185f7fea5e32c2eb6ba2fd2",
+    "grid": "7d2bce296d8ac61ac7e0741855a79705ebba05492801e2611b7067195092b17e",
+    "screw": "a7bd63799dcdd8070d29dd94d4980cf6fe6a6f1642f5070b8272247b7ba94f24"
+  },
+  "source": "frozen encoder clean forward on 768->672 crop"
+}

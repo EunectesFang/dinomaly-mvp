@@ -1,0 +1,205 @@
+{
+  "device": "cuda",
+  "size": 256,
+  "patch": 8,
+  "fit": "train/good only, files present on disk",
+  "gain_min": 0.02,
+  "near_px": 14,
+  "classes": {
+    "grid": {
+      "n_train": 40,
+      "n_test": 78,
+      "period_y": 24,
+      "period_x": 24,
+      "mean_abs_shift_px": {
+        "dy": 4.243589743589744,
+        "dx": 3.282051282051282
+      },
+      "variants": {
+        "global": {
+          "P-AP": 0.09602819474549167,
+          "delta_vs_global": 0.0,
+          "far_fp_fraction": 0.46209629186602874,
+          "near_fp_fraction": 0.31556519138755984,
+          "hit_fraction": 0.2223385167464115,
+          "recall_in_top": 0.3248877280879388,
+          "per_defect_image_ap": {
+            "bent": 0.16120822919265448,
+            "broken": 0.18167903888815076,
+            "glue": 0.21886842632918146,
+            "metal_contamination": 0.3120345665485854,
+            "thread": 0.2093454022514475
+          }
+        },
+        "position": {
+          "P-AP": 0.01089903465809341,
+          "delta_vs_global": -0.08512916008739825,
+          "far_fp_fraction": 0.7969248405103669,
+          "near_fp_fraction": 0.125,
+          "hit_fraction": 0.07807515948963317,
+          "recall_in_top": 0.06772414888043835,
+          "per_defect_image_ap": {
+            "bent": 0.034117175705485524,
+            "broken": 0.033973226999826724,
+            "glue": 0.03349871816484234,
+            "metal_contamination": 0.03662918050220279,
+            "thread": 0.12733456121522377
+          }
+        },
+        "aligned": {
+          "P-AP": 0.010955320731629942,
+          "delta_vs_global": -0.08507287401386172,
+          "far_fp_fraction": 0.8075408692185008,
+          "near_fp_fraction": 0.11994118819776714,
+          "hit_fraction": 0.07251794258373205,
+          "recall_in_top": 0.060512245635490805,
+          "per_defect_image_ap": {
+            "bent": 0.034117175705485524,
+            "broken": 0.034885771742301126,
+            "glue": 0.019823479622299554,
+            "metal_contamination": 0.04016927576574152,
+            "thread": 0.1249834225132405
+          }
+        },
+        "phase": {
+          "P-AP": 0.036905756858863006,
+          "delta_vs_global": -0.05912243788662866,
+          "far_fp_fraction": 0.6942035486443381,
+          "near_fp_fraction": 0.18543161881977677,
+          "hit_fraction": 0.12036483253588516,
+          "recall_in_top": 0.1599320163135736,
+          "per_defect_image_ap": {
+            "bent": 0.0855454902621267,
+            "broken": 0.08554767291325292,
+            "glue": 0.08042125294799911,
+            "metal_contamination": 0.13922173796345683,
+            "thread": 0.13618759314854628
+          }
+        }
+      },
+      "primary": "phase",
+      "supported": false,
+      "position_harms": true,
+      "global_far_fp_fraction": 0.46209629186602874
+    },
+    "transistor": {
+      "n_train": 40,
+      "n_test": 100,
+      "period_y": 12,
+      "period_x": 28,
+      "mean_abs_shift_px": {
+        "dy": 1.41,
+        "dx": 1.45
+      },
+      "variants": {
+        "global": {
+          "P-AP": 0.09830934593670948,
+          "delta_vs_global": 0.0,
+          "far_fp_fraction": 0.5857599431818181,
+          "near_fp_fraction": 0.11857244318181817,
+          "hit_fraction": 0.2956676136363637,
+          "recall_in_top": 0.03878176506596325,
+          "per_defect_image_ap": {
+            "bent_lead": 0.09360958993161701,
+            "cut_lead": 0.030849322365300146,
+            "damaged_case": 0.19503666143783555,
+            "misplaced": 0.6902377089483888
+          }
+        },
+        "position": {
+          "P-AP": 0.18480704739109746,
+          "delta_vs_global": 0.08649770145438798,
+          "far_fp_fraction": 0.5286931818181818,
+          "near_fp_fraction": 0.1295809659090909,
+          "hit_fraction": 0.3417258522727272,
+          "recall_in_top": 0.057410150190981925,
+          "per_defect_image_ap": {
+            "bent_lead": 0.1243224275217154,
+            "cut_lead": 0.051197265514613385,
+            "damaged_case": 0.2245419894678745,
+            "misplaced": 0.7913272707533187
+          }
+        },
+        "aligned": {
+          "P-AP": 0.19396070584337743,
+          "delta_vs_global": 0.09565135990666795,
+          "far_fp_fraction": 0.5292613636363637,
+          "near_fp_fraction": 0.13011363636363638,
+          "hit_fraction": 0.340625,
+          "recall_in_top": 0.05738581493090487,
+          "per_defect_image_ap": {
+            "bent_lead": 0.12750957236741406,
+            "cut_lead": 0.051197512971945136,
+            "damaged_case": 0.2245419894678745,
+            "misplaced": 0.7849967691348365
+          }
+        }
+      },
+      "primary": "aligned",
+      "supported": true,
+      "position_harms": false,
+      "global_far_fp_fraction": 0.5857599431818181
+    },
+    "screw": {
+      "n_train": 40,
+      "n_test": 160,
+      "period_y": 12,
+      "period_x": 12,
+      "mean_abs_shift_px": {
+        "dy": 7.10625,
+        "dx": 8.6
+      },
+      "variants": {
+        "global": {
+          "P-AP": 0.028261966930824074,
+          "delta_vs_global": 0.0,
+          "far_fp_fraction": 0.7780151833460659,
+          "near_fp_fraction": 0.1846949006875478,
+          "hit_fraction": 0.037289915966386554,
+          "recall_in_top": 0.10643715296275272,
+          "per_defect_image_ap": {
+            "manipulated_front": 0.08889555207840871,
+            "scratch_head": 0.0354086819508316,
+            "scratch_neck": 0.044522494564081395,
+            "thread_side": 0.047125508601412694,
+            "thread_top": 0.08382796314851254
+          }
+        },
+        "position": {
+          "P-AP": 0.02586887227292854,
+          "delta_vs_global": -0.002393094657895535,
+          "far_fp_fraction": 0.7807964094728801,
+          "near_fp_fraction": 0.17649446142093203,
+          "hit_fraction": 0.04270912910618793,
+          "recall_in_top": 0.13350036294982104,
+          "per_defect_image_ap": {
+            "manipulated_front": 0.16678058422844053,
+            "scratch_head": 0.03368867370296941,
+            "scratch_neck": 0.04806515870806117,
+            "thread_side": 0.04002380121316901,
+            "thread_top": 0.06632332067104088
+          }
+        },
+        "aligned": {
+          "P-AP": 0.02330743597821141,
+          "delta_vs_global": -0.0049545309526126645,
+          "far_fp_fraction": 0.7863469251336898,
+          "near_fp_fraction": 0.1774493888464477,
+          "hit_fraction": 0.036203686019862485,
+          "recall_in_top": 0.11400528686952947,
+          "per_defect_image_ap": {
+            "manipulated_front": 0.1469712204012763,
+            "scratch_head": 0.033979534654215604,
+            "scratch_neck": 0.045057497203166104,
+            "thread_side": 0.03659578428449439,
+            "thread_top": 0.06251399071699006
+          }
+        }
+      },
+      "primary": "aligned",
+      "supported": false,
+      "position_harms": false,
+      "global_far_fp_fraction": 0.7780151833460659
+    }
+  }
+}

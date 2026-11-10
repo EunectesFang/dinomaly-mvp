@@ -1,0 +1,18 @@
+{
+  "id": "eunectesqaq/dinomaly-guided-boundary-v7",
+  "title": "dinomaly guided boundary v7",
+  "code_file": "guided_boundary_v7.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ipythonx/mvtec-ad",
+    "eunectesqaq/dinomaly-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "eunectesqaq/dinomaly-base-10k"
+  ]
+}

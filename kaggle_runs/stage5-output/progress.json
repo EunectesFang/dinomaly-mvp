@@ -1,0 +1,47 @@
+{
+  "slug": "eunectesqaq/dinomaly-normal-reference-v5",
+  "fingerprint": "fa88f11516537ac9",
+  "classes_total": 15,
+  "classes_done": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "current": null,
+  "latest": {
+    "class": "zipper",
+    "seconds": 172.67017889022827,
+    "g_spatial": 0.43862770493354974,
+    "P-AP": {
+      "base_global": 0.791161105658772,
+      "ref_free": 0.38542565144575636,
+      "ref_spatial": 0.3665753563126447,
+      "ref_fuse_fixed": 0.38358286146929244,
+      "ref_adaptive": 0.38449756587560696,
+      "base_fuse672": 0.8671961556390471,
+      "ref_plus_base": 0.7549975827894198
+    },
+    "P-AUPRO": {
+      "base_global": 0.9727077923023153,
+      "ref_free": 0.7037301003048447,
+      "ref_spatial": 0.6784522122525529,
+      "ref_fuse_fixed": 0.6942875277270324,
+      "ref_adaptive": 0.6964739773466369,
+      "base_fuse672": 0.980588373974324,
+      "ref_plus_base": 0.947687534028262
+    }
+  },
+  "updated": "2026-11-05 12:18:52"
+}

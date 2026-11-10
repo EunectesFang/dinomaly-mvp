@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "checks": 17,
+  "item": "leather",
+  "image": "/kaggle/input/datasets/ipythonx/mvtec-ad/leather/test/color/000.png",
+  "preattention_max_token_delta": 0.0,
+  "masked_encoder_max_delta": 0.0,
+  "combined_hi_max_delta": 0.0,
+  "clean_feature_max_delta": 0.0,
+  "b0_max_delta_vs_stage7_code": 0.0,
+  "timing_ms_batch1": {
+    "base_392": 71.21062278747559,
+    "hi_672_combined_forward": 301.53346061706543,
+    "four_masked_encoder_672": 807.4381351470947,
+    "head_forward": 10.225057601928711,
+    "masked_per_pass": 201.85953378677368
+  }
+}

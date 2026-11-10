@@ -1,0 +1,477 @@
+{
+  "experiment": {
+    "slug": "eunectesqaq/dinomaly-synthetic-refine-v11",
+    "stage": 11,
+    "generated": "2026-11-05 23:38:18",
+    "partial": false,
+    "hypothesis": "synthetic train/good local defects teach a shared refinement head to suppress normal-texture false positives while preserving the frozen v7 baseline"
+  },
+  "config": {
+    "slug": "eunectesqaq/dinomaly-synthetic-refine-v11",
+    "stage": 11,
+    "script": "stage11.py",
+    "code_sha256": "ebcb504fb4114a8e86af200489ee8ba4f450e27d6916f360d2374a26398069a7",
+    "baseline": {
+      "resize": 448,
+      "crop": 392
+    },
+    "high_res": {
+      "resize": 768,
+      "crop": 672
+    },
+    "variants": [
+      "v7_guide",
+      "learned_head",
+      "blend_guarded"
+    ],
+    "fusion": "0.5 * base_global + 0.5 * hi672",
+    "guide": {
+      "radius": 7,
+      "epsilon": 0.0025
+    },
+    "training": {
+      "source": "MVTec train/good only",
+      "classes": [
+        "bottle",
+        "screw",
+        "wood"
+      ],
+      "good_images_per_class": 16,
+      "synthetic_images_per_class": 16,
+      "pairs_total": 96,
+      "synthetic": "irregular ellipse; moved/replaced/contrast patch",
+      "seed": 1105,
+      "epochs": 20,
+      "batch": 8,
+      "optimizer": "AdamW lr 1e-3 wd 1e-4",
+      "schedule": "MultiStepLR 0.3 at 55% and 82%",
+      "loss": "pixel BCE pos_weight + 0.5 soft Dice",
+      "head": "Conv3x3(10->24)-GroupNorm-ReLU-Conv3x3(24->1)",
+      "test_images_or_labels_used_for_fit": false,
+      "external_data": false
+    },
+    "blend": {
+      "alpha": 0.5,
+      "guard_cap": 0.25,
+      "definition": "guided + 0.5*scale*clip(head_prob - normalized(guided), -0.25, 0.25)"
+    },
+    "metrics": {
+      "keys": [
+        "I-AUROC",
+        "I-AP",
+        "I-F1",
+        "P-AUROC",
+        "P-AP",
+        "P-F1",
+        "P-AUPRO"
+      ],
+      "recall": [
+        "R@FPR0.001",
+        "R@FPR0.01",
+        "R@FPR0.05"
+      ],
+      "evaluation_grid": 256,
+      "mask_source": "exact original 448->392 gt, nearest to 256",
+      "image_score": "original baseline top1% reused unchanged"
+    },
+    "classes_total": 3,
+    "eval_classes": [
+      "bottle",
+      "screw",
+      "wood"
+    ],
+    "partial": false,
+    "test_images_total": 322,
+    "test_images_evaluated": 322,
+    "test_counts": {
+      "bottle": 83,
+      "screw": 160,
+      "wood": 79
+    },
+    "base_checkpoint": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/model_10000.pt",
+    "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218"
+  },
+  "checkpoints": {
+    "base": {
+      "path": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/model_10000.pt",
+      "sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+      "iter": 10000,
+      "kind": null,
+      "unchanged": true
+    },
+    "head": {
+      "path": "E:/dinomaly-mvp/kaggle_runs/stage11-local\\refine_head.pt",
+      "sha256": "934ba73f4e7155b75ce9cae613d2c07e8f3ced521bbe6d773500f3f4abbdfbba"
+    }
+  },
+  "identity": {
+    "image_score_unchanged": true,
+    "image_score_source": "baseline 448->392 global top1% reused by all variants",
+    "test_labels_used_for_fit": false,
+    "test_images_used_for_fit": false,
+    "external_data": false,
+    "frozen_checkpoint": true,
+    "exact_v7_geometry": true,
+    "exact_official_masks": true
+  },
+  "results": {
+    "per_class": {
+      "bottle": {
+        "class": "bottle",
+        "fingerprint": "adef21cf1185029f",
+        "n_test": 83,
+        "n_normal": 20,
+        "n_anomaly": 63,
+        "n_gt_positive_pixels": 425068,
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "original baseline 448->392 global top1%",
+          "reused_for_all_variants": true,
+          "sha256": "207181144422461b6cb1d2abfcf16ec2da0cf6016636a59ca951da497a736a79"
+        },
+        "variants": {
+          "v7_guide": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9923518279721195,
+              "P-AP": 0.9045533522640403,
+              "P-F1": 0.8452326360576696,
+              "P-AUPRO": 0.9686885765829796
+            },
+            "recall": {
+              "R@FPR0.001": 0.2751983212097829,
+              "R@FPR0.01": 0.7952680512294503,
+              "R@FPR0.05": 0.9766837306031035
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1760607361793518,
+              "T@FPR0.01": 0.1308213770389557,
+              "T@FPR0.05": 0.08951343595981598
+            }
+          },
+          "learned_head": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9862930692135341,
+              "P-AP": 0.8239192486038898,
+              "P-F1": 0.7957752288482922,
+              "P-AUPRO": 0.9604250041037732
+            },
+            "recall": {
+              "R@FPR0.001": 0.12274977180121768,
+              "R@FPR0.01": 0.5692312759370265,
+              "R@FPR0.05": 0.9662501058654145
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.9953733086585999,
+              "T@FPR0.01": 0.9625644683837891,
+              "T@FPR0.05": 0.678173303604126
+            }
+          },
+          "blend_guarded": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9904877446137895,
+              "P-AP": 0.8735015846587193,
+              "P-F1": 0.8268925011293453,
+              "P-AUPRO": 0.9635189763891607
+            },
+            "recall": {
+              "R@FPR0.001": 0.1563773325679656,
+              "R@FPR0.01": 0.7247358069767661,
+              "R@FPR0.05": 0.9759520829608439
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.19708003103733063,
+              "T@FPR0.01": 0.15029728412628174,
+              "T@FPR0.05": 0.10383456945419312
+            }
+          }
+        },
+        "seconds": 31.988089561462402
+      },
+      "screw": {
+        "class": "screw",
+        "fingerprint": "adef21cf1185029f",
+        "n_test": 160,
+        "n_normal": 41,
+        "n_anomaly": 119,
+        "n_gt_positive_pixels": 39664,
+        "image_metrics": {
+          "I-AUROC": 0.983398237343718,
+          "I-AP": 0.9946887003395251,
+          "I-F1": 0.9626555516675014
+        },
+        "image_scores": {
+          "source": "original baseline 448->392 global top1%",
+          "reused_for_all_variants": true,
+          "sha256": "590dc43e14af7e8a32a191bd40edaf966e1c1ae4f8a1dc2bfb9e2e4c35bd2b33"
+        },
+        "variants": {
+          "v7_guide": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9935720713526138,
+              "P-AP": 0.6227282907340276,
+              "P-F1": 0.6156344291088014,
+              "P-AUPRO": 0.9672397716063188
+            },
+            "recall": {
+              "R@FPR0.001": 0.5207745058491328,
+              "R@FPR0.01": 0.8900262202501008,
+              "R@FPR0.05": 0.9637706736587334
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1092003658413887,
+              "T@FPR0.01": 0.08469691872596741,
+              "T@FPR0.05": 0.07322615385055542
+            }
+          },
+          "learned_head": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9900752380388061,
+              "P-AP": 0.36328347042323156,
+              "P-F1": 0.42300261183899696,
+              "P-AUPRO": 0.944764241364225
+            },
+            "recall": {
+              "R@FPR0.001": 0.2379739814441307,
+              "R@FPR0.01": 0.7948517547398144,
+              "R@FPR0.05": 0.9679054054054054
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.9968823790550232,
+              "T@FPR0.01": 0.8849067687988281,
+              "T@FPR0.05": 0.2962256669998169
+            }
+          },
+          "blend_guarded": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9942652779418663,
+              "P-AP": 0.5304865201595496,
+              "P-F1": 0.5383030165419249,
+              "P-AUPRO": 0.9701539883959435
+            },
+            "recall": {
+              "R@FPR0.001": 0.41153186768858413,
+              "R@FPR0.01": 0.8617133924969745,
+              "R@FPR0.05": 0.9822004840661557
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.10869017988443375,
+              "T@FPR0.01": 0.08369460701942444,
+              "T@FPR0.05": 0.06756208837032318
+            }
+          }
+        },
+        "seconds": 89.67751145362854
+      },
+      "wood": {
+        "class": "wood",
+        "fingerprint": "adef21cf1185029f",
+        "n_test": 79,
+        "n_normal": 19,
+        "n_anomaly": 60,
+        "n_gt_positive_pixels": 252458,
+        "image_metrics": {
+          "I-AUROC": 0.999122807017544,
+          "I-AP": 0.9997267759562843,
+          "I-F1": 0.9917354871935002
+        },
+        "image_scores": {
+          "source": "original baseline 448->392 global top1%",
+          "reused_for_all_variants": true,
+          "sha256": "463e7d6013159b1d5a53a8fc358e695d57cc41072c0306dc275c6b7942c20c25"
+        },
+        "variants": {
+          "v7_guide": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9798067768846008,
+              "P-AP": 0.7521418773562054,
+              "P-F1": 0.6909763559547984,
+              "P-AUPRO": 0.9443402106635163
+            },
+            "recall": {
+              "R@FPR0.001": 0.20257230905734816,
+              "R@FPR0.01": 0.5938294686640946,
+              "R@FPR0.05": 0.8895895554904182
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17922121286392212,
+              "T@FPR0.01": 0.13349059224128723,
+              "T@FPR0.05": 0.09461025148630142
+            }
+          },
+          "learned_head": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9685606965936759,
+              "P-AP": 0.659778642495966,
+              "P-F1": 0.6167405076085233,
+              "P-AUPRO": 0.9198705870395663
+            },
+            "recall": {
+              "R@FPR0.001": 0.14104920422406894,
+              "R@FPR0.01": 0.45400819146155,
+              "R@FPR0.05": 0.8375531771621418
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.9993236064910889,
+              "T@FPR0.01": 0.9905184507369995,
+              "T@FPR0.05": 0.8307894468307495
+            }
+          },
+          "blend_guarded": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9744495772463948,
+              "P-AP": 0.6987650283013295,
+              "P-F1": 0.6707620437601578,
+              "P-AUPRO": 0.9214537652546455
+            },
+            "recall": {
+              "R@FPR0.001": 0.15762225795973983,
+              "R@FPR0.01": 0.5233345744638712,
+              "R@FPR0.05": 0.8477370493309778
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.2030922919511795,
+              "T@FPR0.01": 0.1479620337486267,
+              "T@FPR0.05": 0.10625071078538895
+            }
+          }
+        },
+        "seconds": 36.61457920074463
+      }
+    },
+    "mean": {
+      "v7_guide": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9885768920697782,
+          "P-AP": 0.7598078401180911,
+          "P-F1": 0.7172811403737565,
+          "P-AUPRO": 0.9600895196176049
+        },
+        "recall": {
+          "R@FPR0.001": 0.3328483787054213,
+          "R@FPR0.01": 0.7597079133812152,
+          "R@FPR0.05": 0.9433479865840849
+        }
+      },
+      "learned_head": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9816430012820053,
+          "P-AP": 0.6156604538410291,
+          "P-F1": 0.6118394494319375,
+          "P-AUPRO": 0.9416866108358549
+        },
+        "recall": {
+          "R@FPR0.001": 0.16725765248980576,
+          "R@FPR0.01": 0.6060304073794637,
+          "R@FPR0.05": 0.9239028961443205
+        }
+      },
+      "blend_guarded": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9864008666006835,
+          "P-AP": 0.7009177110398661,
+          "P-F1": 0.6786525204771428,
+          "P-AUPRO": 0.95170891001325
+        },
+        "recall": {
+          "R@FPR0.001": 0.24184381940542987,
+          "R@FPR0.01": 0.703261257979204,
+          "R@FPR0.05": 0.9352965387859925
+        }
+      }
+    }
+  },
+  "image_metrics": {
+    "mean": {
+      "I-AUROC": 0.994173681453754,
+      "I-AP": 0.9981384920986031,
+      "I-F1": 0.9847969962870015
+    }
+  },
+  "deltas": {
+    "learned_head - v7_guide": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.006933890787772845,
+        "P-AP": -0.14414738627706203,
+        "P-F1": -0.10544169094181899,
+        "P-AUPRO": -0.018402908781749994
+      },
+      "recall": {
+        "R@FPR0.001": -0.16559072621561552,
+        "R@FPR0.01": -0.15367750600175156,
+        "R@FPR0.05": -0.01944509043976439
+      }
+    },
+    "blend_guarded - v7_guide": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.002176025469094678,
+        "P-AP": -0.058890129078224995,
+        "P-F1": -0.0386286198966137,
+        "P-AUPRO": -0.008380609604354938
+      },
+      "recall": {
+        "R@FPR0.001": -0.0910045592999914,
+        "R@FPR0.01": -0.056446655402011214,
+        "R@FPR0.05": -0.008051447798092415
+      }
+    }
+  },
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.6.0+cu124",
+    "classes_evaluated": 3,
+    "test_images_evaluated": 322,
+    "seconds_total": 158.28018021583557
+  },
+  "files": {
+    "per_class_dir": "E:/dinomaly-mvp/kaggle_runs/stage11-local\\per_class",
+    "progress": "E:/dinomaly-mvp/kaggle_runs/stage11-local\\progress.json",
+    "status": "E:/dinomaly-mvp/kaggle_runs/stage11-local\\status.json",
+    "head": "E:/dinomaly-mvp/kaggle_runs/stage11-local\\refine_head.pt"
+  }
+}

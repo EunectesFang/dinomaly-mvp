@@ -1,0 +1,354 @@
+{
+  "class": "pill",
+  "fingerprint": "9f62379aa463bcaa",
+  "n_test": 167,
+  "n_normal": 26,
+  "n_anomaly": 141,
+  "n_gt_positive_pixels": 496895,
+  "n_gt_negative_pixels": 10447617,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 267,
+    "memory_files": [
+      "000.png",
+      "005.png",
+      "010.png",
+      "015.png",
+      "019.png",
+      "024.png",
+      "029.png",
+      "034.png",
+      "039.png",
+      "044.png",
+      "048.png",
+      "053.png",
+      "058.png",
+      "063.png",
+      "068.png",
+      "073.png",
+      "077.png",
+      "082.png",
+      "087.png",
+      "092.png",
+      "097.png",
+      "102.png",
+      "106.png",
+      "111.png",
+      "116.png",
+      "121.png",
+      "126.png",
+      "131.png",
+      "135.png",
+      "140.png",
+      "145.png",
+      "150.png",
+      "155.png",
+      "160.png",
+      "164.png",
+      "169.png",
+      "174.png",
+      "179.png",
+      "184.png",
+      "189.png"
+    ],
+    "calibration_files": [
+      "193.png",
+      "198.png",
+      "203.png",
+      "208.png",
+      "213.png",
+      "218.png",
+      "222.png",
+      "227.png",
+      "232.png",
+      "237.png",
+      "242.png",
+      "247.png",
+      "251.png",
+      "256.png",
+      "261.png",
+      "266.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "shift_radius": 2,
+    "shift_prior_manhattan": 0.005,
+    "alignment": "per (test image, memory image) coherent shift (sr,sc) in [-2,2]^2; shift score = mean cosine similarity over in-image query positions minus 0.005*(|sr|+|sc|); candidates = +/-1 neighbourhood around the shifted coordinate; out-of-image positions masked; row falls back to the original zero-shift neighbourhood when fewer than top-3 finite candidates remain",
+    "calibration": {
+      "ref_free": {
+        "median": 0.26919859647750854,
+        "q95": 0.3907076418399811,
+        "scale": 0.12150904536247253,
+        "n_values": 1048576
+      },
+      "ref_spatial_aligned": {
+        "median": 0.278268039226532,
+        "q95": 0.41159647703170776,
+        "scale": 0.13332843780517578,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.04575338959693909,
+        "q95": 0.059690773487091064,
+        "scale": 0.013937383890151978,
+        "n_values": 1048576
+      }
+    },
+    "calibration_shift_alignment": {
+      "shift_radius": 2,
+      "shift_prior_manhattan": 0.005,
+      "shift_counts": {
+        "0,0": 640
+      },
+      "pairs": 640,
+      "rows": 12544,
+      "fallback_rows": 0,
+      "fallback_fraction": 0.0,
+      "zero_shift_pairs": 640,
+      "zero_shift_fraction": 1.0,
+      "invalid_shift_score_pairs": 0,
+      "mean_abs_sr": 0.0,
+      "mean_abs_sc": 0.0
+    },
+    "gate": {
+      "rel_extra_median": 0.0,
+      "g_spatial": 0.5,
+      "source": "disjoint calibration normals; aligned spatial branch",
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_aligned - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 0.9920894708128751,
+    "I-AP": 0.9986187195143849,
+    "I-F1": 0.9858155528368819
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "223d2a1feff6c0245df6d9b62e4f973018f6828636e2e759c1fd14a5b2404f3c",
+    "stage1_baseline_delta": null
+  },
+  "test_shift_alignment": {
+    "shift_radius": 2,
+    "shift_prior_manhattan": 0.005,
+    "shift_counts": {
+      "0,0": 6680
+    },
+    "pairs": 6680,
+    "rows": 130928,
+    "fallback_rows": 0,
+    "fallback_fraction": 0.0,
+    "zero_shift_pairs": 6680,
+    "zero_shift_fraction": 1.0,
+    "invalid_shift_score_pairs": 0,
+    "mean_abs_sr": 0.0,
+    "mean_abs_sc": 0.0
+  },
+  "v5_control_comparison": {
+    "source": "downloaded stage-5 per-class JSON; unchanged control",
+    "v5_n_test": 167,
+    "v5_metrics": {
+      "base_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.9920894708128751,
+          "I-AP": 0.9986187195143849,
+          "I-F1": 0.9858155528368819,
+          "P-AUROC": 0.9754204475463726,
+          "P-AP": 0.7425064490658501,
+          "P-F1": 0.7093033833782402,
+          "P-AUPRO": 0.97712044500069
+        },
+        "recall": {
+          "R@FPR0.001": 0.1650509665019773,
+          "R@FPR0.01": 0.6620855512734078,
+          "R@FPR0.05": 0.8742953742742431
+        }
+      },
+      "ref_spatial": {
+        "metrics": {
+          "I-AUROC": 0.9920894708128751,
+          "I-AP": 0.9986187195143849,
+          "I-F1": 0.9858155528368819,
+          "P-AUROC": 0.8677015972901764,
+          "P-AP": 0.5084259983535028,
+          "P-F1": 0.5504685897412528,
+          "P-AUPRO": 0.8937167107712383
+        },
+        "recall": {
+          "R@FPR0.001": 0.09546684913311665,
+          "R@FPR0.01": 0.42732770504835027,
+          "R@FPR0.05": 0.6550840720876644
+        }
+      },
+      "ref_plus_base": {
+        "metrics": {
+          "I-AUROC": 0.9920894708128751,
+          "I-AP": 0.9986187195143849,
+          "I-F1": 0.9858155528368819,
+          "P-AUROC": 0.9577910282274725,
+          "P-AP": 0.7087673546860803,
+          "P-F1": 0.6858441403020662,
+          "P-AUPRO": 0.9692415028194312
+        },
+        "recall": {
+          "R@FPR0.001": 0.15560832771511085,
+          "R@FPR0.01": 0.6247959830547701,
+          "R@FPR0.05": 0.8460942452630837
+        }
+      }
+    },
+    "deltas_pp": {
+      "base_fuse672 - v5_base_fuse672": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0,
+          "P-AP": 0.0,
+          "P-F1": 0.0,
+          "P-AUPRO": 0.0
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 0.0
+        }
+      },
+      "ref_spatial_aligned - v5_ref_spatial": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0,
+          "P-AP": 0.0,
+          "P-F1": 0.0,
+          "P-AUPRO": 0.0
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 0.0
+        }
+      },
+      "aligned_plus_base - v5_ref_plus_base": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 0.0,
+          "P-AP": 0.0,
+          "P-F1": 0.0,
+          "P-AUPRO": 0.0
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 0.0
+        }
+      }
+    }
+  },
+  "variants": {
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 0.9920894708128751,
+        "I-AP": 0.9986187195143849,
+        "I-F1": 0.9858155528368819,
+        "P-AUROC": 0.9754204475463726,
+        "P-AP": 0.7425064490658501,
+        "P-F1": 0.7093033833782402,
+        "P-AUPRO": 0.97712044500069
+      },
+      "recall": {
+        "R@FPR0.001": 0.1650509665019773,
+        "R@FPR0.01": 0.6620855512734078,
+        "R@FPR0.05": 0.8742953742742431
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.12253513932228088,
+        "T@FPR0.01": 0.08673900365829468,
+        "T@FPR0.05": 0.06632933765649796
+      }
+    },
+    "ref_spatial_aligned": {
+      "metrics": {
+        "I-AUROC": 0.9920894708128751,
+        "I-AP": 0.9986187195143849,
+        "I-F1": 0.9858155528368819,
+        "P-AUROC": 0.8677015972901764,
+        "P-AP": 0.5084259983535028,
+        "P-F1": 0.5504685897412528,
+        "P-AUPRO": 0.8937167107712383
+      },
+      "recall": {
+        "R@FPR0.001": 0.09546684913311665,
+        "R@FPR0.01": 0.42732770504835027,
+        "R@FPR0.05": 0.6550840720876644
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.6848122477531433,
+        "T@FPR0.01": 0.536278486251831,
+        "T@FPR0.05": 0.43647119402885437
+      }
+    },
+    "ref_adaptive_aligned": {
+      "metrics": {
+        "I-AUROC": 0.9920894708128751,
+        "I-AP": 0.9986187195143849,
+        "I-F1": 0.9858155528368819,
+        "P-AUROC": 0.8730047346673804,
+        "P-AP": 0.5405819829462286,
+        "P-F1": 0.5703057983176987,
+        "P-AUPRO": 0.8981174588727455
+      },
+      "recall": {
+        "R@FPR0.001": 0.12330572857444731,
+        "R@FPR0.01": 0.46153613942583444,
+        "R@FPR0.05": 0.6730919007033679
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.932676315307617,
+        "T@FPR0.01": 1.8768500089645386,
+        "T@FPR0.05": 1.1731847524642944
+      }
+    },
+    "aligned_plus_base": {
+      "metrics": {
+        "I-AUROC": 0.9920894708128751,
+        "I-AP": 0.9986187195143849,
+        "I-F1": 0.9858155528368819,
+        "P-AUROC": 0.9577910282274725,
+        "P-AP": 0.7087673546860803,
+        "P-F1": 0.6858441403020662,
+        "P-AUPRO": 0.9692415028194312
+      },
+      "recall": {
+        "R@FPR0.001": 0.15560832771511085,
+        "R@FPR0.01": 0.6247959830547701,
+        "R@FPR0.05": 0.8460942452630837
+      },
+      "thresholds": {
+        "T@FPR0.001": 4.062931537628174,
+        "T@FPR0.01": 2.2918500900268555,
+        "T@FPR0.05": 1.1390581130981445
+      }
+    }
+  },
+  "seconds": 144.9888141155243,
+  "gpu_peak_mib": 2204.42529296875
+}

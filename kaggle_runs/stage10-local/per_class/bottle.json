@@ -1,0 +1,166 @@
+{
+  "class": "bottle",
+  "fingerprint": "5a440a6370ef0b02",
+  "n_test": 83,
+  "n_normal": 20,
+  "n_anomaly": 63,
+  "n_gt_positive_pixels": 425068,
+  "n_gt_negative_pixels": 5014420,
+  "scales": [
+    {
+      "name": "hi672",
+      "crop": 672,
+      "resize": 768,
+      "fov": 0.875,
+      "batch": 2
+    }
+  ],
+  "image_metrics": {
+    "I-AUROC": 1.0,
+    "I-AP": 0.9999999999999998,
+    "I-F1": 0.9999999500000026
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant; never gated or replaced",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "207181144422461b6cb1d2abfcf16ec2da0cf6016636a59ca951da497a736a79"
+  },
+  "calibration": {
+    "n": 48,
+    "min": 0.049813877791166306,
+    "median": 0.05511448159813881,
+    "q95": 0.05999160911887884,
+    "q99": 0.06073966160416603,
+    "max": 0.061274368315935135,
+    "denom95": 0.005,
+    "denom99": 0.005625180006027221,
+    "min_denom_clamped": true,
+    "scores_sha256": "cdb577055ba6a3b5fb4faf62640965ff568a77428a81e13716674b1b06ff66ec",
+    "class": "bottle",
+    "selection": "sorted train/good paths, evenly spaced",
+    "n_selected": 48,
+    "source": "original 448->392 global postprocessed top1% image score",
+    "test_labels_used": false,
+    "seconds": 4.578952074050903
+  },
+  "gate": {
+    "mild": {
+      "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)",
+      "mean": 0.9457873747350091,
+      "min": 0.21852285111817019,
+      "max": 1.0,
+      "frac_below_0.2": 0.0,
+      "frac_above_0.8": 0.9156626506024096
+    },
+    "sharp": {
+      "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)",
+      "mean": 0.9325585841941685,
+      "min": 0.15161994572632564,
+      "max": 1.0,
+      "frac_below_0.2": 0.012048192771084338,
+      "frac_above_0.8": 0.891566265060241
+    }
+  },
+  "guide": {
+    "radius": 7,
+    "epsilon": 0.0025,
+    "baseline_variant": "stage-7 full grayscale guided filter output"
+  },
+  "variants": {
+    "guide_baseline": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9923518279721195,
+        "P-AP": 0.9045533522640403,
+        "P-F1": 0.8452326360576696,
+        "P-AUPRO": 0.9686885765829796,
+        "P-AUROC-anom": 0.9896675669947124,
+        "P-AP-anom": 0.9045753629818826
+      },
+      "recall": {
+        "R@FPR0.001": 0.2751983212097829,
+        "R@FPR0.01": 0.7952680512294503,
+        "R@FPR0.05": 0.9766837306031035
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1760607361793518,
+        "T@FPR0.01": 0.1308213770389557,
+        "T@FPR0.05": 0.08951343595981598
+      }
+    },
+    "guide_gate_mild": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9923588015472213,
+        "P-AP": 0.9045612618151688,
+        "P-F1": 0.8452326360576696,
+        "P-AUPRO": 0.967372945465792,
+        "P-AUROC-anom": 0.9896675669947124,
+        "P-AP-anom": 0.9045753629818826
+      },
+      "recall": {
+        "R@FPR0.001": 0.2751983212097829,
+        "R@FPR0.01": 0.7952680512294503,
+        "R@FPR0.05": 0.9766860831678696
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1760607361793518,
+        "T@FPR0.01": 0.1308213770389557,
+        "T@FPR0.05": 0.08951320499181747
+      }
+    },
+    "guide_gate_sharp": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9923606679077469,
+        "P-AP": 0.9045635117408597,
+        "P-F1": 0.8452326360576696,
+        "P-AUPRO": 0.9687566103365222,
+        "P-AUROC-anom": 0.9896675669947124,
+        "P-AP-anom": 0.9045753629818826
+      },
+      "recall": {
+        "R@FPR0.001": 0.2751983212097829,
+        "R@FPR0.01": 0.7952680512294503,
+        "R@FPR0.05": 0.9766860831678696
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.1760607361793518,
+        "T@FPR0.01": 0.1308213770389557,
+        "T@FPR0.05": 0.08951320499181747
+      }
+    },
+    "guide_gate_mild_medsub": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 0.9999999999999998,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9901409321411072,
+        "P-AP": 0.8971320064652182,
+        "P-F1": 0.8457605041714812,
+        "P-AUPRO": 0.9726128888138093,
+        "P-AUROC-anom": 0.9874394445503539,
+        "P-AP-anom": 0.8975171162335482
+      },
+      "recall": {
+        "R@FPR0.001": 0.2611276313436909,
+        "R@FPR0.01": 0.7856695869837297,
+        "R@FPR0.05": 0.9726914281950182
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.11469585448503494,
+        "T@FPR0.01": 0.07045124471187592,
+        "T@FPR0.05": 0.02973296493291855
+      }
+    }
+  },
+  "seconds": 57.860366106033325,
+  "gpu_peak_mib": 1961.630859375
+}

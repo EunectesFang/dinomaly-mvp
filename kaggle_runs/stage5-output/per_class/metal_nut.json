@@ -1,0 +1,291 @@
+{
+  "class": "metal_nut",
+  "fingerprint": "fa88f11516537ac9",
+  "n_test": 115,
+  "n_normal": 22,
+  "n_anomaly": 93,
+  "n_gt_positive_pixels": 1173521,
+  "n_gt_negative_pixels": 6363119,
+  "normal_reference": {
+    "source": "train/good only; test images never used for fitting",
+    "memory_count": 40,
+    "calibration_count": 16,
+    "total_per_class": 56,
+    "disjoint": true,
+    "train_good_available": 220,
+    "memory_files": [
+      "000.png",
+      "004.png",
+      "008.png",
+      "012.png",
+      "016.png",
+      "020.png",
+      "024.png",
+      "028.png",
+      "032.png",
+      "036.png",
+      "040.png",
+      "044.png",
+      "048.png",
+      "052.png",
+      "056.png",
+      "060.png",
+      "064.png",
+      "068.png",
+      "072.png",
+      "076.png",
+      "080.png",
+      "084.png",
+      "088.png",
+      "092.png",
+      "096.png",
+      "100.png",
+      "104.png",
+      "108.png",
+      "111.png",
+      "115.png",
+      "119.png",
+      "123.png",
+      "127.png",
+      "131.png",
+      "135.png",
+      "139.png",
+      "143.png",
+      "147.png",
+      "151.png",
+      "155.png"
+    ],
+    "calibration_files": [
+      "159.png",
+      "163.png",
+      "167.png",
+      "171.png",
+      "175.png",
+      "179.png",
+      "183.png",
+      "187.png",
+      "191.png",
+      "195.png",
+      "199.png",
+      "203.png",
+      "207.png",
+      "211.png",
+      "215.png",
+      "219.png"
+    ],
+    "selection": "sorted train/good paths; evenly spaced indices; first 40 memory, last 16 calibration",
+    "feature_groups": [
+      768,
+      768
+    ],
+    "concat_dim": 1536,
+    "dimensionality_reduction": null,
+    "normalization": "per-group z-score from memory bank, concat, L2",
+    "bank_patches": 31360,
+    "patch_side": 28,
+    "top_k": 3,
+    "local_radius": 1,
+    "calibration": {
+      "ref_free": {
+        "median": 0.2767491936683655,
+        "q95": 0.4609990119934082,
+        "scale": 0.18424981832504272,
+        "n_values": 1048576
+      },
+      "ref_spatial": {
+        "median": 0.2888569235801697,
+        "q95": 0.4823897182941437,
+        "scale": 0.193532794713974,
+        "n_values": 1048576
+      },
+      "base_global": {
+        "median": 0.04514703154563904,
+        "q95": 0.05742349103093147,
+        "scale": 0.012276459485292435,
+        "n_values": 1048576
+      },
+      "base_fuse672": {
+        "median": 0.0582616813480854,
+        "q95": 0.07168648391962051,
+        "scale": 0.01342480257153511,
+        "n_values": 1048576
+      }
+    },
+    "gate": {
+      "rel_extra_median": 0.0,
+      "g_spatial": 0.5,
+      "formula": "g = 0.15 + 0.35 * exp(-max(rel_extra, 0) / 0.25), clipped to [0.15, 0.50]; rel_extra = median((d_spatial - d_free) / max(d_free, 0.02)) over calibration normals"
+    }
+  },
+  "image_metrics": {
+    "I-AUROC": 1.0,
+    "I-AP": 1.0,
+    "I-F1": 0.9999999500000026
+  },
+  "image_scores": {
+    "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant",
+    "reused_for_all_variants": true,
+    "max_abs_diff_across_variants": 0.0,
+    "sha256": "e6cabb6575b768f295c666c766e3d931defd90b2d028a99efe9ccd479e75a6eb",
+    "stage1_baseline_delta": {
+      "I-AUROC": 0.0,
+      "I-AP": 0.0,
+      "I-F1": -4.99999973646581e-08,
+      "P-AUROC": 4.5291005257297456e-07,
+      "P-AP": 4.453104474055891e-08,
+      "P-F1": -8.550630314907437e-08,
+      "P-AUPRO": 3.9550305408475595e-07
+    }
+  },
+  "variants": {
+    "base_global": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9692014529100526,
+        "P-AP": 0.7963460445310447,
+        "P-F1": 0.8691149144936968,
+        "P-AUPRO": 0.9486423955030541
+      },
+      "recall": {
+        "R@FPR0.001": 0.027743005877184986,
+        "R@FPR0.01": 0.17174809824451373,
+        "R@FPR0.05": 0.952106523871324
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.17312908172607422,
+        "T@FPR0.01": 0.13121072947978973,
+        "T@FPR0.05": 0.07934024930000305
+      }
+    },
+    "ref_free": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9302903125233347,
+        "P-AP": 0.7584663770889845,
+        "P-F1": 0.7543614173770853,
+        "P-AUPRO": 0.8997891705850423
+      },
+      "recall": {
+        "R@FPR0.001": 0.05408424732067002,
+        "R@FPR0.01": 0.2913266997352412,
+        "R@FPR0.05": 0.7655764149086381
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.6872455477714539,
+        "T@FPR0.01": 0.5872659683227539,
+        "T@FPR0.05": 0.4813677966594696
+      }
+    },
+    "ref_spatial": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9304598382103743,
+        "P-AP": 0.7599951869957803,
+        "P-F1": 0.7680363343024394,
+        "P-AUPRO": 0.8934790543628124
+      },
+      "recall": {
+        "R@FPR0.001": 0.04417560486774416,
+        "R@FPR0.01": 0.28081474468714235,
+        "R@FPR0.05": 0.7874260452092464
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.7398620247840881,
+        "T@FPR0.01": 0.6318827271461487,
+        "T@FPR0.05": 0.5091956257820129
+      }
+    },
+    "ref_fuse_fixed": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9323580496750971,
+        "P-AP": 0.7657171262829516,
+        "P-F1": 0.7726163682176584,
+        "P-AUPRO": 0.897729623424503
+      },
+      "recall": {
+        "R@FPR0.001": 0.05274980166524502,
+        "R@FPR0.01": 0.27824640547548785,
+        "R@FPR0.05": 0.7927510457844384
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.2561707496643066,
+        "T@FPR0.01": 1.720541000366211,
+        "T@FPR0.05": 1.1152989864349365
+      }
+    },
+    "ref_adaptive": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9323580496750971,
+        "P-AP": 0.7657171262829516,
+        "P-F1": 0.7726163682176584,
+        "P-AUPRO": 0.897729623424503
+      },
+      "recall": {
+        "R@FPR0.001": 0.05274980166524502,
+        "R@FPR0.01": 0.27824640547548785,
+        "R@FPR0.05": 0.7927510457844384
+      },
+      "thresholds": {
+        "T@FPR0.001": 2.2561707496643066,
+        "T@FPR0.01": 1.720541000366211,
+        "T@FPR0.05": 1.1152989864349365
+      }
+    },
+    "base_fuse672": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.971400953398316,
+        "P-AP": 0.8162044253257396,
+        "P-F1": 0.8791614701104498,
+        "P-AUPRO": 0.9575058358139675
+      },
+      "recall": {
+        "R@FPR0.001": 0.027699546919058116,
+        "R@FPR0.01": 0.20390517084909432,
+        "R@FPR0.05": 0.9540400214397526
+      },
+      "thresholds": {
+        "T@FPR0.001": 0.187653586268425,
+        "T@FPR0.01": 0.13764721155166626,
+        "T@FPR0.05": 0.08724295347929001
+      }
+    },
+    "ref_plus_base": {
+      "metrics": {
+        "I-AUROC": 1.0,
+        "I-AP": 1.0,
+        "I-F1": 0.9999999500000026,
+        "P-AUROC": 0.9670663391848049,
+        "P-AP": 0.8165531073521686,
+        "P-F1": 0.8760998441604878,
+        "P-AUPRO": 0.9554201632648018
+      },
+      "recall": {
+        "R@FPR0.001": 0.03265642455482262,
+        "R@FPR0.01": 0.2102587000999556,
+        "R@FPR0.05": 0.9452365999415434
+      },
+      "thresholds": {
+        "T@FPR0.001": 5.814168930053711,
+        "T@FPR0.01": 3.761697292327881,
+        "T@FPR0.05": 1.5283827781677246
+      }
+    }
+  },
+  "seconds": 141.50713872909546,
+  "gpu_peak_mib": 2204.42529296875
+}

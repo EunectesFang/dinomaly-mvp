@@ -1,0 +1,1100 @@
+{
+  "experiment": {
+    "slug": "eunectesqaq/dinomaly-image-conditioned-v10",
+    "stage": 10,
+    "generated": "2026-11-05 23:38:40",
+    "partial": false,
+    "hypothesis": "the original 392 image score is excellent at image level, but normal-image heatmaps still compete in pixel ranking; soft per-image confidence gating may suppress those false positives without hurting localization"
+  },
+  "config": {
+    "slug": "eunectesqaq/dinomaly-image-conditioned-v10",
+    "stage": 10,
+    "script": "dinomaly_image_conditioned_v10.py",
+    "code_sha256": "50af5e4a05f72cd6619e6b329c06c8e284c0f5fdee5771f9d0c6f808d3fe651a",
+    "baseline": {
+      "resize": 448,
+      "crop": 392,
+      "fov": 0.875
+    },
+    "enabled_scales": [
+      {
+        "name": "hi672",
+        "crop": 672,
+        "resize": 768,
+        "fov": 0.875,
+        "batch": 2
+      }
+    ],
+    "variants": [
+      "guide_baseline",
+      "guide_gate_mild",
+      "guide_gate_sharp",
+      "guide_gate_mild_medsub"
+    ],
+    "fusion": {
+      "reference": "0.5 * base_global + 0.5 * hi672",
+      "pixel_map": "exact stage-7 full grayscale guided filter on the fusion; guide_baseline is ungated"
+    },
+    "guide": {
+      "source": "original 672 crop de-normalized to RGB 0..1, bilinear resized to 256, luminance grayscale",
+      "radius": 7,
+      "epsilon": 0.0025,
+      "box_pooling": "avg_pool2d(count_include_pad=False)"
+    },
+    "calibration": {
+      "source": "train/good only; original 448->392 top1% score",
+      "images_per_class": 48,
+      "selection": "sorted paths, evenly spaced",
+      "classes": {
+        "bottle": {
+          "n": 48,
+          "min": 0.049813877791166306,
+          "median": 0.05511448159813881,
+          "q95": 0.05999160911887884,
+          "q99": 0.06073966160416603,
+          "max": 0.061274368315935135,
+          "denom95": 0.005,
+          "denom99": 0.005625180006027221,
+          "min_denom_clamped": true,
+          "scores_sha256": "cdb577055ba6a3b5fb4faf62640965ff568a77428a81e13716674b1b06ff66ec",
+          "class": "bottle",
+          "selection": "sorted train/good paths, evenly spaced",
+          "n_selected": 48,
+          "source": "original 448->392 global postprocessed top1% image score",
+          "test_labels_used": false,
+          "seconds": 4.578952074050903
+        },
+        "screw": {
+          "n": 48,
+          "min": 0.05180267617106438,
+          "median": 0.057166945189237595,
+          "q95": 0.06172339618206024,
+          "q99": 0.06403530344367028,
+          "max": 0.06526932120323181,
+          "denom95": 0.005,
+          "denom99": 0.006868358254432688,
+          "min_denom_clamped": true,
+          "scores_sha256": "fb9408af8fd72f69f13d0c49b1b0533855f2a0a12f35d014b7f5a1d6b00fcd12",
+          "class": "screw",
+          "selection": "sorted train/good paths, evenly spaced",
+          "n_selected": 48,
+          "source": "original 448->392 global postprocessed top1% image score",
+          "test_labels_used": false,
+          "seconds": 4.468467473983765
+        },
+        "wood": {
+          "n": 48,
+          "min": 0.053975533694028854,
+          "median": 0.05802626349031925,
+          "q95": 0.06263228114694357,
+          "q99": 0.06362166427075863,
+          "max": 0.06377115845680237,
+          "denom95": 0.005,
+          "denom99": 0.00559540078043938,
+          "min_denom_clamped": true,
+          "scores_sha256": "35224ab160afdfc1449410364703add6562917aa3bc183d1b07c2a4270c53186",
+          "class": "wood",
+          "selection": "sorted train/good paths, evenly spaced",
+          "n_selected": 48,
+          "source": "original 448->392 global postprocessed top1% image score",
+          "test_labels_used": false,
+          "seconds": 5.072027683258057
+        }
+      },
+      "test_labels_used": false
+    },
+    "gate": {
+      "mild": {
+        "floor": 0.1,
+        "mid_key": "q95",
+        "width_scale": 2.0,
+        "min_denom": 0.005,
+        "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)"
+      },
+      "sharp": {
+        "floor": 0.03,
+        "mid_key": "q99",
+        "width_scale": 2.0,
+        "min_denom": 0.005,
+        "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)"
+      },
+      "application": "per-image multiplication of the pixel map; within-image ranking unchanged",
+      "median_subtraction_variant": "mild gate * (map - per-image median); cheap, post-hoc"
+    },
+    "metrics": {
+      "keys": [
+        "I-AUROC",
+        "I-AP",
+        "I-F1",
+        "P-AUROC",
+        "P-AP",
+        "P-F1",
+        "P-AUPRO",
+        "P-AUROC-anom",
+        "P-AP-anom"
+      ],
+      "recall": [
+        "R@FPR0.001",
+        "R@FPR0.01",
+        "R@FPR0.05"
+      ],
+      "evaluation_grid": 256,
+      "mask_source": "exact original 448->392 gt transform, nearest to 256",
+      "image_score": "original baseline global top1% of the postprocessed 256 map, reused by all variants; never gated or replaced",
+      "diagnostic_anom_only": "P-*-anom restrict pixel metrics to anomaly test images only",
+      "pro": "stage 3 compute_pro_pre, 200 thresholds, FPR < 0.3"
+    },
+    "no_training": true,
+    "test_labels_used_for_selection_or_fit": false,
+    "classes_total": 3,
+    "eval_classes": [
+      "bottle",
+      "screw",
+      "wood"
+    ],
+    "partial": false,
+    "test_images_total": 322,
+    "test_images_evaluated": 322,
+    "test_counts": {
+      "bottle": 83,
+      "screw": 160,
+      "wood": 79
+    },
+    "eval_batch": 2,
+    "base_batch": 2,
+    "scale_batches": {
+      "672": 2
+    },
+    "probe": {
+      "base": {
+        "crop": 392,
+        "resize": 448,
+        "batch": 2,
+        "seconds": 0.3944132328033447,
+        "seconds_per_image": 0.19720661640167236,
+        "peak_mib": 981.2890625,
+        "enabled": true
+      },
+      "672": {
+        "crop": 672,
+        "resize": 768,
+        "batch": 2,
+        "seconds": 0.7322914600372314,
+        "seconds_per_image": 0.3661457300186157,
+        "peak_mib": 1957.61328125,
+        "enabled": true
+      }
+    },
+    "base_checkpoint": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/model_10000.pt",
+    "base_sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+    "stage1_metrics": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/metrics.json"
+  },
+  "checkpoints": {
+    "base": {
+      "path": "E:/dinomaly-mvp/kaggle_runs/dinomaly-base-10k/model_10000.pt",
+      "sha256": "f5689b76aafa5c9d2b36a0df8e87ef7bdc82075a042c76bcf7933e0edd637218",
+      "iter": 10000,
+      "kind": null,
+      "reused_unchanged": true
+    }
+  },
+  "identity": {
+    "image_scores_identical_across_variants": true,
+    "image_score_max_abs_diff_across_variants": 0.0,
+    "image_scores_source": "one original 392 top1% score per test image, preserved unchanged for image metrics and gating",
+    "scale_selection": "fixed a priori: only 392 base and 672 (768->672); no 560 forward; no test labels used",
+    "no_training": true,
+    "checkpoint_reused_unchanged": true,
+    "high_res_geometry": "672 branch independently resizes the native PIL image; same 7/8 FOV as the 448->392 baseline",
+    "position_interpolation": "DINOv2 interpolate_pos_encoding; ViTill side derived from token count",
+    "guide_parameters_fixed_a_priori": true,
+    "reference": "guide_baseline = exact stage-7 full guided filter on 0.5*base_global + 0.5*hi672",
+    "gate_input_scope": "original 392 image score only; no pixel map, mask, or test label participates",
+    "calibration_scope": "deterministic train/good images only",
+    "stage1_baseline_comparison": null
+  },
+  "results": {
+    "per_class": {
+      "bottle": {
+        "class": "bottle",
+        "fingerprint": "5a440a6370ef0b02",
+        "n_test": 83,
+        "n_normal": 20,
+        "n_anomaly": 63,
+        "n_gt_positive_pixels": 425068,
+        "n_gt_negative_pixels": 5014420,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 1.0,
+          "I-AP": 0.9999999999999998,
+          "I-F1": 0.9999999500000026
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant; never gated or replaced",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "207181144422461b6cb1d2abfcf16ec2da0cf6016636a59ca951da497a736a79"
+        },
+        "calibration": {
+          "n": 48,
+          "min": 0.049813877791166306,
+          "median": 0.05511448159813881,
+          "q95": 0.05999160911887884,
+          "q99": 0.06073966160416603,
+          "max": 0.061274368315935135,
+          "denom95": 0.005,
+          "denom99": 0.005625180006027221,
+          "min_denom_clamped": true,
+          "scores_sha256": "cdb577055ba6a3b5fb4faf62640965ff568a77428a81e13716674b1b06ff66ec",
+          "class": "bottle",
+          "selection": "sorted train/good paths, evenly spaced",
+          "n_selected": 48,
+          "source": "original 448->392 global postprocessed top1% image score",
+          "test_labels_used": false,
+          "seconds": 4.578952074050903
+        },
+        "gate": {
+          "mild": {
+            "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)",
+            "mean": 0.9457873747350091,
+            "min": 0.21852285111817019,
+            "max": 1.0,
+            "frac_below_0.2": 0.0,
+            "frac_above_0.8": 0.9156626506024096
+          },
+          "sharp": {
+            "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)",
+            "mean": 0.9325585841941685,
+            "min": 0.15161994572632564,
+            "max": 1.0,
+            "frac_below_0.2": 0.012048192771084338,
+            "frac_above_0.8": 0.891566265060241
+          }
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "baseline_variant": "stage-7 full grayscale guided filter output"
+        },
+        "variants": {
+          "guide_baseline": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9923518279721195,
+              "P-AP": 0.9045533522640403,
+              "P-F1": 0.8452326360576696,
+              "P-AUPRO": 0.9686885765829796,
+              "P-AUROC-anom": 0.9896675669947124,
+              "P-AP-anom": 0.9045753629818826
+            },
+            "recall": {
+              "R@FPR0.001": 0.2751983212097829,
+              "R@FPR0.01": 0.7952680512294503,
+              "R@FPR0.05": 0.9766837306031035
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1760607361793518,
+              "T@FPR0.01": 0.1308213770389557,
+              "T@FPR0.05": 0.08951343595981598
+            }
+          },
+          "guide_gate_mild": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9923588015472213,
+              "P-AP": 0.9045612618151688,
+              "P-F1": 0.8452326360576696,
+              "P-AUPRO": 0.967372945465792,
+              "P-AUROC-anom": 0.9896675669947124,
+              "P-AP-anom": 0.9045753629818826
+            },
+            "recall": {
+              "R@FPR0.001": 0.2751983212097829,
+              "R@FPR0.01": 0.7952680512294503,
+              "R@FPR0.05": 0.9766860831678696
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1760607361793518,
+              "T@FPR0.01": 0.1308213770389557,
+              "T@FPR0.05": 0.08951320499181747
+            }
+          },
+          "guide_gate_sharp": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9923606679077469,
+              "P-AP": 0.9045635117408597,
+              "P-F1": 0.8452326360576696,
+              "P-AUPRO": 0.9687566103365222,
+              "P-AUROC-anom": 0.9896675669947124,
+              "P-AP-anom": 0.9045753629818826
+            },
+            "recall": {
+              "R@FPR0.001": 0.2751983212097829,
+              "R@FPR0.01": 0.7952680512294503,
+              "R@FPR0.05": 0.9766860831678696
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1760607361793518,
+              "T@FPR0.01": 0.1308213770389557,
+              "T@FPR0.05": 0.08951320499181747
+            }
+          },
+          "guide_gate_mild_medsub": {
+            "metrics": {
+              "I-AUROC": 1.0,
+              "I-AP": 0.9999999999999998,
+              "I-F1": 0.9999999500000026,
+              "P-AUROC": 0.9901409321411072,
+              "P-AP": 0.8971320064652182,
+              "P-F1": 0.8457605041714812,
+              "P-AUPRO": 0.9726128888138093,
+              "P-AUROC-anom": 0.9874394445503539,
+              "P-AP-anom": 0.8975171162335482
+            },
+            "recall": {
+              "R@FPR0.001": 0.2611276313436909,
+              "R@FPR0.01": 0.7856695869837297,
+              "R@FPR0.05": 0.9726914281950182
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.11469585448503494,
+              "T@FPR0.01": 0.07045124471187592,
+              "T@FPR0.05": 0.02973296493291855
+            }
+          }
+        },
+        "seconds": 57.860366106033325,
+        "gpu_peak_mib": 1961.630859375
+      },
+      "screw": {
+        "class": "screw",
+        "fingerprint": "5a440a6370ef0b02",
+        "n_test": 160,
+        "n_normal": 41,
+        "n_anomaly": 119,
+        "n_gt_positive_pixels": 39664,
+        "n_gt_negative_pixels": 10446096,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.983398237343718,
+          "I-AP": 0.9946887003395251,
+          "I-F1": 0.9626555516675014
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant; never gated or replaced",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "590dc43e14af7e8a32a191bd40edaf966e1c1ae4f8a1dc2bfb9e2e4c35bd2b33"
+        },
+        "calibration": {
+          "n": 48,
+          "min": 0.05180267617106438,
+          "median": 0.057166945189237595,
+          "q95": 0.06172339618206024,
+          "q99": 0.06403530344367028,
+          "max": 0.06526932120323181,
+          "denom95": 0.005,
+          "denom99": 0.006868358254432688,
+          "min_denom_clamped": true,
+          "scores_sha256": "fb9408af8fd72f69f13d0c49b1b0533855f2a0a12f35d014b7f5a1d6b00fcd12",
+          "class": "screw",
+          "selection": "sorted train/good paths, evenly spaced",
+          "n_selected": 48,
+          "source": "original 448->392 global postprocessed top1% image score",
+          "test_labels_used": false,
+          "seconds": 4.468467473983765
+        },
+        "gate": {
+          "mild": {
+            "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)",
+            "mean": 0.9542968162898056,
+            "min": 0.27891229655588856,
+            "max": 0.9999999999999922,
+            "frac_below_0.2": 0.0,
+            "frac_above_0.8": 0.89375
+          },
+          "sharp": {
+            "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)",
+            "mean": 0.902278641112505,
+            "min": 0.18136993955697067,
+            "max": 0.9999999998897918,
+            "frac_below_0.2": 0.00625,
+            "frac_above_0.8": 0.8
+          }
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "baseline_variant": "stage-7 full grayscale guided filter output"
+        },
+        "variants": {
+          "guide_baseline": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9935720713526138,
+              "P-AP": 0.6227282907340276,
+              "P-F1": 0.6156344291088014,
+              "P-AUPRO": 0.9672397716063188,
+              "P-AUROC-anom": 0.9925988164961403,
+              "P-AP-anom": 0.6239514148190242
+            },
+            "recall": {
+              "R@FPR0.001": 0.5207745058491328,
+              "R@FPR0.01": 0.8900262202501008,
+              "R@FPR0.05": 0.9637706736587334
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1092003658413887,
+              "T@FPR0.01": 0.08469691872596741,
+              "T@FPR0.05": 0.07322615385055542
+            }
+          },
+          "guide_gate_mild": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9934386803023092,
+              "P-AP": 0.6222195006246575,
+              "P-F1": 0.6155443627474436,
+              "P-AUPRO": 0.9661108422166454,
+              "P-AUROC-anom": 0.9918772434688717,
+              "P-AP-anom": 0.6227912263911041
+            },
+            "recall": {
+              "R@FPR0.001": 0.5207492940701896,
+              "R@FPR0.01": 0.8881857603872529,
+              "R@FPR0.05": 0.9630899556272691
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.1092003658413887,
+              "T@FPR0.01": 0.08455904573202133,
+              "T@FPR0.05": 0.07222235947847366
+            }
+          },
+          "guide_gate_sharp": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.9910746864215827,
+              "P-AP": 0.6187870709758044,
+              "P-F1": 0.6147412192378874,
+              "P-AUPRO": 0.9539236451246043,
+              "P-AUROC-anom": 0.988634744227398,
+              "P-AP-anom": 0.6189895102214962
+            },
+            "recall": {
+              "R@FPR0.001": 0.5199425171440096,
+              "R@FPR0.01": 0.8830173457039129,
+              "R@FPR0.05": 0.9510135135135135
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.10920033603906631,
+              "T@FPR0.01": 0.08439309149980545,
+              "T@FPR0.05": 0.07135076820850372
+            }
+          },
+          "guide_gate_mild_medsub": {
+            "metrics": {
+              "I-AUROC": 0.983398237343718,
+              "I-AP": 0.9946887003395251,
+              "I-F1": 0.9626555516675014,
+              "P-AUROC": 0.99349003303942,
+              "P-AP": 0.6249642365191616,
+              "P-F1": 0.6152637841980669,
+              "P-AUPRO": 0.9655041493826578,
+              "P-AUROC-anom": 0.9920373435192932,
+              "P-AP-anom": 0.6254497839952283
+            },
+            "recall": {
+              "R@FPR0.001": 0.5227914481645825,
+              "R@FPR0.01": 0.8896480435659541,
+              "R@FPR0.05": 0.9626361436062929
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.06932780146598816,
+              "T@FPR0.01": 0.04467574506998062,
+              "T@FPR0.05": 0.03242289274930954
+            }
+          }
+        },
+        "seconds": 110.19062662124634,
+        "gpu_peak_mib": 1961.630859375
+      },
+      "wood": {
+        "class": "wood",
+        "fingerprint": "5a440a6370ef0b02",
+        "n_test": 79,
+        "n_normal": 19,
+        "n_anomaly": 60,
+        "n_gt_positive_pixels": 252458,
+        "n_gt_negative_pixels": 4924886,
+        "scales": [
+          {
+            "name": "hi672",
+            "crop": 672,
+            "resize": 768,
+            "fov": 0.875,
+            "batch": 2
+          }
+        ],
+        "image_metrics": {
+          "I-AUROC": 0.999122807017544,
+          "I-AP": 0.9997267759562843,
+          "I-F1": 0.9917354871935002
+        },
+        "image_scores": {
+          "source": "baseline 448->392 global top1% of the postprocessed 256 map, computed once and reused by every variant; never gated or replaced",
+          "reused_for_all_variants": true,
+          "max_abs_diff_across_variants": 0.0,
+          "sha256": "463e7d6013159b1d5a53a8fc358e695d57cc41072c0306dc275c6b7942c20c25"
+        },
+        "calibration": {
+          "n": 48,
+          "min": 0.053975533694028854,
+          "median": 0.05802626349031925,
+          "q95": 0.06263228114694357,
+          "q99": 0.06362166427075863,
+          "max": 0.06377115845680237,
+          "denom95": 0.005,
+          "denom99": 0.00559540078043938,
+          "min_denom_clamped": true,
+          "scores_sha256": "35224ab160afdfc1449410364703add6562917aa3bc183d1b07c2a4270c53186",
+          "class": "wood",
+          "selection": "sorted train/good paths, evenly spaced",
+          "n_selected": 48,
+          "source": "original 448->392 global postprocessed top1% image score",
+          "test_labels_used": false,
+          "seconds": 5.072027683258057
+        },
+        "gate": {
+          "mild": {
+            "definition": "g = 0.10 + 0.90 * sigmoid((s - q95) / max(q95 - median, 0.005) * 2)",
+            "mean": 0.9574065941180564,
+            "min": 0.21519274405890884,
+            "max": 1.0,
+            "frac_below_0.2": 0.0,
+            "frac_above_0.8": 0.9367088607594937
+          },
+          "sharp": {
+            "definition": "g = 0.03 + 0.97 * sigmoid((s - q99) / max(q99 - median, 0.005) * 2)",
+            "mean": 0.9485017818975728,
+            "min": 0.1388505624848408,
+            "max": 1.0,
+            "frac_below_0.2": 0.02531645569620253,
+            "frac_above_0.8": 0.9367088607594937
+          }
+        },
+        "guide": {
+          "radius": 7,
+          "epsilon": 0.0025,
+          "baseline_variant": "stage-7 full grayscale guided filter output"
+        },
+        "variants": {
+          "guide_baseline": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9798067768846008,
+              "P-AP": 0.7521418773562054,
+              "P-F1": 0.6909763559547984,
+              "P-AUPRO": 0.9443402106635163,
+              "P-AUROC-anom": 0.973916365807046,
+              "P-AP-anom": 0.752996022350803
+            },
+            "recall": {
+              "R@FPR0.001": 0.20257230905734816,
+              "R@FPR0.01": 0.5938294686640946,
+              "R@FPR0.05": 0.8895895554904182
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17922121286392212,
+              "T@FPR0.01": 0.13349059224128723,
+              "T@FPR0.05": 0.09461025148630142
+            }
+          },
+          "guide_gate_mild": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9798504274589741,
+              "P-AP": 0.752157982803425,
+              "P-F1": 0.6909763559547984,
+              "P-AUPRO": 0.9410384378769523,
+              "P-AUROC-anom": 0.9739163658791687,
+              "P-AP-anom": 0.752996022343107
+            },
+            "recall": {
+              "R@FPR0.001": 0.20257230905734816,
+              "R@FPR0.01": 0.5938294686640946,
+              "R@FPR0.05": 0.8895895554904182
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17922121286392212,
+              "T@FPR0.01": 0.13349059224128723,
+              "T@FPR0.05": 0.09461025148630142
+            }
+          },
+          "guide_gate_sharp": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9798832130771333,
+              "P-AP": 0.7521740168911336,
+              "P-F1": 0.6909763559547984,
+              "P-AUPRO": 0.937955563856809,
+              "P-AUROC-anom": 0.9739163662085658,
+              "P-AP-anom": 0.7529960219477676
+            },
+            "recall": {
+              "R@FPR0.001": 0.20257230905734816,
+              "R@FPR0.01": 0.5938294686640946,
+              "R@FPR0.05": 0.8895895554904182
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.17922121286392212,
+              "T@FPR0.01": 0.13349059224128723,
+              "T@FPR0.05": 0.09461024403572083
+            }
+          },
+          "guide_gate_mild_medsub": {
+            "metrics": {
+              "I-AUROC": 0.999122807017544,
+              "I-AP": 0.9997267759562843,
+              "I-F1": 0.9917354871935002,
+              "P-AUROC": 0.9728673032894783,
+              "P-AP": 0.7370016418306319,
+              "P-F1": 0.6874411460572398,
+              "P-AUPRO": 0.9364073042864026,
+              "P-AUROC-anom": 0.9677585026304688,
+              "P-AP-anom": 0.7390402573840736
+            },
+            "recall": {
+              "R@FPR0.001": 0.19613163377670742,
+              "R@FPR0.01": 0.5770068684692107,
+              "R@FPR0.05": 0.8727669552955343
+            },
+            "thresholds": {
+              "T@FPR0.001": 0.11570251733064651,
+              "T@FPR0.01": 0.07072536647319794,
+              "T@FPR0.05": 0.030340123921632767
+            }
+          }
+        },
+        "seconds": 45.38228988647461,
+        "gpu_peak_mib": 1961.630859375
+      }
+    },
+    "mean": {
+      "guide_baseline": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9885768920697782,
+          "P-AP": 0.7598078401180911,
+          "P-F1": 0.7172811403737565,
+          "P-AUPRO": 0.9600895196176049,
+          "P-AUROC-anom": 0.9853942497659661,
+          "P-AP-anom": 0.7605076000505698
+        },
+        "recall": {
+          "R@FPR0.001": 0.3328483787054213,
+          "R@FPR0.01": 0.7597079133812152,
+          "R@FPR0.05": 0.9433479865840849
+        }
+      },
+      "guide_gate_mild": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9885493031028348,
+          "P-AP": 0.7596462484144171,
+          "P-F1": 0.717251118253304,
+          "P-AUPRO": 0.9581740751864632,
+          "P-AUROC-anom": 0.9851537254475843,
+          "P-AP-anom": 0.7601208705720311
+        },
+        "recall": {
+          "R@FPR0.001": 0.3328399747791069,
+          "R@FPR0.01": 0.759094426760266,
+          "R@FPR0.05": 0.9431218647618523
+        }
+      },
+      "guide_gate_sharp": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9877728558021542,
+          "P-AP": 0.7585081998692659,
+          "P-F1": 0.7169834037501185,
+          "P-AUPRO": 0.9535452731059785,
+          "P-AUROC-anom": 0.9840728924768921,
+          "P-AP-anom": 0.7588536317170488
+        },
+        "recall": {
+          "R@FPR0.001": 0.3325710491370469,
+          "R@FPR0.01": 0.7573716218658193,
+          "R@FPR0.05": 0.939096384057267
+        }
+      },
+      "guide_gate_mild_medsub": {
+        "metrics": {
+          "I-AUROC": 0.994173681453754,
+          "I-AP": 0.9981384920986031,
+          "I-F1": 0.9847969962870015,
+          "P-AUROC": 0.9854994228233352,
+          "P-AP": 0.7530326282716705,
+          "P-F1": 0.7161551448089293,
+          "P-AUPRO": 0.9581747808276232,
+          "P-AUROC-anom": 0.9824117635667053,
+          "P-AP-anom": 0.7540023858709501
+        },
+        "recall": {
+          "R@FPR0.001": 0.3266835710949936,
+          "R@FPR0.01": 0.7507748330062981,
+          "R@FPR0.05": 0.9360315090322818
+        }
+      }
+    },
+    "calibration_mean": {
+      "median": 0.056769230092565216,
+      "q95": 0.06144909548262755,
+      "q99": 0.06279887643953165,
+      "denom95": 0.005,
+      "denom99": 0.00602964634696643
+    },
+    "gate_mean": {
+      "mild": {
+        "mean": 0.952496928380957,
+        "min": 0.23754263057765587,
+        "max": 0.9999999999999973,
+        "frac_below_0.2": 0.0,
+        "frac_above_0.8": 0.9153738371206345
+      },
+      "sharp": {
+        "mean": 0.9277796690680821,
+        "min": 0.1572801492560457,
+        "max": 0.9999999999632639,
+        "frac_below_0.2": 0.01453821615576229,
+        "frac_above_0.8": 0.8760917086065781
+      }
+    }
+  },
+  "image_metrics": {
+    "mean": {
+      "I-AUROC": 0.994173681453754,
+      "I-AP": 0.9981384920986031,
+      "I-F1": 0.9847969962870015
+    },
+    "note": "identical for every variant; from the original 392 baseline global map and never gated"
+  },
+  "diagnostic": {
+    "P-AUROC-anom": "pixel AUROC restricted to anomaly test images",
+    "P-AP-anom": "pixel AP restricted to anomaly test images",
+    "interpretation": "If overall P-AP rises while anomaly-only P-AP is flat, the gain is normal-image false-positive suppression; if anomaly-only P-AP also rises, localization improved"
+  },
+  "deltas": {
+    "guide_gate_mild - guide_baseline": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -2.758896694332602e-05,
+        "P-AP": -0.00016159170367402442,
+        "P-F1": -3.0022120452444234e-05,
+        "P-AUPRO": -0.0019154444311416663,
+        "P-AUROC-anom": -0.00024052431838184063,
+        "P-AP-anom": -0.0003867294785386832
+      },
+      "recall": {
+        "R@FPR0.001": -8.403926314404231e-06,
+        "R@FPR0.01": -0.0006134866209492884,
+        "R@FPR0.05": -0.00022612182223258337
+      }
+    },
+    "guide_gate_sharp - guide_baseline": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.000804036267623931,
+        "P-AP": -0.001299640248825229,
+        "P-F1": -0.0002977366236379675,
+        "P-AUPRO": -0.006544246511626439,
+        "P-AUROC-anom": -0.00132135728907401,
+        "P-AP-anom": -0.0016539683335210498
+      },
+      "recall": {
+        "R@FPR0.001": -0.00027732956837439593,
+        "R@FPR0.01": -0.0023362915153959385,
+        "R@FPR0.05": -0.004251602526817888
+      }
+    },
+    "guide_gate_mild_medsub - guide_baseline": {
+      "metrics": {
+        "I-AUROC": 0.0,
+        "I-AP": 0.0,
+        "I-F1": 0.0,
+        "P-AUROC": -0.003077469246442921,
+        "P-AP": -0.0067752118464206035,
+        "P-F1": -0.0011259955648271758,
+        "P-AUPRO": -0.001914738789981718,
+        "P-AUROC-anom": -0.002982486199260781,
+        "P-AP-anom": -0.006505214179619689
+      },
+      "recall": {
+        "R@FPR0.001": -0.006164807610427703,
+        "R@FPR0.01": -0.008933080374917135,
+        "R@FPR0.05": -0.007316477551803091
+      }
+    }
+  },
+  "per_class_deltas": {
+    "guide_gate_mild - guide_baseline": {
+      "bottle": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 6.973575101820728e-06,
+          "P-AP": 7.909551128504333e-06,
+          "P-F1": 0.0,
+          "P-AUPRO": -0.0013156311171875767,
+          "P-AUROC-anom": 0.0,
+          "P-AP-anom": 0.0
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 2.3525647661060134e-06
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.00013339105030463205,
+          "P-AP": -0.0005087901093701053,
+          "P-F1": -9.006636135777679e-05,
+          "P-AUPRO": -0.0011289293896733499,
+          "P-AUROC-anom": -0.0007215730272686072,
+          "P-AP-anom": -0.0011601884279200947
+        },
+        "recall": {
+          "R@FPR0.001": -2.5211778943212693e-05,
+          "R@FPR0.01": -0.0018404598628478652,
+          "R@FPR0.05": -0.0006807180314643002
+        }
+      },
+      "wood": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 4.365057437327735e-05,
+          "P-AP": 1.610544721963869e-05,
+          "P-F1": 0.0,
+          "P-AUPRO": -0.0033017727865639612,
+          "P-AUROC-anom": 7.212275221490927e-11,
+          "P-AP-anom": -7.695954984399123e-12
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 0.0
+        }
+      }
+    },
+    "guide_gate_sharp - guide_baseline": {
+      "bottle": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 8.839935627391604e-06,
+          "P-AP": 1.015947681937135e-05,
+          "P-F1": 0.0,
+          "P-AUPRO": 6.803375354258456e-05,
+          "P-AUROC-anom": 0.0,
+          "P-AP-anom": 0.0
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 2.3525647661060134e-06
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.0024973849310311325,
+          "P-AP": -0.003941219758223147,
+          "P-F1": -0.0008932098709140135,
+          "P-AUPRO": -0.01331612648171454,
+          "P-AUROC-anom": -0.003964072268742291,
+          "P-AP-anom": -0.0049619045975279885
+        },
+        "recall": {
+          "R@FPR0.001": -0.0008319887051231323,
+          "R@FPR0.01": -0.0070088745461879265,
+          "R@FPR0.05": -0.012757160145219881
+        }
+      },
+      "wood": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": 7.6436192532503e-05,
+          "P-AP": 3.213953492819943e-05,
+          "P-F1": 0.0,
+          "P-AUPRO": -0.00638464680670725,
+          "P-AUROC-anom": 4.015198173945578e-10,
+          "P-AP-anom": -4.030353828454736e-10
+        },
+        "recall": {
+          "R@FPR0.001": 0.0,
+          "R@FPR0.01": 0.0,
+          "R@FPR0.05": 0.0
+        }
+      }
+    },
+    "guide_gate_mild_medsub - guide_baseline": {
+      "bottle": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.002210895831012305,
+          "P-AP": -0.007421345798822143,
+          "P-F1": 0.0005278681138115582,
+          "P-AUPRO": 0.003924312230829674,
+          "P-AUROC-anom": -0.002228122444358438,
+          "P-AP-anom": -0.007058246748334329
+        },
+        "recall": {
+          "R@FPR0.001": -0.014070689866092001,
+          "R@FPR0.01": -0.00959846424572064,
+          "R@FPR0.05": -0.003992302408085346
+        }
+      },
+      "screw": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -8.203831319386623e-05,
+          "P-AP": 0.002235945785133975,
+          "P-F1": -0.0003706449107344634,
+          "P-AUPRO": -0.0017356222236609709,
+          "P-AUROC-anom": -0.000561472976847166,
+          "P-AP-anom": 0.0014983691762041618
+        },
+        "recall": {
+          "R@FPR0.001": 0.002016942315449688,
+          "R@FPR0.01": -0.0003781766841467471,
+          "R@FPR0.05": -0.0011345300524404633
+        }
+      },
+      "wood": {
+        "metrics": {
+          "I-AUROC": 0.0,
+          "I-AP": 0.0,
+          "I-F1": 0.0,
+          "P-AUROC": -0.006939473595122481,
+          "P-AP": -0.015140235525573531,
+          "P-F1": -0.003535209897558622,
+          "P-AUPRO": -0.007932906377113635,
+          "P-AUROC-anom": -0.006157863176577183,
+          "P-AP-anom": -0.013955764966729345
+        },
+        "recall": {
+          "R@FPR0.001": -0.00644067528064074,
+          "R@FPR0.01": -0.016822600194883908,
+          "R@FPR0.05": -0.016822600194883908
+        }
+      }
+    }
+  },
+  "runtime": {
+    "device": "cuda:0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "classes_evaluated": 3,
+    "test_images_evaluated": 322,
+    "eval_batch": 2,
+    "base_batch": 2,
+    "scale_batches": {
+      "672": 2
+    },
+    "enabled_scales": [
+      [
+        672,
+        768
+      ]
+    ],
+    "forwards_per_test_image": 2,
+    "probe": {
+      "base": {
+        "crop": 392,
+        "resize": 448,
+        "batch": 2,
+        "seconds": 0.3944132328033447,
+        "seconds_per_image": 0.19720661640167236,
+        "peak_mib": 981.2890625,
+        "enabled": true
+      },
+      "672": {
+        "crop": 672,
+        "resize": 768,
+        "batch": 2,
+        "seconds": 0.7322914600372314,
+        "seconds_per_image": 0.3661457300186157,
+        "peak_mib": 1957.61328125,
+        "enabled": true
+      }
+    },
+    "seconds_total": 213.43328261375427,
+    "gpu_peak_mib_max": 1961.630859375
+  },
+  "files": {
+    "per_class_dir": "E:/dinomaly-mvp/kaggle_runs/stage10-local\\per_class",
+    "progress": "E:/dinomaly-mvp/kaggle_runs/stage10-local\\progress.json",
+    "status": "E:/dinomaly-mvp/kaggle_runs/stage10-local\\status.json"
+  }
+}

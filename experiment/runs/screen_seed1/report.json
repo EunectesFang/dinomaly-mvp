@@ -1,0 +1,95 @@
+{
+  "classes_locked": [
+    "wood",
+    "bottle",
+    "screw"
+  ],
+  "seed": 1,
+  "batch_size": 4,
+  "pretrain_steps": 300,
+  "loc_steps": 200,
+  "counts": {
+    "wood": {
+      "train_good": 198,
+      "val_good": 49,
+      "total_good": 247
+    },
+    "bottle": {
+      "train_good": 167,
+      "val_good": 42,
+      "total_good": 209
+    },
+    "screw": {
+      "train_good": 256,
+      "val_good": 64,
+      "total_good": 320
+    }
+  },
+  "peak_mib": 3392.5,
+  "fits_8gb": true,
+  "pretrain": {
+    "seconds": 90.52802085876465,
+    "first20_mean": 0.5243548393249512,
+    "after_warmup_mean": 0.3361112281680107,
+    "last20_mean": 0.10682780221104622,
+    "losses_head": [
+      1.01188,
+      0.75613,
+      0.64914,
+      0.57859,
+      0.59554
+    ],
+    "losses_tail": [
+      0.10157,
+      0.09043,
+      0.09052,
+      0.09689,
+      0.10902
+    ]
+  },
+  "loc": {
+    "seconds": 31.400075912475586,
+    "first20_mean": 0.5080543391406536,
+    "last20_mean": 0.0434966774424538,
+    "losses_head": [
+      0.73549,
+      0.72259,
+      0.70722,
+      0.69061,
+      0.67214
+    ],
+    "losses_tail": [
+      0.07462,
+      0.07804,
+      0.03474,
+      0.12,
+      0.03851
+    ]
+  },
+  "val_before_loc": {
+    "clean_mean_sigmoid": 0.5220498663253734,
+    "clean_frac_above_0.5": 1.0,
+    "paste_interior_mean_sigmoid": 0.5215170507775568,
+    "paste_border_mean_sigmoid": 0.5212566902421457,
+    "n_val": 155,
+    "interior_tokens": 5619,
+    "border_tokens": 3013
+  },
+  "val_after_loc": {
+    "clean_mean_sigmoid": 0.004054057837474338,
+    "clean_frac_above_0.5": 0.0,
+    "paste_interior_mean_sigmoid": 0.6629165344591306,
+    "paste_border_mean_sigmoid": 0.476920554220894,
+    "n_val": 155,
+    "interior_tokens": 5619,
+    "border_tokens": 3013
+  },
+  "flags": {
+    "recon_loss_down": true,
+    "loc_loss_down": true,
+    "clean_not_painted": true,
+    "paste_above_clean": true
+  },
+  "not_evaluated": "official test set and ground_truth were not read",
+  "not_a_paper_baseline": "3 classes, batch 4, 300 reconstruction steps; not the 15-class 10000-iter checkpoint"
+}

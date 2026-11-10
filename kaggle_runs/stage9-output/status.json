@@ -1,0 +1,15 @@
+{
+  "slug": "eunectesqaq/dinomaly-combined-diagnostic-v9",
+  "fingerprint": "95b0ea9131ba4fcb",
+  "status": "complete",
+  "updated": "2026-11-05 13:11:43",
+  "classes_done": [
+    "transistor",
+    "zipper",
+    "pill",
+    "screw"
+  ],
+  "classes_total": 4,
+  "report": "/kaggle/working/combined_diagnostic_report.json",
+  "markdown": null
+}
